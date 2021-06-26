@@ -1,0 +1,102 @@
+import React from "react";
+import { useFormik } from "formik";
+import { Input, Button, Radio, Form } from "antd";
+import * as Yup from "yup";
+import { useDispatch } from "react-redux";
+
+import userActions from "../../redux/user/user.actions";
+import FormErorr from "../FormError/FormError.componenet";
+
+const LoginSchema = Yup.object().shape({
+  email: Yup.string().email().required().label("Email"),
+  password: Yup.string().required().label("Password"),
+});
+
+const formStyles = {
+  width: "500px ",
+  display: "flex",
+  flexDirection: "column",
+};
+
+const btnStyles = { alignSelf: "center" };
+
+const LoginForm = () => {
+  const dispatch = useDispatch();
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+      type: "utilisateur",
+    },
+    validationSchema: LoginSchema,
+    onSubmit: async ({ type, email, password }) => {
+      dispatch({
+        type: userActions.LOGIN_START,
+        payload: { type, email, password, setErrors },
+      });
+    },
+  });
+
+  const {
+    handleSubmit,
+    handleChange,
+    handleBlur,
+    values,
+    setFieldValue,
+    setErrors,
+    errors,
+    touched,
+  } = formik;
+
+  return (
+    <Form
+      onFinish={handleSubmit}
+      size="large"
+      layout="vertical"
+      style={formStyles}
+    >
+      <Form.Item
+        label="Email"
+        name="email"
+        onChange={handleChange}
+        onBlur={handleBlur}
+      >
+        <Input />
+      </Form.Item>
+      <FormErorr error={errors.email} touched={touched.email} />
+      <Form.Item
+        label="Password"
+        name="password"
+        type="password"
+        onChange={handleChange}
+        onBlur={handleBlur}
+      >
+        <Input.Password />
+      </Form.Item>
+      <FormErorr error={errors.password} touched={touched.password} />
+      <Form.Item label="Type">
+        <Radio.Group
+          onChange={({ target }) => setFieldValue("type", target.value)}
+          value={values.type}
+        >
+          <Radio value="initiateur">initiateur</Radio>
+          <Radio value="utilisateur">utilisateur</Radio>
+        </Radio.Group>
+      </Form.Item>
+
+      <Form.Item style={btnStyles}>
+        <Button
+          type="primary"
+          htmlType="submit"
+          disabled={!!Object.keys(errors).length}
+        >
+          Se Connecter
+        </Button>
+      </Form.Item>
+      <FormErorr error={errors.server} touched={true} />
+    </Form>
+  );
+};
+
+export default LoginForm;
