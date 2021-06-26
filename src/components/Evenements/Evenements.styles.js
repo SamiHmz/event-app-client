@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const EvenementsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  overflow-x: scroll;
 `;
 
 export const EvenementsContainerTop = styled.div`

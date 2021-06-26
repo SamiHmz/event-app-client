@@ -28,10 +28,10 @@ const App = () => {
   }, [user]);
 
   return (
-    <>
+    <div style={{ height: "100vh", width: "100%" }}>
       {user ? <Main /> : <Login />}
       <ToastContainer limit={1} style={toastStyle} />
-    </>
+    </div>
   );
 };
 

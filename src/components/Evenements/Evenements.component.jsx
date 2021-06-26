@@ -1,5 +1,13 @@
-import React from "react";
-import { Input, Space, Button, Table, Tag } from "antd";
+import React, { useEffect, useState } from "react";
+import { Delete, Edit, Eye } from "../Icons/icons";
+import { useSelector, useDispatch } from "react-redux";
+import { getDemandesCount } from "../../services/evenement.services";
+import {
+  demandesSelector,
+  demandeIsLoading,
+} from "../../redux/evenement/evenement.selectors";
+import { startFetchingDemandes } from "../../redux/evenement/evenement.actions";
+import { Input, Space, Button, Table, Tag, Spin } from "antd";
 import { ReactComponenet as Plus } from "../../img/plus-solid.svg";
 import { PlusOutlined } from "@ant-design/icons";
 import {
@@ -7,31 +15,7 @@ import {
   EvenementsContainerTop,
   EvenementsContainerBottom,
   EvenementsContainerTopLeft,
-  Title,
 } from "./Evenements.styles";
-const data = [
-  {
-    key: "1",
-    nom: "John Brown",
-    date: 32,
-    address: "New York No. 1 Lake Park",
-    etat: "approuvè",
-  },
-  {
-    key: "2",
-    nom: "John Brown",
-    date: 32,
-    address: "New York No. 1 Lake Park",
-    etat: "approuvè",
-  },
-  {
-    key: "3",
-    nom: "John Brown",
-    date: 32,
-    address: "New York No. 1 Lake Park",
-    etat: "approuvè",
-  },
-];
 
 const columns = [
   {
@@ -44,6 +28,7 @@ const columns = [
     dataIndex: "date",
     key: "date",
   },
+
   {
     title: "Etat de la demande",
     key: "etat",
@@ -55,12 +40,22 @@ const columns = [
     ),
   },
   {
+    title: "Datails ",
+    dataIndex: "details",
+    key: "datails",
+    render: (text, record) => (
+      <Space size="middle">
+        <Eye title="Voir les details de la demande " />
+      </Space>
+    ),
+  },
+  {
     title: "Action",
     key: "action",
     render: (text, record) => (
       <Space size="middle">
-        <a>modifier </a>
-        <a>supprimer</a>
+        <Delete title="Suprimer la demande " />
+        <Edit title="Modifier la demande " />
       </Space>
     ),
   },
@@ -69,7 +64,34 @@ const columns = [
 const { Search } = Input;
 
 function Evenements(props) {
-  return (
+  const [demandeCount, setDemandeCount] = useState(0);
+  const dispatch = useDispatch();
+  const data = useSelector(demandesSelector);
+  const isLoading = useSelector(demandeIsLoading);
+
+  const getDemandesOnFirstLoad = async () => {
+    try {
+      const { data } = await getDemandesCount();
+      setDemandeCount(data.count);
+      if (data.count > 0) {
+        dispatch(startFetchingDemandes());
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getDemandesOnFirstLoad();
+  }, []);
+
+  const handlePageChange = (page) => {
+    dispatch(startFetchingDemandes(page));
+  };
+
+  return demandeCount === 0 ? (
+    <h1> Vous n'avez acune demande pour le moment </h1>
+  ) : (
     <EvenementsContainer>
       <EvenementsContainerTop>
         <EvenementsContainerTopLeft>
@@ -86,21 +108,24 @@ function Evenements(props) {
         </Button>
       </EvenementsContainerTop>
       <EvenementsContainerBottom>
-        <Table
-          columns={columns}
-          dataSource={data}
-          style={{
-            alignSelf: "center",
-            boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
-          }}
-          pagination={{
-            pageSize: 12,
-            onChange: (page, pageSize) => {
-              console.log(page);
-            },
-            total: 50,
-          }}
-        />
+        {isLoading ? (
+          <Spin size="large" />
+        ) : (
+          <Table
+            columns={columns}
+            dataSource={data}
+            style={{
+              alignSelf: "center",
+              boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
+              width: "80%",
+            }}
+            pagination={{
+              pageSize: 10,
+              total: demandeCount,
+              onChange: handlePageChange,
+            }}
+          />
+        )}
       </EvenementsContainerBottom>
     </EvenementsContainer>
   );
