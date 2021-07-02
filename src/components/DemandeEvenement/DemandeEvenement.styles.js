@@ -1,16 +1,16 @@
 import styled from "styled-components";
 
-export const EvenementsContainer = styled.div`
+export const DemandeEvenementContainer = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
-export const EvenementsContainerTop = styled.div`
+export const DemandeEvenementContainerTop = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 3% 5%;
 `;
-export const EvenementsContainerTopLeft = styled.div`
+export const DemandeEvenementContainerTopLeft = styled.div`
   display: flex;
   width: 70%;
 `;
@@ -22,7 +22,7 @@ export const Title = styled.div`
   margin-right: 30px;
 `;
 
-export const EvenementsContainerBottom = styled.div`
+export const DemandeEvenementContainerBottom = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;

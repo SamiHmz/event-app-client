@@ -8,7 +8,7 @@ export const demandesSelector = createSelector(
     return demandes.data.map((demande) => {
       return {
         key: demande.id,
-        nom: demande.titre,
+        intitulé: demande.intitulé,
         date: demande.createdAt,
         etat: demande.etat,
       };
@@ -20,6 +20,25 @@ export const demandeIsLoading = createSelector(
   demandesInputSelector,
   (demandes) => demandes.isLoading
 );
-// export default {
-//   demandesSelector,
-// };
+
+const demandeValidationInputSelector = (state) =>
+  state.evenement.demandesValidation;
+
+export const demandeValidationSelector = createSelector(
+  demandeValidationInputSelector,
+  (demandesValidation) => {
+    return demandesValidation.data.map((validation) => {
+      return {
+        key: validation.id,
+        date: validation.createdAt,
+        etat: validation.etat,
+        details: validation.details,
+      };
+    });
+  }
+);
+
+export const demandeValidationIsLoading = createSelector(
+  demandeValidationInputSelector,
+  (demandesValidation) => demandesValidation.isLoading
+);

@@ -5,10 +5,11 @@ import {
   MainContainerRight,
   MainContainerRightBottom,
 } from "./Main.styles";
-import SideBare from "../../components/sideBare/SideBare.component";
 import { Route, Switch } from "react-router-dom";
-import Evenements from "../../components/Evenements/Evenements.component";
+import DemandeEvenement from "../../components/DemandeEvenement/DemandeEvenement.component";
 import AntSideBare from "../../components/AntSideBare/AntSideBare.component";
+import DetailsDemande from "../../components/DetailsDemande/DetailsDemande.component";
+
 const Dashboard = () => <h1>i'am dashboard</h1>;
 const Main = () => {
   return (
@@ -19,7 +20,8 @@ const Main = () => {
         <MainContainerRightBottom>
           <Switch>
             <Route exact path="/" component={Dashboard} />
-            <Route path="/demandes" component={Evenements} />
+            <Route exact path="/demandes/:id" component={DetailsDemande} />
+            <Route exact path="/demandes" component={DemandeEvenement} />
           </Switch>
         </MainContainerRightBottom>
       </MainContainerRight>

@@ -1,9 +1,9 @@
 import { all, call, spawn } from "redux-saga/effects";
-import { watchLoginStarts } from "./user/user.sagas";
-import { watchFetchDemandesStart } from "../redux/evenement/evenement.saga";
+import { userSagas } from "./user/user.sagas";
+import { evenementSagas } from "../redux/evenement/evenement.saga";
 
 export default function* rootSaga() {
-  const sagas = [watchLoginStarts, watchFetchDemandesStart];
+  const sagas = [userSagas, evenementSagas];
 
   yield all(
     sagas.map((saga) =>

@@ -1,27 +1,29 @@
 import React, { useEffect, useState } from "react";
+import EvenementForm from "../EvenementForm/EvenementForm.componenet";
+import Etat from "../Etat/Etat.component";
 import { Delete, Edit, Eye } from "../Icons/icons";
 import { useSelector, useDispatch } from "react-redux";
+
 import { getDemandesCount } from "../../services/evenement.services";
 import {
   demandesSelector,
   demandeIsLoading,
 } from "../../redux/evenement/evenement.selectors";
 import { startFetchingDemandes } from "../../redux/evenement/evenement.actions";
-import { Input, Space, Button, Table, Tag, Spin } from "antd";
-import { ReactComponenet as Plus } from "../../img/plus-solid.svg";
+import { Input, Space, Button, Table, Tag, Spin, BackTop } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import {
-  EvenementsContainer,
-  EvenementsContainerTop,
-  EvenementsContainerBottom,
-  EvenementsContainerTopLeft,
-} from "./Evenements.styles";
+  DemandeEvenementContainer,
+  DemandeEvenementContainerTop,
+  DemandeEvenementContainerBottom,
+  DemandeEvenementContainerTopLeft,
+} from "./DemandeEvenement.styles";
 
 const columns = [
   {
-    title: "Nom de l'évenement",
-    dataIndex: "nom",
-    key: "nom",
+    title: "Intitulé de l'évenement",
+    dataIndex: "intitulé",
+    key: "intitulé",
   },
   {
     title: "Date de la demande",
@@ -35,24 +37,23 @@ const columns = [
     dataIndex: "etat",
     render: (etat) => (
       <>
-        <Tag key={etat}>{etat.toUpperCase()}</Tag>
+        <Etat value={etat} />
       </>
     ),
   },
   {
     title: "Datails ",
-    dataIndex: "details",
-    key: "datails",
-    render: (text, record) => (
-      <Space size="middle">
-        <Eye title="Voir les details de la demande " />
-      </Space>
-    ),
+    dataIndex: "key",
+    key: "details",
+    render: (key) => {
+      return <Eye to={key} title="Voir les details de la demande " />;
+    },
   },
   {
     title: "Action",
     key: "action",
-    render: (text, record) => (
+    dataIndex: "key",
+    render: (key) => (
       <Space size="middle">
         <Delete title="Suprimer la demande " />
         <Edit title="Modifier la demande " />
@@ -63,8 +64,17 @@ const columns = [
 
 const { Search } = Input;
 
-function Evenements(props) {
+function DemandeEvenement(props) {
   const [demandeCount, setDemandeCount] = useState(0);
+  /********************* Form *********/
+
+  const [visible, setVisible] = useState(false);
+  const onCreate = (values) => {
+    console.log("Received values of form: ", values);
+    setVisible(false);
+  };
+
+  /********************* Form *********/
   const dispatch = useDispatch();
   const data = useSelector(demandesSelector);
   const isLoading = useSelector(demandeIsLoading);
@@ -89,12 +99,10 @@ function Evenements(props) {
     dispatch(startFetchingDemandes(page));
   };
 
-  return demandeCount === 0 ? (
-    <h1> Vous n'avez acune demande pour le moment </h1>
-  ) : (
-    <EvenementsContainer>
-      <EvenementsContainerTop>
-        <EvenementsContainerTopLeft>
+  return (
+    <DemandeEvenementContainer>
+      <DemandeEvenementContainerTop>
+        <DemandeEvenementContainerTopLeft>
           {/* <Title>Demandes</Title> */}
           <Search
             size="large"
@@ -102,33 +110,54 @@ function Evenements(props) {
             placeholder="input search text"
             enterButton
           />
-        </EvenementsContainerTopLeft>
-        <Button type="primary" icon={<PlusOutlined />} size="large">
+        </DemandeEvenementContainerTopLeft>
+        <Button
+          type="primary"
+          icon={<PlusOutlined />}
+          size="large"
+          onClick={() => {
+            setVisible(true);
+          }}
+        >
           Nouvel Evenement
         </Button>
-      </EvenementsContainerTop>
-      <EvenementsContainerBottom>
+        <EvenementForm
+          visible={visible}
+          onCreate={onCreate}
+          onCancel={() => {
+            setVisible(false);
+          }}
+        />
+      </DemandeEvenementContainerTop>
+      <DemandeEvenementContainerBottom>
         {isLoading ? (
-          <Spin size="large" />
+          demandeCount > 0 ? (
+            <Spin size="large" />
+          ) : (
+            <h1>there is no data</h1>
+          )
         ) : (
           <Table
             columns={columns}
+            tableLayout="fixed"
             dataSource={data}
+            scroll={{ scrollToFirstRowOnChange: true }}
             style={{
               alignSelf: "center",
               boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
-              width: "80%",
+              maxWidth: "80%",
             }}
             pagination={{
-              pageSize: 10,
+              pageSize: 5,
               total: demandeCount,
               onChange: handlePageChange,
             }}
           />
         )}
-      </EvenementsContainerBottom>
-    </EvenementsContainer>
+        <BackTop />
+      </DemandeEvenementContainerBottom>
+    </DemandeEvenementContainer>
   );
 }
 
-export default Evenements;
+export default DemandeEvenement;

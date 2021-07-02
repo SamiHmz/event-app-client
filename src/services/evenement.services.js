@@ -8,3 +8,11 @@ export const getAllDemandes = async (pageNumber = 1) => {
 export const getDemandesCount = async (pageNumber = 1) => {
   return await axios.get(`${apiUrl}/demandes/count`);
 };
+
+export const createDemande = async (evenement) => {
+  return await axios.post(`${apiUrl}/evenement`, evenement);
+};
+
+export const getAllValidation = async (evenmentId) => {
+  return await axios.get(`${apiUrl}/validations/${evenmentId}`);
+};

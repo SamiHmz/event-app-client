@@ -55,7 +55,6 @@ const intiateurList = [
     to: "/demandes",
   },
 ];
-const { SubMenu } = Menu;
 const MenuItem = Menu.Item;
 const AntSideBare = () => {
   const [collapsed, setColapsed] = useState(false);
@@ -78,7 +77,7 @@ const AntSideBare = () => {
   return (
     <div style={{ width: "20%", height: "100%" }}>
       <Menu
-        defaultSelectedKeys={["1"]}
+        defaultSelectedKeys={["2"]}
         defaultOpenKeys={["sub1"]}
         mode="inline"
         theme="dark"
