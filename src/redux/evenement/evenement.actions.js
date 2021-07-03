@@ -26,3 +26,13 @@ export const DemandeValidationFetchingSuccess = (validations) => ({
   type: evenemetActions.DEMANDE_VALIDATION_FETCHING_SUCCESS,
   payload: { validations },
 });
+
+export const startOneDemandeFetching = (id) => ({
+  type: evenemetActions.START_ONE_DEMANDE_FETCHING,
+  payload: { id },
+});
+
+export const OneDemandeFetchingSuccess = (demande) => ({
+  type: evenemetActions.ONE_DEMANDE_FETCHING_SUCCESS,
+  payload: { demande },
+});

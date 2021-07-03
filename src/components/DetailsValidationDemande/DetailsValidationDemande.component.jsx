@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { startDemandeValidationFetching } from "../../redux/evenement/evenement.actions";
 import {
   demandeValidationSelector,
-  demandeValidationIsLoading,
+  demandeValidationIsLoadingSelector,
 } from "../../redux/evenement/evenement.selectors";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -35,7 +35,7 @@ const columns = [
 const DetailsValidationDemande = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const isLoading = useSelector(demandeValidationIsLoading);
+  const isLoading = useSelector(demandeValidationIsLoadingSelector);
   const demandesValidation = useSelector(demandeValidationSelector);
 
   useEffect(() => {

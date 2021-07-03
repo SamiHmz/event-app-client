@@ -1,40 +1,56 @@
-import React from "react";
-import { Descriptions } from "antd";
-import { useSelector } from "react-redux";
-import { getOneDemandeSelector } from "../../redux/evenement/evenement.selectors";
+import React, { useEffect } from "react";
+import { Descriptions, Spin } from "antd";
+import { useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { startOneDemandeFetching } from "../../redux/evenement/evenement.actions";
+import {
+  currentDemandeIsLoadingSelector,
+  currentDemandeSelector,
+} from "../../redux/evenement/evenement.selectors";
 
 const DetailsDemandeInfo = (props) => {
-  return (
+  const isLoading = useSelector(currentDemandeIsLoadingSelector);
+  const currentDemande = useSelector(currentDemandeSelector);
+  const dispatch = useDispatch();
+  const { id } = useParams();
+
+  useEffect(() => {
+    dispatch(startOneDemandeFetching(id));
+  }, []);
+
+  return isLoading ? (
+    <Spin />
+  ) : (
     <Descriptions bordered>
       <Descriptions.Item label="Intitulé" span={3}>
-        Salon de l'emploi
+        {currentDemande.intitulé}
       </Descriptions.Item>
       <Descriptions.Item label="Type" span={3}>
-        Salon
+        {currentDemande.type}
       </Descriptions.Item>
       <Descriptions.Item label="Mode" span={3}>
-        Presentiel
+        {currentDemande.mode}
       </Descriptions.Item>
       <Descriptions.Item label="Lieu" span={3}>
-        Ecole superieur D'informatique
+        {currentDemande.lieu}
       </Descriptions.Item>
       <Descriptions.Item label="Date De Crèation" span={3}>
-        2021-07-01T11:07:55.753Z
+        {currentDemande.createdAt}
       </Descriptions.Item>
       <Descriptions.Item label="Date Debut" span={3}>
-        2021-07-01T11:07:55.753Z
+        {currentDemande.debut}
       </Descriptions.Item>
       <Descriptions.Item label="Date Fin" span={3}>
-        2021-07-01T11:07:55.753Z
+        {currentDemande.fin}
       </Descriptions.Item>
       <Descriptions.Item label="Etat" span={3}>
-        aprouvè
+        {currentDemande.etat}
       </Descriptions.Item>
       <Descriptions.Item label="Objectifs" span={3}>
-        Des objectifs
+        {currentDemande.objectifs}
       </Descriptions.Item>
       <Descriptions.Item label="Programe" span={3}>
-        Programe
+        {currentDemande.programe}
       </Descriptions.Item>
     </Descriptions>
   );

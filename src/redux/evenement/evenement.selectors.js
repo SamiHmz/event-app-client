@@ -1,11 +1,11 @@
 import { createSelector } from "reselect";
 
-const demandesInputSelector = (state) => state.evenement.demandes;
+const demandesInputSelector = (state) => state.evenement;
 
 export const demandesSelector = createSelector(
   [demandesInputSelector],
-  (demandes) => {
-    return demandes.data.map((demande) => {
+  ({ demandes }) => {
+    return demandes.map((demande) => {
       return {
         key: demande.id,
         intitulé: demande.intitulé,
@@ -16,18 +16,15 @@ export const demandesSelector = createSelector(
   }
 );
 
-export const demandeIsLoading = createSelector(
+export const demandesIsLoadingSelector = createSelector(
   demandesInputSelector,
-  (demandes) => demandes.isLoading
+  ({ isDemandesLoading }) => isDemandesLoading
 );
 
-const demandeValidationInputSelector = (state) =>
-  state.evenement.demandesValidation;
-
 export const demandeValidationSelector = createSelector(
-  demandeValidationInputSelector,
-  (demandesValidation) => {
-    return demandesValidation.data.map((validation) => {
+  demandesInputSelector,
+  ({ demandesValidation }) => {
+    return demandesValidation.map((validation) => {
       return {
         key: validation.id,
         date: validation.createdAt,
@@ -38,7 +35,17 @@ export const demandeValidationSelector = createSelector(
   }
 );
 
-export const demandeValidationIsLoading = createSelector(
-  demandeValidationInputSelector,
-  (demandesValidation) => demandesValidation.isLoading
+export const demandeValidationIsLoadingSelector = createSelector(
+  demandesInputSelector,
+  ({ isValidationLoading }) => isValidationLoading
+);
+
+export const currentDemandeSelector = createSelector(
+  demandesInputSelector,
+  ({ currentDemande }) => currentDemande
+);
+
+export const currentDemandeIsLoadingSelector = createSelector(
+  demandesInputSelector,
+  ({ isCurrentDemandeLoading }) => isCurrentDemandeLoading
 );

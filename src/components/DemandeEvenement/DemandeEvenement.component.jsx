@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getDemandesCount } from "../../services/evenement.services";
 import {
   demandesSelector,
-  demandeIsLoading,
+  demandesIsLoadingSelector,
 } from "../../redux/evenement/evenement.selectors";
 import { startFetchingDemandes } from "../../redux/evenement/evenement.actions";
 import { Input, Space, Button, Table, Tag, Spin, BackTop } from "antd";
@@ -70,14 +70,13 @@ function DemandeEvenement(props) {
 
   const [visible, setVisible] = useState(false);
   const onCreate = (values) => {
-    console.log("Received values of form: ", values);
     setVisible(false);
   };
 
   /********************* Form *********/
   const dispatch = useDispatch();
   const data = useSelector(demandesSelector);
-  const isLoading = useSelector(demandeIsLoading);
+  const isLoading = useSelector(demandesIsLoadingSelector);
 
   const getDemandesOnFirstLoad = async () => {
     try {
@@ -96,6 +95,7 @@ function DemandeEvenement(props) {
   }, []);
 
   const handlePageChange = (page) => {
+    console.log("excuted");
     dispatch(startFetchingDemandes(page));
   };
 
@@ -148,7 +148,7 @@ function DemandeEvenement(props) {
               maxWidth: "80%",
             }}
             pagination={{
-              pageSize: 5,
+              pageSize: 10,
               total: demandeCount,
               onChange: handlePageChange,
             }}

@@ -1,13 +1,11 @@
 import evenemetActions from "./evenement.actions.types";
 const INITIAL_STATE = {
-  demandes: {
-    data: [],
-    isLoading: true,
-  },
-  demandesValidation: {
-    data: [],
-    isLoading: true,
-  },
+  demandes: [],
+  demandesValidation: [],
+  isDemandesLoading: true,
+  isCurrentDemandeLoading: true,
+  isValidationLoading: true,
+  currentDemande: null,
 };
 
 const evenementReducer = (state = INITIAL_STATE, action) => {
@@ -15,23 +13,25 @@ const evenementReducer = (state = INITIAL_STATE, action) => {
     case evenemetActions.DEMANDE_FETCHING_SUCCESS:
       return {
         ...state,
-        demandes: { data: action.payload.demandes, isLoading: false },
+        isDemandesLoading: false,
+        demandes: action.payload.demandes,
       };
     case evenemetActions.DEMANDE_CREATION_SUCCESS:
       return {
         ...state,
-        demandes: {
-          data: [action.payload, ...state.demandes.data],
-          isLoading: state.demandes.isLoading,
-        },
+        demandes: [action.payload, ...state.demandes],
       };
     case evenemetActions.DEMANDE_VALIDATION_FETCHING_SUCCESS:
       return {
         ...state,
-        demandesValidation: {
-          data: action.payload.validations,
-          isLoading: false,
-        },
+        isValidationLoading: false,
+        demandesValidation: action.payload.validations,
+      };
+    case evenemetActions.ONE_DEMANDE_FETCHING_SUCCESS:
+      return {
+        ...state,
+        isCurrentDemandeLoading: false,
+        currentDemande: action.payload.demande,
       };
 
     default:

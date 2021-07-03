@@ -5,6 +5,10 @@ export const getAllDemandes = async (pageNumber = 1) => {
   return await axios.get(`${apiUrl}/demande/${pageNumber}`);
 };
 
+export const getOneDemande = async (id) => {
+  return await axios.get(`${apiUrl}/evenement/${id}`);
+};
+
 export const getDemandesCount = async (pageNumber = 1) => {
   return await axios.get(`${apiUrl}/demandes/count`);
 };
