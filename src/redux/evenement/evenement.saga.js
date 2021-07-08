@@ -11,6 +11,7 @@ import {
   createValidationSuccess,
   updateDemandeSuccess,
   deleteDemandeSuccess,
+  updateValidationSuccess,
 } from "./evenement.actions";
 import {
   getAllDemandes,
@@ -20,6 +21,7 @@ import {
   createDemandeValidation,
   updateDemande,
   deleteDemande,
+  updateDemandeValidation,
 } from "../../services/evenement.services";
 
 function* onFetchDemandesStarts({ payload }) {
@@ -96,13 +98,16 @@ export function* onCreateValidationStart({ payload }) {
       payload.validation
     );
     yield put(createValidationSuccess(validation));
+    yield payload.resetForm();
+    yield payload.onCancel();
     yield message.success("la validation a été créé  avec succès");
   } catch (error) {
-    if (error.response && error.response.status >= 400) {
-      console.log(error);
+    yield payload.setErrors({ server: error.response.data });
+    // if (error.response && error.response.status >= 400) {
+    //   console.log(error);
 
-      toast.error(error.response.data, toastConfig);
-    }
+    //   toast.error(error.response.data, toastConfig);
+    // }
   }
 }
 export function* watchCreateValidationStart() {
@@ -113,7 +118,6 @@ export function* watchCreateValidationStart() {
 }
 
 export function* onUpdateDemandeStart({ payload }) {
-  console.log(payload);
   try {
     const { data: demande } = yield call(
       updateDemande,
@@ -122,6 +126,7 @@ export function* onUpdateDemandeStart({ payload }) {
     );
     yield put(updateDemandeSuccess(demande));
     yield payload.closeForm();
+
     yield message.success("la demande a été modifièe  avec succès");
   } catch (error) {
     yield payload.setErrors({ server: error.response.data });
@@ -144,6 +149,28 @@ export function* watchDeleteDemandeStart() {
   yield takeLatest(evenemetActions.START_DELETE_DEMANDE, onDeleteDemandeStart);
 }
 
+export function* onUpdateValidationStart({ payload }) {
+  try {
+    const { data: validation } = yield call(
+      updateDemandeValidation,
+      payload.validation,
+      payload.id
+    );
+    yield put(updateValidationSuccess(validation));
+    yield payload.resetForm();
+    yield payload.onCancel();
+    yield message.success("la validation a été modifier avec succès");
+  } catch (error) {
+    yield payload.setErrors({ server: error.response.data });
+  }
+}
+
+export function* watchUpdateValidationStart() {
+  yield takeLatest(
+    evenemetActions.START_UPDATE_VALIDATION,
+    onUpdateValidationStart
+  );
+}
 export function* evenementSagas() {
   yield all([
     call(watchEvenementCreated),
@@ -153,5 +180,6 @@ export function* evenementSagas() {
     call(watchCreateValidationStart),
     call(watchUpdateDemandeStart),
     call(watchDeleteDemandeStart),
+    call(watchUpdateValidationStart),
   ]);
 }

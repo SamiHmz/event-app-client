@@ -1,7 +1,7 @@
 import { createSelector } from "reselect";
 import { userInputSelector } from "../user/user.selectors";
 import { typeUtilisateur } from "../../util/magic_strings";
-
+import moment from "moment";
 const demandesInputSelector = (state) => state.evenement;
 
 export const demandesSelector = createSelector(
@@ -18,11 +18,12 @@ export const demandesSelector = createSelector(
       });
     }
     return demandes.map((demande) => {
+      console.log(moment(demande.createdAt).format("DD-MMM-YYYY"));
       return {
         initiateur: demande.initiateur.nom,
         key: demande.id,
         intitulé: demande.intitulé,
-        date: demande.createdAt,
+        date: moment(demande.createdAt).format("DD-MMM-YYYY"),
         etat: demande.etat,
       };
     });
@@ -39,7 +40,7 @@ export const demandeValidationSelector = createSelector(
     return demandesValidation.map((validation) => {
       return {
         key: validation.id,
-        date: validation.createdAt,
+        date: moment(validation.createdAt).format("MMMM Do YYYY, h:mm:ss a"),
         etat: validation.etat,
         details: validation.details,
       };

@@ -46,7 +46,6 @@ const evenementReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         demandes: state.demandes.map((demande) => {
-          console.log("payload :", action.payload);
           if (demande.id === action.payload.demande.id)
             return action.payload.demande;
           return demande;
@@ -58,6 +57,17 @@ const evenementReducer = (state = INITIAL_STATE, action) => {
         demandes: state.demandes.filter(
           (demande) => demande.id !== action.payload.id
         ),
+      };
+    case evenemetActions.UPDATE_VALIDATION_SUCCESS:
+      return {
+        ...state,
+        demandesValidation: state.demandesValidation.map((validation) => {
+          console.log("payload:", action.payload.validation);
+
+          if (validation.id === action.payload.validation.id)
+            return action.payload.validation;
+          return validation;
+        }),
       };
     default:
       return state;

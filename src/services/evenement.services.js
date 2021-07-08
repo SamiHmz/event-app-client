@@ -17,8 +17,15 @@ export const getAllValidation = async (evenmentId) => {
   return await axios.get(`${apiUrl}/validations/${evenmentId}`);
 };
 
+export const getOneValidation = async (validationId) => {
+  return await axios.get(`${apiUrl}/validation/${validationId}`);
+};
 export const createDemandeValidation = async (validation) => {
   return await axios.post(`${apiUrl}/validation`, validation);
+};
+
+export const updateDemandeValidation = async (validation, valiDationId) => {
+  return await axios.put(`${apiUrl}/validation/${valiDationId}`, validation);
 };
 
 export const setDemandeIsOpened = async (id, isOpened) => {

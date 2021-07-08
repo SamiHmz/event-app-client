@@ -37,11 +37,9 @@ export const OneDemandeFetchingSuccess = (demande) => ({
   payload: { demande },
 });
 
-export const startCreateValidation = (validation) => ({
+export const startCreateValidation = (payload) => ({
   type: evenemetActions.CREATE_VALIDATION_START,
-  payload: {
-    validation,
-  },
+  payload,
 });
 
 export const createValidationSuccess = (validation) => ({
@@ -74,4 +72,16 @@ export const startDeleteDemande = (id) => ({
 export const deleteDemandeSuccess = (id) => ({
   type: evenemetActions.DELETE_DEMANDE_SUCCESS,
   payload: { id },
+});
+
+export const startUpdateValidation = (payload) => ({
+  type: evenemetActions.START_UPDATE_VALIDATION,
+  payload,
+});
+
+export const updateValidationSuccess = (validation) => ({
+  type: evenemetActions.UPDATE_VALIDATION_SUCCESS,
+  payload: {
+    validation,
+  },
 });
