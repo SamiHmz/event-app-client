@@ -1,30 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Modal, Form, Input, Radio, Select, DatePicker } from "antd";
+import { Modal, Form, Input, DatePicker } from "antd";
 import FormErorr from "../FormError/FormError.componenet";
 import SelectInput from "../SelectInput/SelectInput.component";
-import { startCreateDemande } from "../../redux/evenement/evenement.actions";
+import {
+  startCreateDemande,
+  startUpdateDemande,
+} from "../../redux/evenement/evenement.actions";
 import { useDispatch } from "react-redux";
-const { Option } = Select;
+import { typeEvenement, modeEvenement } from "../../util/magic_strings";
+import { getOneDemande } from "../../services/evenement.services";
+import moment from "moment";
+
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 
-const typeEvenement = [
-  "Exposition",
-  "Salon",
-  "Confèrence",
-  "Workshop",
-  "Formation",
-  "Visit",
-  "Compètision",
-];
-
-const modeEvenement = ["Prèsentiel", "En Ligne"];
-
 const evenementSchema = Yup.object().shape({
   intitulé: Yup.string().required().label("Intitulé"),
-  lieu: Yup.string().required().label("Intitulé"),
+  lieu: Yup.string().required().label("Lieu"),
   objectifs: Yup.string().required().label("Objectifs"),
   programe: Yup.string().required().label("Programe"),
   type: Yup.string().required().label("Type"),
@@ -32,9 +26,13 @@ const evenementSchema = Yup.object().shape({
   fin: Yup.date().required().label("Date debut et date fin"),
 });
 
-const EvenementForm = ({ visible, onCancel, onCreate }) => {
+const EvenementForm = ({ visible, onCancel, onCreate, id, setId }) => {
   const dispatch = useDispatch();
+  const [form] = Form.useForm();
+
   const formik = useFormik({
+    enableReinitialize: true,
+
     initialValues: {
       intitulé: "",
       type: "",
@@ -46,17 +44,30 @@ const EvenementForm = ({ visible, onCancel, onCreate }) => {
       programe: "",
     },
     validationSchema: evenementSchema,
-    onSubmit: (values, { resetForm }) => {
-      dispatch(
-        startCreateDemande({
-          demande: values,
-          setErrors,
-          closeForm: onCancel,
-          resetForm,
-        })
-      );
+    onSubmit: (values) => {
+      if (!id) {
+        dispatch(
+          startCreateDemande({
+            demande: values,
+            setErrors,
+            closeForm: onCancel,
+            resetForm: form.resetFields,
+          })
+        );
+      } else {
+        dispatch(
+          startUpdateDemande({
+            demande: values,
+            id: id,
+            setErrors,
+            closeForm: onCancel,
+            resetForm: form.resetFields,
+          })
+        );
+      }
     },
   });
+
   const {
     handleSubmit,
     handleChange,
@@ -69,7 +80,47 @@ const EvenementForm = ({ visible, onCancel, onCreate }) => {
     errors,
     touched,
     resetForm,
+    setValues,
   } = formik;
+
+  useEffect(() => {
+    if (!id) return;
+    const getDemandeInfo = async (demandeID) => {
+      try {
+        const { data: demande } = await getOneDemande(demandeID);
+        setValues({
+          intitulé: demande.intitulé,
+          type: demande.type,
+          lieu: demande.lieu,
+          mode: demande.mode,
+          debut: demande.debut,
+          fin: demande.fin,
+          objectifs: demande.objectifs,
+          programe: demande.programe,
+        });
+
+        form.setFieldsValue({
+          intitulé: demande.intitulé,
+          type: demande.type,
+          lieu: demande.lieu,
+          mode: demande.mode,
+          pick: [moment(demande.debut), moment(demande.fin)],
+          objectifs: demande.objectifs,
+          programe: demande.programe,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getDemandeInfo(id);
+  }, []);
+
+  const handlCloseForm = () => {
+    if (id) form.resetFields();
+    setId(null);
+    onCancel();
+  };
 
   return (
     <Modal
@@ -77,20 +128,20 @@ const EvenementForm = ({ visible, onCancel, onCreate }) => {
       title="Créer un nouvel événement"
       okText="Create"
       cancelText="Cancel"
-      onCancel={onCancel}
+      onCancel={handlCloseForm}
       onOk={handleSubmit}
     >
-      <Form onFinish={handleSubmit} size="large" layout="vertical">
+      <Form onFinish={handleSubmit} size="large" layout="vertical" form={form}>
         <Form.Item
           label="Intitulé de l'évènement"
           name="intitulé"
           onChange={handleChange}
           onBlur={handleBlur}
         >
-          <Input placeholder="Veuillez ajouter l'intitulé" />
+          <Input placeholder="Veuillez ajouter l'intitulé" key="intitulé" />
         </Form.Item>
         <FormErorr error={errors.intitulé} touched={touched.intitulé} />
-        <Form.Item label="Type de l'évènement">
+        <Form.Item label="Type de l'évènement" name="type">
           <SelectInput
             options={typeEvenement}
             onChange={(value) => setFieldValue("type", value)}
@@ -100,7 +151,7 @@ const EvenementForm = ({ visible, onCancel, onCreate }) => {
         </Form.Item>
         <FormErorr error={errors.type} touched={touched.type} />
 
-        <Form.Item label="Mode de l'évènement">
+        <Form.Item label="Mode de l'évènement" name="mode">
           <SelectInput
             options={modeEvenement}
             onChange={(value) => setFieldValue("mode", value)}
@@ -109,11 +160,11 @@ const EvenementForm = ({ visible, onCancel, onCreate }) => {
           />
         </Form.Item>
         <FormErorr error={errors.mode} touched={touched.mode} />
-        <Form.Item name="debut" label="Date debut - Date fin">
+        <Form.Item name="debut" label="Date debut - Date fin" name="pick">
           <RangePicker
             onChange={(value) => {
-              setFieldValue("debut", value[0]._d);
-              setFieldValue("fin", value[1]._d);
+              setFieldValue("debut", value?.[0]._d || "");
+              setFieldValue("fin", value?.[1]._d || "");
             }}
             onBlur={() => setFieldTouched("fin", true)}
           />
@@ -155,7 +206,6 @@ const EvenementForm = ({ visible, onCancel, onCreate }) => {
         <FormErorr error={errors.programe} touched={touched.programe} />
 
         <FormErorr error={errors.server} touched={true} />
-        <button onClick={() => resetForm()}>reset form</button>
       </Form>
     </Modal>
   );

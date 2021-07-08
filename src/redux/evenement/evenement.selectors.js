@@ -1,12 +1,25 @@
 import { createSelector } from "reselect";
+import { userInputSelector } from "../user/user.selectors";
+import { typeUtilisateur } from "../../util/magic_strings";
 
 const demandesInputSelector = (state) => state.evenement;
 
 export const demandesSelector = createSelector(
-  [demandesInputSelector],
-  ({ demandes }) => {
+  [demandesInputSelector, userInputSelector],
+  ({ demandes }, { currentUser }) => {
+    if (currentUser.type === typeUtilisateur.INITIATEUR) {
+      return demandes.map((demande) => {
+        return {
+          key: demande.id,
+          intitulé: demande.intitulé,
+          date: demande.createdAt,
+          etat: demande.etat,
+        };
+      });
+    }
     return demandes.map((demande) => {
       return {
+        initiateur: demande.initiateur.nom,
         key: demande.id,
         intitulé: demande.intitulé,
         date: demande.createdAt,
@@ -15,7 +28,6 @@ export const demandesSelector = createSelector(
     });
   }
 );
-
 export const demandesIsLoadingSelector = createSelector(
   demandesInputSelector,
   ({ isDemandesLoading }) => isDemandesLoading

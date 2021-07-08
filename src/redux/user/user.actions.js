@@ -1,6 +1,13 @@
-const userActions = {
-  SET_CURRENT_USER: "SET_CURRENT_USER",
-  LOGIN_START: "LOGIN",
-};
+import userActions from "./user.actions.types";
+export const loginStart = (payload) => ({
+  type: userActions.LOGIN_START,
+  payload,
+});
 
-export default userActions;
+export const setCurrentUser = (user, token) => ({
+  type: userActions.SET_CURRENT_USER,
+  payload: {
+    user,
+    token,
+  },
+});

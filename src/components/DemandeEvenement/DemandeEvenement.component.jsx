@@ -1,16 +1,26 @@
 import React, { useEffect, useState } from "react";
-import EvenementForm from "../EvenementForm/EvenementForm.componenet";
-import Etat from "../Etat/Etat.component";
 import { Delete, Edit, Eye } from "../Icons/icons";
+import Etat from "../Etat/Etat.component";
+import EvenementForm from "../EvenementForm/EvenementForm.componenet";
 import { useSelector, useDispatch } from "react-redux";
+import { userSelector } from "../../redux/user/user.selectors";
+import { typeUtilisateur } from "../../util/magic_strings";
+import { toastConfig } from "../../services/axios";
+import { toast } from "react-toastify";
 
-import { getDemandesCount } from "../../services/evenement.services";
+import {
+  getDemandesCount,
+  getDemandeIsOpened,
+} from "../../services/evenement.services";
 import {
   demandesSelector,
   demandesIsLoadingSelector,
 } from "../../redux/evenement/evenement.selectors";
-import { startFetchingDemandes } from "../../redux/evenement/evenement.actions";
-import { Input, Space, Button, Table, Tag, Spin, BackTop } from "antd";
+import {
+  startFetchingDemandes,
+  startDeleteDemande,
+} from "../../redux/evenement/evenement.actions";
+import { Button, Table, Spin, BackTop, Space, Popconfirm } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import {
   DemandeEvenementContainer,
@@ -19,56 +29,64 @@ import {
   DemandeEvenementContainerTopLeft,
 } from "./DemandeEvenement.styles";
 
-const columns = [
-  {
-    title: "Intitulé de l'évenement",
-    dataIndex: "intitulé",
-    key: "intitulé",
-  },
-  {
-    title: "Date de la demande",
-    dataIndex: "date",
-    key: "date",
-  },
-
-  {
-    title: "Etat de la demande",
-    key: "etat",
-    dataIndex: "etat",
-    render: (etat) => (
-      <>
-        <Etat value={etat} />
-      </>
-    ),
-  },
-  {
-    title: "Datails ",
-    dataIndex: "key",
-    key: "details",
-    render: (key) => {
-      return <Eye to={key} title="Voir les details de la demande " />;
-    },
-  },
-  {
-    title: "Action",
-    key: "action",
-    dataIndex: "key",
-    render: (key) => (
-      <Space size="middle">
-        <Delete title="Suprimer la demande " />
-        <Edit title="Modifier la demande " />
-      </Space>
-    ),
-  },
-];
-
-const { Search } = Input;
+import { AdminstrateurColumn } from "./demandesColums";
+import SearchInput from "../SearchInput/SearchInput.component";
 
 function DemandeEvenement(props) {
+  const initiateurColumn = [
+    {
+      title: "Intitulé de l'évenement",
+      dataIndex: "intitulé",
+      key: "intitulé",
+    },
+    {
+      title: "Date de la demande",
+      dataIndex: "date",
+      key: "date",
+    },
+
+    {
+      title: "Etat de la demande",
+      key: "etat",
+      dataIndex: "etat",
+      render: (etat) => (
+        <>
+          <Etat value={etat} />
+        </>
+      ),
+    },
+    {
+      title: "Datails ",
+      dataIndex: "key",
+      key: "details",
+      render: (key) => {
+        return <Eye to={key} title="Voir les details de la demande " />;
+      },
+    },
+    {
+      title: "Action",
+      key: "action",
+      dataIndex: "key",
+      render: (key) => (
+        <Space size="middle">
+          <Popconfirm
+            title="Êtes-vous sûr de supprimer cette demande?"
+            okText="Oui"
+            cancelText="Non"
+            onConfirm={() => dispatch(startDeleteDemande(key))}
+          >
+            <Delete title="Suprimer la demande " />
+          </Popconfirm>
+          <Edit title="Modifier la demande " onClick={() => handleEdit(key)} />
+        </Space>
+      ),
+    },
+  ];
   const [demandeCount, setDemandeCount] = useState(0);
   /********************* Form *********/
 
   const [visible, setVisible] = useState(false);
+  const [demandeId, setDemandeId] = useState(null);
   const onCreate = (values) => {
     setVisible(false);
   };
@@ -77,14 +95,13 @@ function DemandeEvenement(props) {
   const dispatch = useDispatch();
   const data = useSelector(demandesSelector);
   const isLoading = useSelector(demandesIsLoadingSelector);
+  const user = useSelector(userSelector);
 
   const getDemandesOnFirstLoad = async () => {
     try {
       const { data } = await getDemandesCount();
       setDemandeCount(data.count);
-      if (data.count > 0) {
-        dispatch(startFetchingDemandes());
-      }
+      dispatch(startFetchingDemandes());
     } catch (error) {
       console.log(error);
     }
@@ -95,57 +112,76 @@ function DemandeEvenement(props) {
   }, []);
 
   const handlePageChange = (page) => {
-    console.log("excuted");
     dispatch(startFetchingDemandes(page));
+  };
+
+  const getColumn = () => {
+    return user.type === typeUtilisateur.ADMINISTRATEUR
+      ? AdminstrateurColumn
+      : initiateurColumn;
+  };
+  const handleEdit = async (id) => {
+    try {
+      const { data: isOpened } = await getDemandeIsOpened(id);
+
+      if (isOpened)
+        return toast.error(
+          "vous ne pouvez pas modifier cette demande, un administrateur est en train de la validè ,Veuillez réessayer ultérieurement"
+        );
+      setDemandeId(id);
+      setVisible(true);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleDelete = (id) => {
+    dispatch(startDeleteDemande(id));
   };
 
   return (
     <DemandeEvenementContainer>
       <DemandeEvenementContainerTop>
         <DemandeEvenementContainerTopLeft>
-          {/* <Title>Demandes</Title> */}
-          <Search
-            size="large"
-            style={{ width: "50%" }}
-            placeholder="input search text"
-            enterButton
-          />
+          <SearchInput />
         </DemandeEvenementContainerTopLeft>
-        <Button
-          type="primary"
-          icon={<PlusOutlined />}
-          size="large"
-          onClick={() => {
-            setVisible(true);
-          }}
-        >
-          Nouvel Evenement
-        </Button>
-        <EvenementForm
-          visible={visible}
-          onCreate={onCreate}
-          onCancel={() => {
-            setVisible(false);
-          }}
-        />
+        {user.type === typeUtilisateur.ADMINISTRATEUR ? null : (
+          <Button
+            type="primary"
+            icon={<PlusOutlined />}
+            size="large"
+            onClick={() => {
+              setVisible(true);
+            }}
+          >
+            Nouvel Evenement
+          </Button>
+        )}
+        {visible ? (
+          <EvenementForm
+            visible={visible}
+            onCreate={onCreate}
+            id={demandeId}
+            setId={setDemandeId}
+            onCancel={() => {
+              setVisible(false);
+            }}
+          />
+        ) : null}
       </DemandeEvenementContainerTop>
       <DemandeEvenementContainerBottom>
         {isLoading ? (
-          demandeCount > 0 ? (
-            <Spin size="large" />
-          ) : (
-            <h1>there is no data</h1>
-          )
+          <Spin size="large" />
         ) : (
           <Table
-            columns={columns}
-            tableLayout="fixed"
+            columns={getColumn()}
             dataSource={data}
             scroll={{ scrollToFirstRowOnChange: true }}
             style={{
               alignSelf: "center",
               boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
-              maxWidth: "80%",
+              width: "80%",
+              overflowX: "scroll",
             }}
             pagination={{
               pageSize: 10,

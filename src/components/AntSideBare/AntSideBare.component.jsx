@@ -4,65 +4,35 @@ import { useHistory } from "react-router-dom";
 import { Menu, Button } from "antd";
 import logo from "../../img/logo.png";
 
-import { CalendarFilled, ClockCircleFilled } from "@ant-design/icons";
-import { ReactComponent as Intervenants } from "../../img/intervenants.svg";
-import { ReactComponent as Dashboard } from "../../img/dashboard.svg";
-import { ReactComponent as Journaliste } from "../../img/journaliste.svg";
-import { ReactComponent as Dollar } from "../../img/dollar.svg";
-import { ReactComponent as Checked } from "../../img/checked.svg";
-import { ReactComponent as Bilan } from "../../img/bilan.svg";
 import { SideBareLogo } from "../sideBare/sideBare.styles";
+import { intiateurSimpleList, administrateurSimpleList } from "./sideBareLists";
+import { useSelector } from "react-redux";
+import { userSelector } from "../../redux/user/user.selectors";
+import { roles, typeUtilisateur } from "../../util/magic_strings";
+import { AntSideBareContainer } from "./AntSideBare.styles";
+import windowSize from "react-window-size";
 
-const intiateurList = [
-  {
-    text: "Dashboard",
-    component: <Dashboard />,
-    to: "/",
-  },
-  {
-    text: "Evenements",
-    component: <CalendarFilled />,
-    to: "/evenements",
-  },
-  {
-    text: "Demandes",
-    component: <ClockCircleFilled />,
-    to: "/demandes",
-  },
-  {
-    text: "Intervenats",
-    component: <Intervenants />,
-    to: "/demandes",
-  },
-  {
-    text: "Journalistes",
-    component: <Journaliste />,
-    to: "/demandes",
-  },
-  {
-    text: "Sponsoring",
-    component: <Dollar />,
-    to: "/demandes",
-  },
-  {
-    text: "Reservations",
-    component: <Checked />,
-    to: "/demandes",
-  },
-  {
-    text: "Bilans",
-    component: <Bilan />,
-    to: "/demandes",
-  },
-];
 const MenuItem = Menu.Item;
-const AntSideBare = () => {
+
+const AntSideBare = ({ windowWidth }) => {
   const [collapsed, setColapsed] = useState(false);
   const toggleCollapsed = () => {
     setColapsed(!collapsed);
   };
-
   const history = useHistory();
+
+  const user = useSelector(userSelector);
+  const getCurrentList = () => {
+    if (user.type === typeUtilisateur.ADMINISTRATEUR) {
+      if (user.role === roles.SIMPLE) {
+        return administrateurSimpleList;
+      } else return [];
+    }
+    if (user.role === roles.SIMPLE) {
+      return intiateurSimpleList;
+    }
+    return [];
+  };
 
   const renderSideBareMenuItem = (MenuItems) => {
     return MenuItems.map(({ text, component, to }, index) => {
@@ -75,20 +45,20 @@ const AntSideBare = () => {
   };
 
   return (
-    <div style={{ width: "20%", height: "100%" }}>
+    <AntSideBareContainer windowWidth={windowWidth}>
       <Menu
         defaultSelectedKeys={["2"]}
         defaultOpenKeys={["sub1"]}
         mode="inline"
         theme="dark"
         inlineCollapsed={collapsed}
-        style={{ height: "100%" }}
+        style={{ minHeight: "100%" }}
       >
         <SideBareLogo src={logo} />
-        {renderSideBareMenuItem(intiateurList)}
+        {renderSideBareMenuItem(getCurrentList())}
       </Menu>
-    </div>
+    </AntSideBareContainer>
   );
 };
 
-export default AntSideBare;
+export default windowSize(AntSideBare);

@@ -5,10 +5,6 @@ export const getAllDemandes = async (pageNumber = 1) => {
   return await axios.get(`${apiUrl}/demande/${pageNumber}`);
 };
 
-export const getOneDemande = async (id) => {
-  return await axios.get(`${apiUrl}/evenement/${id}`);
-};
-
 export const getDemandesCount = async (pageNumber = 1) => {
   return await axios.get(`${apiUrl}/demandes/count`);
 };
@@ -19,4 +15,30 @@ export const createDemande = async (evenement) => {
 
 export const getAllValidation = async (evenmentId) => {
   return await axios.get(`${apiUrl}/validations/${evenmentId}`);
+};
+
+export const createDemandeValidation = async (validation) => {
+  return await axios.post(`${apiUrl}/validation`, validation);
+};
+
+export const setDemandeIsOpened = async (id, isOpened) => {
+  return await axios.put(`${apiUrl}/demande/opened/${id}`, {
+    is_opened: isOpened,
+  });
+};
+
+export const getDemandeIsOpened = async (id) => {
+  return await axios.get(`${apiUrl}/demande/opened/${id}`);
+};
+
+export const getOneDemande = async (id) => {
+  return await axios.get(`${apiUrl}/evenement/${id}`);
+};
+
+export const updateDemande = async (demande, id) => {
+  return await axios.put(`${apiUrl}/evenement/${id}`, demande);
+};
+
+export const deleteDemande = async (id) => {
+  return await axios.delete(`${apiUrl}/evenement/${id}`);
 };

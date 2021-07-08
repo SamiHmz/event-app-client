@@ -4,12 +4,12 @@ export const etat = {
   REJETER: "rejetè",
 };
 
-const roles = {
+export const roles = {
   ADMIN: "admin",
   SIMPLE: "simple",
 };
 
-const typeEvenement = [
+export const typeEvenement = [
   "Exposition",
   "Salon",
   "Confèrence",
@@ -19,27 +19,14 @@ const typeEvenement = [
   "Compètision",
 ];
 
-const typeUtilisateur = {
+export const typeUtilisateur = {
   ADMINISTRATEUR: "administrateur",
   INITIATEUR: "initiateur",
 };
 const typeInitiateur = ["club", "association"];
-const modeEvenement = ["Prèsentiel", "En Ligne"];
+export const modeEvenement = ["Prèsentiel", "En Ligne"];
 
 const modeSponsoring = ["espèce", "matériel"];
 const media = ["tv", "radio", "journal", "journal", "jouranl en ligne"];
 const langue = ["Francais,Anglais,Arabe"];
 const sexe = ["homme", "femme"];
-
-// export {
-//   etat,
-//   roles,
-//   typeEvenement,
-//   modeEvenement,
-//   typeInitiateur,
-//   modeSponsoring,
-//   typeUtilisateur,
-//   media,
-//   langue,
-//   sexe,
-// };

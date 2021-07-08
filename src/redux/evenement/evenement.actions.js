@@ -36,3 +36,42 @@ export const OneDemandeFetchingSuccess = (demande) => ({
   type: evenemetActions.ONE_DEMANDE_FETCHING_SUCCESS,
   payload: { demande },
 });
+
+export const startCreateValidation = (validation) => ({
+  type: evenemetActions.CREATE_VALIDATION_START,
+  payload: {
+    validation,
+  },
+});
+
+export const createValidationSuccess = (validation) => ({
+  type: evenemetActions.CREATE_VALIDATION_SUCCESS,
+  payload: {
+    validation,
+  },
+});
+
+export const startUpdateDemande = ({ demande, id, ...others }) => ({
+  type: evenemetActions.START_UPDATE_DEMANDE,
+  payload: {
+    demande,
+    id,
+    ...others,
+  },
+});
+
+export const updateDemandeSuccess = (demande) => ({
+  type: evenemetActions.UPDATE_DEMANDE_SUCCESS,
+  payload: {
+    demande,
+  },
+});
+
+export const startDeleteDemande = (id) => ({
+  type: evenemetActions.START_DELETE_DEMANDE,
+  payload: { id },
+});
+export const deleteDemandeSuccess = (id) => ({
+  type: evenemetActions.DELETE_DEMANDE_SUCCESS,
+  payload: { id },
+});

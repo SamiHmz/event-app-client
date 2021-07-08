@@ -3,8 +3,9 @@ import { useFormik } from "formik";
 import { Input, Button, Radio, Form } from "antd";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
+import { typeUtilisateur } from "../../util/magic_strings";
 
-import userActions from "../../redux/user/user.actions";
+import { loginStart } from "../../redux/user/user.actions";
 import FormErorr from "../FormError/FormError.componenet";
 
 const LoginSchema = Yup.object().shape({
@@ -12,6 +13,7 @@ const LoginSchema = Yup.object().shape({
   password: Yup.string().required().label("Password"),
 });
 
+const { INITIATEUR, ADMINISTRATEUR } = typeUtilisateur;
 const formStyles = {
   width: "500px ",
   display: "flex",
@@ -27,14 +29,15 @@ const LoginForm = () => {
     initialValues: {
       email: "",
       password: "",
-      type: "utilisateur",
+      type: INITIATEUR,
     },
     validationSchema: LoginSchema,
     onSubmit: async ({ type, email, password }) => {
-      dispatch({
-        type: userActions.LOGIN_START,
-        payload: { type, email, password, setErrors },
-      });
+      // dispatch({
+      //   type: userActions.LOGIN_START,
+      //   payload: { type, email, password, setErrors },
+      // });
+      dispatch(loginStart({ type, email, password, setErrors }));
     },
   });
 
@@ -80,8 +83,8 @@ const LoginForm = () => {
           onChange={({ target }) => setFieldValue("type", target.value)}
           value={values.type}
         >
-          <Radio value="initiateur">initiateur</Radio>
-          <Radio value="utilisateur">utilisateur</Radio>
+          <Radio value={INITIATEUR}>{INITIATEUR}</Radio>
+          <Radio value={ADMINISTRATEUR}>{ADMINISTRATEUR}</Radio>
         </Radio.Group>
       </Form.Item>
 

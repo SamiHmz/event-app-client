@@ -27,6 +27,14 @@ const evenementReducer = (state = INITIAL_STATE, action) => {
         isValidationLoading: false,
         demandesValidation: action.payload.validations,
       };
+    case evenemetActions.CREATE_VALIDATION_SUCCESS:
+      return {
+        ...state,
+        demandesValidation: [
+          action.payload.validation,
+          ...state.demandesValidation,
+        ],
+      };
     case evenemetActions.ONE_DEMANDE_FETCHING_SUCCESS:
       return {
         ...state,
@@ -34,6 +42,23 @@ const evenementReducer = (state = INITIAL_STATE, action) => {
         currentDemande: action.payload.demande,
       };
 
+    case evenemetActions.UPDATE_DEMANDE_SUCCESS:
+      return {
+        ...state,
+        demandes: state.demandes.map((demande) => {
+          console.log("payload :", action.payload);
+          if (demande.id === action.payload.demande.id)
+            return action.payload.demande;
+          return demande;
+        }),
+      };
+    case evenemetActions.DELETE_DEMANDE_SUCCESS:
+      return {
+        ...state,
+        demandes: state.demandes.filter(
+          (demande) => demande.id !== action.payload.id
+        ),
+      };
     default:
       return state;
   }
