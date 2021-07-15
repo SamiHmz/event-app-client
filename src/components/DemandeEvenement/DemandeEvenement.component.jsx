@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import NotificationsList from "../NotificationsList/NotificationsList.component";
+
 import { Delete, Edit, Eye } from "../Icons/icons";
 import Etat from "../Etat/Etat.component";
 import EvenementForm from "../EvenementForm/EvenementForm.componenet";
@@ -7,7 +9,7 @@ import { userSelector } from "../../redux/user/user.selectors";
 import { typeUtilisateur } from "../../util/magic_strings";
 import { toastConfig } from "../../services/axios";
 import { toast } from "react-toastify";
-
+import Spinner from "../Spinner/Spinner.component";
 import {
   getDemandesCount,
   getDemandeIsOpened,
@@ -171,7 +173,7 @@ function DemandeEvenement(props) {
       </DemandeEvenementContainerTop>
       <DemandeEvenementContainerBottom>
         {isLoading ? (
-          <Spin size="large" />
+          <Spinner size="large" />
         ) : (
           <Table
             columns={getColumn()}

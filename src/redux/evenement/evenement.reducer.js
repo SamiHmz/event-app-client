@@ -19,7 +19,7 @@ const evenementReducer = (state = INITIAL_STATE, action) => {
     case evenemetActions.DEMANDE_CREATION_SUCCESS:
       return {
         ...state,
-        demandes: [action.payload, ...state.demandes],
+        demandes: [...state.demandes, action.payload],
       };
     case evenemetActions.DEMANDE_VALIDATION_FETCHING_SUCCESS:
       return {
@@ -31,8 +31,8 @@ const evenementReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         demandesValidation: [
-          action.payload.validation,
           ...state.demandesValidation,
+          action.payload.validation,
         ],
       };
     case evenemetActions.ONE_DEMANDE_FETCHING_SUCCESS:
@@ -62,12 +62,17 @@ const evenementReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         demandesValidation: state.demandesValidation.map((validation) => {
-          console.log("payload:", action.payload.validation);
-
           if (validation.id === action.payload.validation.id)
             return action.payload.validation;
           return validation;
         }),
+      };
+    case evenemetActions.DELETE_VALIDATION_SUCCESS:
+      return {
+        ...state,
+        demandesValidation: state.demandesValidation.filter(
+          (validation) => validation.id !== action.payload.id
+        ),
       };
     default:
       return state;

@@ -3,6 +3,7 @@ import Icon from "@ant-design/icons";
 import { ReactComponent as ShevronDown } from "../../img/chevron-down-solid.svg";
 import { ReactComponent as Menu } from "../../img/menu.svg";
 import { ReactComponent as Bell } from "../../img/bxs-bell.svg";
+import Notifications from "../Notifications/Notifications.component";
 import { Typography } from "antd";
 import Avatar from "../Avatar/Avatar.component";
 import { useSelector } from "react-redux";
@@ -29,7 +30,7 @@ const NavBar = ({ windowWidth, onOpen }) => {
       <NavBarElements>
         <Text type="secondary">Tuesday,April 27th,2021</Text>
         <NavBarElementsRight>
-          <Icon component={Bell} style={iconStyles} />
+          <Notifications />
           <Avatar src={img} />
           <Text type="secondary">{user.nom}</Text>
           <Icon component={ShevronDown} style={{ fontSize: "20px" }} />

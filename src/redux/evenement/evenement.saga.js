@@ -12,6 +12,7 @@ import {
   updateDemandeSuccess,
   deleteDemandeSuccess,
   updateValidationSuccess,
+  deleteValidationSuccess,
 } from "./evenement.actions";
 import {
   getAllDemandes,
@@ -22,6 +23,7 @@ import {
   updateDemande,
   deleteDemande,
   updateDemandeValidation,
+  deleteDemandeValidation,
 } from "../../services/evenement.services";
 
 function* onFetchDemandesStarts({ payload }) {
@@ -171,6 +173,21 @@ export function* watchUpdateValidationStart() {
     onUpdateValidationStart
   );
 }
+
+export function* onDeleteValidationStart({ payload }) {
+  try {
+    yield call(deleteDemandeValidation, payload.id);
+    yield put(deleteValidationSuccess(payload.id));
+  } catch (error) {
+    console.log(error);
+  }
+}
+export function* watchDeleteValidationStart() {
+  yield takeLatest(
+    evenemetActions.START_DELETE_VALIDATION,
+    onDeleteValidationStart
+  );
+}
 export function* evenementSagas() {
   yield all([
     call(watchEvenementCreated),
@@ -181,5 +198,6 @@ export function* evenementSagas() {
     call(watchUpdateDemandeStart),
     call(watchDeleteDemandeStart),
     call(watchUpdateValidationStart),
+    call(watchDeleteValidationStart),
   ]);
 }

@@ -105,6 +105,7 @@ const DemandeValidationForm = ({
     setValidationId(null);
     onCancel();
   };
+
   return (
     <Modal
       visible={visible}

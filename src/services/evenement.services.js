@@ -24,6 +24,10 @@ export const createDemandeValidation = async (validation) => {
   return await axios.post(`${apiUrl}/validation`, validation);
 };
 
+export const deleteDemandeValidation = async (validationId) => {
+  return await axios.delete(`${apiUrl}/validation/${validationId}`);
+};
+
 export const updateDemandeValidation = async (validation, valiDationId) => {
   return await axios.put(`${apiUrl}/validation/${valiDationId}`, validation);
 };

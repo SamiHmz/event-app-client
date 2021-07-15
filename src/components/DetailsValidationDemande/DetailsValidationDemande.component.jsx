@@ -4,7 +4,10 @@ import { Delete, Edit } from "../Icons/icons";
 
 import Etat from "../Etat/Etat.component";
 import { useParams } from "react-router-dom";
-import { startDemandeValidationFetching } from "../../redux/evenement/evenement.actions";
+import {
+  startDemandeValidationFetching,
+  startDeleteValidation,
+} from "../../redux/evenement/evenement.actions";
 import {
   demandeValidationSelector,
   demandeValidationIsLoadingSelector,
@@ -85,7 +88,7 @@ const DetailsValidationDemande = () => {
             title="Êtes-vous sûr de supprimer cette demande?"
             okText="Oui"
             cancelText="Non"
-            onConfirm={""}
+            onConfirm={() => dispatch(startDeleteValidation(key))}
           >
             <Delete title="Suprimer la demande " />
           </Popconfirm>

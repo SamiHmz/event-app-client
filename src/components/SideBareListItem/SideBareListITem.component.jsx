@@ -5,10 +5,10 @@ import { SideBareListItemContainer } from "./SideBareListItem.styles";
 
 const { Text } = Typography;
 
-const SideBareListItem = ({ text, component, to }) => {
+const SideBareListItem = ({ text, component, to, ...others }) => {
   return (
     /*  aded some styles to override ant design default fontsize*/
-    <SideBareListItemContainer to={to}>
+    <SideBareListItemContainer to={to} {...others}>
       <Icon
         component={component}
         style={{

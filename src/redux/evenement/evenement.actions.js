@@ -85,3 +85,17 @@ export const updateValidationSuccess = (validation) => ({
     validation,
   },
 });
+
+export const startDeleteValidation = (id) => ({
+  type: evenemetActions.START_DELETE_VALIDATION,
+  payload: {
+    id,
+  },
+});
+
+export const deleteValidationSuccess = (id) => ({
+  type: evenemetActions.DELETE_VALIDATION_SUCCESS,
+  payload: {
+    id,
+  },
+});

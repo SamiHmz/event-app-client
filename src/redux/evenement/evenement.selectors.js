@@ -12,18 +12,17 @@ export const demandesSelector = createSelector(
         return {
           key: demande.id,
           intitulé: demande.intitulé,
-          date: demande.createdAt,
+          date: moment(demande.createdAt).format("DD-MMM-YYYY , h:mm:ss a"),
           etat: demande.etat,
         };
       });
     }
     return demandes.map((demande) => {
-      console.log(moment(demande.createdAt).format("DD-MMM-YYYY"));
       return {
         initiateur: demande.initiateur.nom,
         key: demande.id,
         intitulé: demande.intitulé,
-        date: moment(demande.createdAt).format("DD-MMM-YYYY"),
+        date: moment(demande.createdAt).format("DD-MMM-YYYY , h:mm:ss a"),
         etat: demande.etat,
       };
     });
