@@ -54,6 +54,17 @@ const notificationsReducer = (state = INITIAL_STATE, action) => {
         ],
       };
     }
+    case NotificationsActions.SET_NOTIFICATION_TO_CLICKED: {
+      return {
+        ...state,
+        notificationsList: state.notificationsList.map((item) => {
+          if (item.id == action.payload.id) {
+            item.is_clicked = true;
+          }
+          return item;
+        }),
+      };
+    }
     default:
       return state;
   }

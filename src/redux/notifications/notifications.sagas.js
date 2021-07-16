@@ -5,11 +5,13 @@ import {
   setHasMore,
   setNotificationsIsLoading,
   setUnviewedNotificationCount,
+  setNotificationToClickedSuccess,
 } from "./notifications.actions";
 import {
   getAllNotifications,
   getUnviewedNotificationsCount,
   setAllnotificationsToViewed,
+  setNotificationToClicked,
 } from "../../services/notifications.services";
 
 export function* onNotificationsFetchingStart({ payload }) {
@@ -65,11 +67,27 @@ export function* watchSetAllNotificationstoViewed() {
     onSetAllNotificationstoViewed
   );
 }
+export function* OnSetNotificationToClicked({ payload }) {
+  try {
+    yield call(setNotificationToClicked, payload.id);
+    yield put(setNotificationToClickedSuccess(payload.id));
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export function* watchSetNotificationToClicked() {
+  yield takeLatest(
+    NotificationsActions.NOTIFICATION_CLICKED,
+    OnSetNotificationToClicked
+  );
+}
 
 export function* notificaitonsSagas() {
   yield all([
     call(watchNotificationsFetchingStart),
     call(watchNotificationsCountFetchinStart),
     call(watchSetAllNotificationstoViewed),
+    call(watchSetNotificationToClicked),
   ]);
 }

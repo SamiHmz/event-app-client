@@ -13,6 +13,8 @@ export const notificationsSelector = createSelector(
         createdAt: item.createdAt,
         src: null,
         nom: item.nom,
+        is_clicked: item.is_clicked,
+        lien: item.lien,
       };
     })
 );

@@ -46,3 +46,14 @@ export const addNewNotification = (notification) => ({
     notification,
   },
 });
+
+export const notificationClicked = (id) => ({
+  type: NotificationsActions.NOTIFICATION_CLICKED,
+  payload: { id },
+});
+export const setNotificationToClickedSuccess = (id) => ({
+  type: NotificationsActions.SET_NOTIFICATION_TO_CLICKED,
+  payload: {
+    id,
+  },
+});
