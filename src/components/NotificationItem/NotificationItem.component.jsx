@@ -17,16 +17,17 @@ const NotificationItem = React.forwardRef(
     const history = useHistory();
     const dispatch = useDispatch();
 
-    const handleNotificationClick = (id, lien) => {
-      console.log(id);
-      dispatch(notificationClicked(id));
+    const handleNotificationClick = () => {
+      if (!is_clicked) {
+        dispatch(notificationClicked(id));
+      }
       history.push(lien);
     };
     return (
       <NotificationItemContainer
         is_clicked={is_clicked}
         ref={ref}
-        onClick={() => handleNotificationClick(id, lien)}
+        onClick={() => handleNotificationClick()}
       >
         <Avatar src={src ? src : img} />
         <NotificationItemTextContainer>

@@ -16,7 +16,7 @@ const DetailsDemandeInfo = (props) => {
 
   useEffect(() => {
     dispatch(startOneDemandeFetching(id));
-  }, []);
+  }, [id]);
 
   return isLoading ? (
     <Spin />

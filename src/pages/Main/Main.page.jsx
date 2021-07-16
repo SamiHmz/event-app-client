@@ -16,13 +16,6 @@ const Dashboard = () => <h1>i'am dashboard</h1>;
 const Main = ({ windowWidth }) => {
   const [visible, setVisible] = useState(false);
 
-  // useEffect(() => {
-  //   axios.defaults.headers.common["x-auth-token"] = localStorage.getItem(
-  //     "token"
-  //   );
-  //   console.log("excuted");
-  // }, []);
-
   return (
     <MainContainer>
       {windowWidth < 700 ? (

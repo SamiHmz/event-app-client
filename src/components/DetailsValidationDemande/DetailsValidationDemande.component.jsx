@@ -100,7 +100,7 @@ const DetailsValidationDemande = () => {
 
   useEffect(() => {
     dispatch(startDemandeValidationFetching(id));
-  }, []);
+  }, [id]);
 
   const getColumns = () => {
     return user.type === typeUtilisateur.INITIATEUR

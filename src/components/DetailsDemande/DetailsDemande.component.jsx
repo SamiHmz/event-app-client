@@ -26,7 +26,7 @@ const DetailsDemande = () => {
     };
     setIsOpenedState(id, true);
     return () => setIsOpenedState(id, false);
-  }, []);
+  });
 
   return (
     <DetailsDemandeContainer>
