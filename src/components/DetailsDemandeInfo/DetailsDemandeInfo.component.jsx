@@ -7,6 +7,8 @@ import {
   currentDemandeIsLoadingSelector,
   currentDemandeSelector,
 } from "../../redux/evenement/evenement.selectors";
+import moment from "moment";
+import Etat from "../Etat/Etat.component";
 
 const DetailsDemandeInfo = (props) => {
   const isLoading = useSelector(currentDemandeIsLoadingSelector);
@@ -44,26 +46,18 @@ const DetailsDemandeInfo = (props) => {
         {currentDemande.lieu}
       </Descriptions.Item>
       <Descriptions.Item label="Date De Crèation" span={3}>
-        {currentDemande.createdAt}
+        {moment(currentDemande.createdAt).format("DD-MMM-YYYY , h:mm:ss a")}
       </Descriptions.Item>
       <Descriptions.Item label="Date Debut" span={3}>
-        {currentDemande.debut}
+        {moment(currentDemande.debut).format("DD-MMM-YYYY")}
       </Descriptions.Item>
       <Descriptions.Item label="Date Fin" span={3}>
-        {currentDemande.fin}
+        {moment(currentDemande.fin).format("DD-MMM-YYYY")}
       </Descriptions.Item>
       <Descriptions.Item label="Etat" span={3}>
-        {currentDemande.etat}
+        <Etat value={currentDemande.etat}></Etat>
       </Descriptions.Item>
-      {/* <Descriptions.Item
-        label="Objectifs"
-        span={3}
-        style={{
-          whiteSpace: "pre-wrap",
-        }}
-      >
-        {currentDemande.objectifs}
-      </Descriptions.Item> */}
+
       <Descriptions.Item label="Objectifs" span={3}>
         {transforTextToList(currentDemande.objectifs)}
       </Descriptions.Item>
