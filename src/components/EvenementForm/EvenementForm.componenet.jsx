@@ -45,6 +45,12 @@ const EvenementForm = ({ visible, onCancel, onCreate, id, setId }) => {
     },
     validationSchema: evenementSchema,
     onSubmit: (values) => {
+      // .replace(/\n/g, "<br/>");
+      values.objectifs
+        .replace(/\r\n/g, "<br/>")
+        .replace(/\n/g, "<br/>")
+        .replace(/\s/g, " ");
+      console.log(values.objectifs);
       if (!id) {
         dispatch(
           startCreateDemande({

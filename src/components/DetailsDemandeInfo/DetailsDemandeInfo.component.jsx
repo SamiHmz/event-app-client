@@ -18,6 +18,15 @@ const DetailsDemandeInfo = (props) => {
     dispatch(startOneDemandeFetching(id));
   }, [id]);
 
+  const transforTextToList = (text) => {
+    return (
+      <ul style={{ padding: "0" }}>
+        {text.split("\n").map((item, index) => (
+          <li key={index}>{item}</li>
+        ))}
+      </ul>
+    );
+  };
   return isLoading ? (
     <Spin />
   ) : (
@@ -46,11 +55,20 @@ const DetailsDemandeInfo = (props) => {
       <Descriptions.Item label="Etat" span={3}>
         {currentDemande.etat}
       </Descriptions.Item>
-      <Descriptions.Item label="Objectifs" span={3}>
+      {/* <Descriptions.Item
+        label="Objectifs"
+        span={3}
+        style={{
+          whiteSpace: "pre-wrap",
+        }}
+      >
         {currentDemande.objectifs}
+      </Descriptions.Item> */}
+      <Descriptions.Item label="Objectifs" span={3}>
+        {transforTextToList(currentDemande.objectifs)}
       </Descriptions.Item>
       <Descriptions.Item label="Programe" span={3}>
-        {currentDemande.programe}
+        {transforTextToList(currentDemande.programe)}
       </Descriptions.Item>
     </Descriptions>
   );
