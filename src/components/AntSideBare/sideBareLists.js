@@ -28,7 +28,7 @@ export const intiateurSimpleList = [
   {
     text: "Intervenats",
     component: <Intervenants />,
-    to: "/demandes",
+    to: "/intervenants",
   },
   {
     text: "Journalistes",

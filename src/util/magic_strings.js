@@ -29,4 +29,5 @@ export const modeEvenement = ["Prèsentiel", "En Ligne"];
 const modeSponsoring = ["espèce", "matériel"];
 const media = ["tv", "radio", "journal", "journal", "jouranl en ligne"];
 const langue = ["Francais,Anglais,Arabe"];
-const sexe = ["homme", "femme"];
+export const sexe = ["homme", "femme"];
+export const typeIntervenant = ["interne", "externe"];

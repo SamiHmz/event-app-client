@@ -21,6 +21,10 @@ const iconStyles = { fontSize: "20px", cursor: "pointer" };
 const { Text } = Typography;
 const NavBar = ({ windowWidth, onOpen }) => {
   const user = useSelector(userSelector);
+  const logOut = () => {
+    localStorage.removeItem("token");
+    window.location = "/";
+  };
   return (
     <NavBarContainer windowWidth={windowWidth}>
       {windowWidth < 700 ? (
@@ -33,7 +37,11 @@ const NavBar = ({ windowWidth, onOpen }) => {
           <Notifications />
           <Avatar src={img} />
           <Text type="secondary">{user.nom}</Text>
-          <Icon component={ShevronDown} style={{ fontSize: "20px" }} />
+          <Icon
+            component={ShevronDown}
+            style={{ fontSize: "20px" }}
+            onClick={logOut}
+          />
         </NavBarElementsRight>
       </NavBarElements>
     </NavBarContainer>

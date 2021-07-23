@@ -2,12 +2,12 @@ import styled from "styled-components";
 import { Input } from "antd";
 const { Search } = Input;
 
-export const DemandeEvenementContainer = styled.div`
+export const Container = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
-export const DemandeEvenementContainerTop = styled.div`
+export const ContainerTop = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 3% 5%;
@@ -15,7 +15,7 @@ export const DemandeEvenementContainerTop = styled.div`
     flex-direction: column;
   }
 `;
-export const DemandeEvenementContainerTopLeft = styled.div`
+export const ContainerTopLeft = styled.div`
   display: flex;
   width: 70%;
   @media screen and (max-width: 700) {
@@ -30,7 +30,7 @@ export const Title = styled.div`
   margin-right: 30px;
 `;
 
-export const DemandeEvenementContainerBottom = styled.div`
+export const ContainerBottom = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;

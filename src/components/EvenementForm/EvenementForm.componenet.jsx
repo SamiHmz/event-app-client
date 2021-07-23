@@ -26,7 +26,7 @@ const evenementSchema = Yup.object().shape({
   fin: Yup.date().required().label("Date debut et date fin"),
 });
 
-const EvenementForm = ({ visible, onCancel, onCreate, id, setId }) => {
+const EvenementForm = ({ visible, onCancel, id, setId }) => {
   const dispatch = useDispatch();
   const [form] = Form.useForm();
 
@@ -43,14 +43,9 @@ const EvenementForm = ({ visible, onCancel, onCreate, id, setId }) => {
       objectifs: "",
       programe: "",
     },
+
     validationSchema: evenementSchema,
     onSubmit: (values) => {
-      // .replace(/\n/g, "<br/>");
-      values.objectifs
-        .replace(/\r\n/g, "<br/>")
-        .replace(/\n/g, "<br/>")
-        .replace(/\s/g, " ");
-      console.log(values.objectifs);
       if (!id) {
         dispatch(
           startCreateDemande({

@@ -25,9 +25,9 @@ const intiateurList = [
     to: "/demandes",
   },
   {
-    text: "Intervenats",
+    text: "Intervenants",
     component: Intervenants,
-    to: "/demandes",
+    to: "/intervenant",
   },
   {
     text: "Journalistes",

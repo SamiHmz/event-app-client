@@ -1,7 +1,5 @@
 import { takeLatest, put, call, all } from "redux-saga/effects";
 import evenemetActions from "./evenement.actions.types";
-import { toast } from "react-toastify";
-import { toastConfig } from "../../services/axios";
 import { message } from "antd";
 import {
   fetchingDemandesSuccess,
@@ -105,11 +103,6 @@ export function* onCreateValidationStart({ payload }) {
     yield message.success("la validation a été créé  avec succès");
   } catch (error) {
     yield payload.setErrors({ server: error.response.data });
-    // if (error.response && error.response.status >= 400) {
-    //   console.log(error);
-
-    //   toast.error(error.response.data, toastConfig);
-    // }
   }
 }
 export function* watchCreateValidationStart() {

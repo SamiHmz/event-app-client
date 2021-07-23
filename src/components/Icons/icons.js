@@ -3,6 +3,7 @@ import Icon from "@ant-design/icons";
 import { ReactComponent as TrashIcon } from "../../img/trash.svg";
 import { ReactComponent as EditIcon } from "../../img/edit.svg";
 import { ReactComponent as EyeIcon } from "../../img/eye.svg";
+import { ReactComponent as FileIcon } from "../../img/file.svg";
 import { Tooltip } from "antd";
 import { Link, useHistory } from "react-router-dom";
 
@@ -34,5 +35,15 @@ export const Eye = ({ title = "edit this item", to, ...other }) => {
         <Icon style={styles} component={EyeIcon} {...other} />
       </Tooltip>
     </Link>
+  );
+};
+
+export const File = ({ title = "voir le fichier", to, ...other }) => {
+  return (
+    <a href={to} style={{ color: "rgba(0, 0, 0, 0.85)" }} target="_blank">
+      <Tooltip title={title} mouseEnterDelay={1}>
+        <Icon style={styles} component={FileIcon} {...other} />
+      </Tooltip>
+    </a>
   );
 };

@@ -19,7 +19,7 @@ const evenementReducer = (state = INITIAL_STATE, action) => {
     case evenemetActions.DEMANDE_CREATION_SUCCESS:
       return {
         ...state,
-        demandes: [...state.demandes, action.payload],
+        demandes: [action.payload, ...state.demandes],
       };
     case evenemetActions.DEMANDE_VALIDATION_FETCHING_SUCCESS:
       return {

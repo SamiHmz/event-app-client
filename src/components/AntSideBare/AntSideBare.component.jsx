@@ -16,9 +16,7 @@ const MenuItem = Menu.Item;
 
 const AntSideBare = ({ windowWidth }) => {
   const [collapsed, setColapsed] = useState(false);
-  const toggleCollapsed = () => {
-    setColapsed(!collapsed);
-  };
+
   const history = useHistory();
 
   const user = useSelector(userSelector);

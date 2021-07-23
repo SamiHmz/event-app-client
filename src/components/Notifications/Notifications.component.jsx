@@ -8,6 +8,7 @@ import { unviewedNotificationsCountSelector } from "../../redux/notifications/no
 import { useSelector } from "react-redux";
 import io from "socket.io-client";
 import { useDispatch } from "react-redux";
+import { baseUrl } from "../../config.json";
 import {
   startFetchUnviewedNotificationCount,
   setUnviewedNotificationCount,
@@ -27,7 +28,7 @@ const Notifications = () => {
     // fetch notifications count
     dispatch(startFetchUnviewedNotificationCount());
     //subscribe to notifications socket
-    const socket = io("http://localhost:1997");
+    const socket = io(baseUrl);
     socket.on("connect", () => {
       socket.emit("join", `${user.type}-${user.id}`);
     });

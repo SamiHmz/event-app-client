@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import NotificationsList from "../NotificationsList/NotificationsList.component";
 
 import { Delete, Edit, Eye } from "../Icons/icons";
 import Etat from "../Etat/Etat.component";
@@ -7,7 +6,6 @@ import EvenementForm from "../EvenementForm/EvenementForm.componenet";
 import { useSelector, useDispatch } from "react-redux";
 import { userSelector } from "../../redux/user/user.selectors";
 import { typeUtilisateur } from "../../util/magic_strings";
-import { toastConfig } from "../../services/axios";
 import { toast } from "react-toastify";
 import Spinner from "../Spinner/Spinner.component";
 import {
@@ -25,10 +23,10 @@ import {
 import { Button, Table, Spin, BackTop, Space, Popconfirm } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import {
-  DemandeEvenementContainer,
-  DemandeEvenementContainerTop,
-  DemandeEvenementContainerBottom,
-  DemandeEvenementContainerTopLeft,
+  Container,
+  ContainerTop,
+  ContainerBottom,
+  ContainerTopLeft,
 } from "./DemandeEvenement.styles";
 
 import { AdminstrateurColumn } from "./demandesColums";
@@ -89,9 +87,6 @@ function DemandeEvenement(props) {
 
   const [visible, setVisible] = useState(false);
   const [demandeId, setDemandeId] = useState(null);
-  const onCreate = (values) => {
-    setVisible(false);
-  };
 
   /********************* Form *********/
   const dispatch = useDispatch();
@@ -137,16 +132,12 @@ function DemandeEvenement(props) {
     }
   };
 
-  const handleDelete = (id) => {
-    dispatch(startDeleteDemande(id));
-  };
-
   return (
-    <DemandeEvenementContainer>
-      <DemandeEvenementContainerTop>
-        <DemandeEvenementContainerTopLeft>
+    <Container>
+      <ContainerTop>
+        <ContainerTopLeft>
           <SearchInput />
-        </DemandeEvenementContainerTopLeft>
+        </ContainerTopLeft>
         {user.type === typeUtilisateur.ADMINISTRATEUR ? null : (
           <Button
             type="primary"
@@ -162,7 +153,6 @@ function DemandeEvenement(props) {
         {visible ? (
           <EvenementForm
             visible={visible}
-            onCreate={onCreate}
             id={demandeId}
             setId={setDemandeId}
             onCancel={() => {
@@ -170,8 +160,8 @@ function DemandeEvenement(props) {
             }}
           />
         ) : null}
-      </DemandeEvenementContainerTop>
-      <DemandeEvenementContainerBottom>
+      </ContainerTop>
+      <ContainerBottom>
         {isLoading ? (
           <Spinner size="large" />
         ) : (
@@ -192,9 +182,8 @@ function DemandeEvenement(props) {
             }}
           />
         )}
-        <BackTop />
-      </DemandeEvenementContainerBottom>
-    </DemandeEvenementContainer>
+      </ContainerBottom>
+    </Container>
   );
 }
 
