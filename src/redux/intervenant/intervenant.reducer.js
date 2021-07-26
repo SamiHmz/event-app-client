@@ -3,6 +3,10 @@ import IntervenantActions from "./intervenant.actions.type";
 const INITIAL_STATE = {
   intervenantsList: [],
   isIntervenantsLoading: true,
+  currentIntervenant: null,
+  isCurrentIntervenantLoading: true,
+  isValidationLoading: true,
+  intervenantValidations: [],
 };
 
 const intervenantReducer = (state = INITIAL_STATE, action) => {
@@ -39,6 +43,18 @@ const intervenantReducer = (state = INITIAL_STATE, action) => {
             return action.payload.intervenant;
           return intervenant;
         }),
+      };
+    case IntervenantActions.ONE_INTERVENANT_FETCHING_SUCCESS:
+      return {
+        ...state,
+        isCurrentIntervenantLoading: false,
+        currentIntervenant: action.payload.intervenant,
+      };
+    case IntervenantActions.INTERVENANT_VALIDATION_FETCHING_SUCCESS:
+      return {
+        ...state,
+        isValidationLoading: false,
+        intervenantValidations: action.payload.validations,
       };
     default:
       return state;

@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { PlusOutlined } from "@ant-design/icons";
-import { Delete, Edit, File } from "../Icons/icons";
+import { Delete, Edit, File, Eye } from "../Icons/icons";
 import Etat from "../Etat/Etat.component";
 import { typeUtilisateur } from "../../util/magic_strings";
+import { toast } from "react-toastify";
+
 import { Button, Table, Spin, Space, Popconfirm, Avatar, Image } from "antd";
 import {
   Container,
@@ -21,7 +23,10 @@ import {
   intervenantIsLoadingSelector,
 } from "../../redux/intervenant/intervenant.selectors";
 import { userSelector } from "../../redux/user/user.selectors";
-import { getAllIntervenantCount } from "../../services/intervenant.services";
+import {
+  getAllIntervenantCount,
+  getIntervenantIsOpened,
+} from "../../services/intervenant.services";
 import IntervenantForm from "../IntervenantForm/IntervenantForm.component";
 const Intervenant = () => {
   const [IntervenantCount, setIntervenantCount] = useState(0);
@@ -51,22 +56,6 @@ const Intervenant = () => {
       dataIndex: "prenom",
       key: "prenom",
     },
-
-    {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
-    },
-    {
-      title: "Telephone",
-      dataIndex: "telephone",
-      key: "telephone",
-    },
-    {
-      title: "Type",
-      dataIndex: "type",
-      key: "type",
-    },
     {
       title: "Etat",
       key: "etat",
@@ -76,6 +65,14 @@ const Intervenant = () => {
           <Etat value={etat} />
         </>
       ),
+    },
+    {
+      title: "Datails ",
+      dataIndex: "key",
+      key: "details",
+      render: (key) => {
+        return <Eye to={key} title="Voir les details de l'intervenant " />;
+      },
     },
     {
       title: "Cv ",
@@ -121,9 +118,19 @@ const Intervenant = () => {
   const handlePageChange = (page) => {
     dispatch(startIntervenantFetching(page));
   };
-  const handleEdit = (id) => {
-    setIntervenantId(id);
-    setVisible(true);
+  const handleEdit = async (id) => {
+    try {
+      const { data: isOpened } = await getIntervenantIsOpened(id);
+
+      if (isOpened)
+        return toast.error(
+          "vous ne pouvez pas modifier cette demande, un administrateur est en train de la validè ,Veuillez réessayer ultérieurement"
+        );
+      setIntervenantId(id);
+      setVisible(true);
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <Container>

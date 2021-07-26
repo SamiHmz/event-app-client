@@ -9,6 +9,7 @@ import DetailsDemande from "../../components/DetailsDemande/DetailsDemande.compo
 import Intervenant from "../../components/Intervenant/Intervenant.component";
 import { Route, Switch } from "react-router-dom";
 import DemandeEvenement from "../../components/DemandeEvenement/DemandeEvenement.component";
+import DetailsIntervenant from "../../components/DetailsIntervenant/DetailsIntervenant.component";
 import AntSideBare from "../../components/AntSideBare/AntSideBare.component";
 import windowSize from "react-window-size";
 import { Drawer } from "antd";
@@ -40,6 +41,11 @@ const Main = ({ windowWidth }) => {
             <Route exact path="/" component={Dashboard} />
             <Route exact path="/demandes/:id" component={DetailsDemande} />
             <Route exact path="/demandes" component={DemandeEvenement} />
+            <Route
+              exact
+              path="/intervenants/:id"
+              component={DetailsIntervenant}
+            />
             <Route exact path="/intervenants" component={Intervenant} />
           </Switch>
         </MainContainerRightBottom>

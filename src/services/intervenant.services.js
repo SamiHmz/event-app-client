@@ -23,3 +23,17 @@ export const getOneIntervenant = async (id) => {
 export const updateIntervenant = async (intervenant, id) => {
   return await axios.put(`${apiUrl}intervenant/${id}`, intervenant);
 };
+
+export const setIntervenantIsOpened = async (id, isOpened) => {
+  return await axios.put(`${apiUrl}intervenant/opened/${id}`, {
+    is_opened: isOpened,
+  });
+};
+
+export const getIntervenantIsOpened = async (id) => {
+  return await axios.get(`${apiUrl}intervenant/opened/${id}`);
+};
+
+export const getAllIntervenantValidations = async (id) => {
+  return await axios.get(`${apiUrl}intervenants/validations/${id}`);
+};

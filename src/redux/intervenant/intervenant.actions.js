@@ -55,3 +55,22 @@ export const updateIntervenantSuccess = (intervenant) => ({
     intervenant,
   },
 });
+
+export const startOneIntervenantFetching = (id) => ({
+  type: IntervenantActions.START_ONE_INTERVENANT_FETCHING,
+  payload: { id },
+});
+
+export const OneIntervenantFetchingSuccess = (intervenant) => ({
+  type: IntervenantActions.ONE_INTERVENANT_FETCHING_SUCCESS,
+  payload: { intervenant },
+});
+
+export const startIntervenantValidationFetching = (id) => ({
+  type: IntervenantActions.START_INTERVENANT_VALIDATION_FETCHING,
+  payload: { id },
+});
+export const IntervenantValidationFetchingSuccess = (validations) => ({
+  type: IntervenantActions.INTERVENANT_VALIDATION_FETCHING_SUCCESS,
+  payload: { validations },
+});

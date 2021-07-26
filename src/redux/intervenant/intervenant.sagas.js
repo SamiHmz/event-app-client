@@ -6,12 +6,16 @@ import {
   createIntervenant,
   deleteIntervenant,
   updateIntervenant,
+  getOneIntervenant,
+  getAllIntervenantValidations,
 } from "../../services/intervenant.services";
 import {
   intervenantFetchingSuccess,
   createIntervenantSuccess,
   deleteIntervenantSuccess,
   updateIntervenantSuccess,
+  OneIntervenantFetchingSuccess,
+  IntervenantValidationFetchingSuccess,
 } from "./intervenant.actions";
 
 export function* onIntervenantFetchingStart({ payload }) {
@@ -89,11 +93,50 @@ export function* watchUpdateIntervenantStart() {
     onUpdateIntervenantStart
   );
 }
+
+function* onFetchOneIntervenantStart({ payload }) {
+  try {
+    const { data: intervenant } = yield call(getOneIntervenant, payload.id);
+    yield put(OneIntervenantFetchingSuccess(intervenant));
+  } catch (error) {
+    console.log(error);
+  }
+
+  return;
+}
+export function* watchFetchOneIntervenantStart() {
+  yield takeLatest(
+    IntervenantActions.START_ONE_INTERVENANT_FETCHING,
+    onFetchOneIntervenantStart
+  );
+}
+
+function* onIntervenantValidationFetchingStart({ payload }) {
+  try {
+    const { data: validations } = yield call(
+      getAllIntervenantValidations,
+      payload.id
+    );
+    yield put(IntervenantValidationFetchingSuccess(validations));
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export function* watchIntervenantValidationFetchingStart() {
+  yield takeLatest(
+    IntervenantActions.START_INTERVENANT_VALIDATION_FETCHING,
+    onIntervenantValidationFetchingStart
+  );
+}
+
 export function* intervenantSagas() {
   yield all([
     call(watchIntervenantFetchingStart),
     call(watchCreateIntervenantStart),
     call(watchDeleteIntervenantStart),
     call(watchUpdateIntervenantStart),
+    call(watchFetchOneIntervenantStart),
+    call(watchIntervenantValidationFetchingStart),
   ]);
 }

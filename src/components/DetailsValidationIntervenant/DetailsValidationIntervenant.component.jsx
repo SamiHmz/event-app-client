@@ -1,29 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Table, Spin, Button, Space, Popconfirm } from "antd";
 import { Delete, Edit } from "../Icons/icons";
-
 import Etat from "../Etat/Etat.component";
 import { useParams } from "react-router-dom";
-import {
-  startDemandeValidationFetching,
-  startDeleteValidation,
-} from "../../redux/evenement/evenement.actions";
-import {
-  demandeValidationSelector,
-  demandeValidationIsLoadingSelector,
-} from "../../redux/evenement/evenement.selectors";
 import { useDispatch, useSelector } from "react-redux";
 import { PlusOutlined } from "@ant-design/icons";
 import { userSelector } from "../../redux/user/user.selectors";
 import { typeUtilisateur } from "../../util/magic_strings";
-import { DetailsValidationContainer } from "./DetailsValidationDemande.styles";
-import DemandeValidationForm from "../DemandeValidationForm/DemandeValidationForm.component";
+import {
+  intervenantValidationsSelector,
+  isValidationLoadingSelector,
+} from "../../redux/intervenant/intervenant.selectors";
+import { DetailsValidationContainer } from "../DetailsValidationDemande/DetailsValidationDemande.styles";
+import { startIntervenantValidationFetching } from "../../redux/intervenant/intervenant.actions";
 
 const initiateurColumns = [
   {
     title: "Date",
     dataIndex: "date",
     key: "date",
+  },
+  {
+    title: "Validateur",
+    dataIndex: "validateur",
+    key: "validateur",
   },
   {
     title: "Etat",
@@ -41,21 +41,23 @@ const initiateurColumns = [
     key: "details",
   },
 ];
-
-const buttonStyles = {
-  width: "20%",
-  alignSelf: "flex-end",
-  marginBottom: "30px",
-};
-
-const DetailsValidationDemande = () => {
+const DetailsValidationIntervenant = () => {
   const [visible, setVisible] = useState(false);
   const [validationId, setValidationId] = useState(false);
   const { id } = useParams();
   const dispatch = useDispatch();
-  const isLoading = useSelector(demandeValidationIsLoadingSelector);
-  const demandesValidation = useSelector(demandeValidationSelector);
   const user = useSelector(userSelector);
+  const intervenantValidations = useSelector(intervenantValidationsSelector);
+  const isValidationLoading = useSelector(isValidationLoadingSelector);
+  const buttonStyles = {
+    width: "20%",
+    alignSelf: "flex-end",
+    marginBottom: "30px",
+  };
+
+  useEffect(() => {
+    dispatch(startIntervenantValidationFetching(id));
+  }, [id]);
 
   const administrateurColumns = [
     {
@@ -88,29 +90,24 @@ const DetailsValidationDemande = () => {
             title="Êtes-vous sûr de supprimer cette demande?"
             okText="Oui"
             cancelText="Non"
-            onConfirm={() => dispatch(startDeleteValidation(key))}
+            // onConfirm={() =>
+            //      dispatch(startDeleteValidation(key))}
           >
             <Delete title="Suprimer la demande " />
           </Popconfirm>
-          <Edit title="Modifier la demande " onClick={() => handleEdit(key)} />
+          <Edit
+            title="Modifier la demande "
+            //   onClick={() => handleEdit(key)}
+          />
         </Space>
       ),
     },
   ];
 
-  useEffect(() => {
-    dispatch(startDemandeValidationFetching(id));
-  }, [id]);
-
   const getColumns = () => {
     return user.type === typeUtilisateur.INITIATEUR
       ? initiateurColumns
       : administrateurColumns;
-  };
-
-  const handleEdit = (id) => {
-    setValidationId(id);
-    setVisible(true);
   };
   return (
     <DetailsValidationContainer>
@@ -127,7 +124,7 @@ const DetailsValidationDemande = () => {
           >
             Nouvel Validation
           </Button>
-          {visible ? (
+          {/* {visible ? (
             <DemandeValidationForm
               visible={visible}
               onCancel={() => setVisible(false)}
@@ -135,10 +132,10 @@ const DetailsValidationDemande = () => {
               validationId={validationId}
               setValidationId={setValidationId}
             />
-          ) : null}
+          ) : null} */}
         </>
       )}
-      {isLoading ? (
+      {isValidationLoading ? (
         <Spin size="large" />
       ) : (
         <Table
@@ -149,11 +146,10 @@ const DetailsValidationDemande = () => {
             maxWidth: "100%",
           }}
           tableLayout="fixed"
-          dataSource={demandesValidation}
+          dataSource={intervenantValidations}
         />
       )}
     </DetailsValidationContainer>
   );
 };
-
-export default DetailsValidationDemande;
+export default DetailsValidationIntervenant;
