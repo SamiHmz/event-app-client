@@ -18,6 +18,7 @@ import { userSelector } from "../../redux/user/user.selectors";
 import { typeUtilisateur } from "../../util/magic_strings";
 import { DetailsValidationContainer } from "./DetailsValidationDemande.styles";
 import DemandeValidationForm from "../DemandeValidationForm/DemandeValidationForm.component";
+import RenderFormAndButton from "../RenderFormAndButton/RenderFormAndButton.component";
 
 const initiateurColumns = [
   {
@@ -114,30 +115,21 @@ const DetailsValidationDemande = () => {
   };
   return (
     <DetailsValidationContainer>
-      {user.type === typeUtilisateur.INITIATEUR ? null : (
-        <>
-          <Button
-            type="primary"
-            icon={<PlusOutlined />}
-            size="large"
-            style={buttonStyles}
-            onClick={() => {
-              setVisible(true);
-            }}
-          >
-            Nouvel Validation
-          </Button>
-          {visible ? (
-            <DemandeValidationForm
-              visible={visible}
-              onCancel={() => setVisible(false)}
-              id={id}
-              validationId={validationId}
-              setValidationId={setValidationId}
-            />
-          ) : null}
-        </>
-      )}
+      <RenderFormAndButton
+        visible={visible}
+        setVisible={setVisible}
+        type={typeUtilisateur.ADMINISTRATEUR}
+        content="validation"
+        buttonStyles={buttonStyles}
+      >
+        <DemandeValidationForm
+          visible={visible}
+          onCancel={() => setVisible(false)}
+          id={id}
+          validationId={validationId}
+          setValidationId={setValidationId}
+        />
+      </RenderFormAndButton>
       {isLoading ? (
         <Spin size="large" />
       ) : (

@@ -17,6 +17,8 @@ import {
   startDeleteIntervenantValidation,
 } from "../../redux/intervenant/intervenant.actions";
 import IntervenantValidationFom from "../IntervenantValidationFom/IntervenantValidationFom.component";
+import RenderFormAndButton from "../RenderFormAndButton/RenderFormAndButton.component";
+
 const initiateurColumns = [
   {
     title: "Date",
@@ -124,30 +126,21 @@ const DetailsValidationIntervenant = () => {
   };
   return (
     <DetailsValidationContainer>
-      {user.type === typeUtilisateur.INITIATEUR ? null : (
-        <>
-          <Button
-            type="primary"
-            icon={<PlusOutlined />}
-            size="large"
-            style={buttonStyles}
-            onClick={() => {
-              setVisible(true);
-            }}
-          >
-            Nouvel Validation
-          </Button>
-          {visible ? (
-            <IntervenantValidationFom
-              visible={visible}
-              onCancel={() => setVisible(false)}
-              id={id}
-              validationId={validationId}
-              setValidationId={setValidationId}
-            />
-          ) : null}
-        </>
-      )}
+      <RenderFormAndButton
+        visible={visible}
+        setVisible={setVisible}
+        type={typeUtilisateur.ADMINISTRATEUR}
+        content="validation"
+        buttonStyles={buttonStyles}
+      >
+        <IntervenantValidationFom
+          visible={visible}
+          onCancel={() => setVisible(false)}
+          id={id}
+          validationId={validationId}
+          setValidationId={setValidationId}
+        />
+      </RenderFormAndButton>
       {isValidationLoading ? (
         <Spin size="large" />
       ) : (

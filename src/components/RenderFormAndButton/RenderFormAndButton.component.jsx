@@ -5,23 +5,32 @@ import { Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { typeUtilisateur } from "../../util/magic_strings";
 
-const RenderFormAndButton = ({ children, visible, setVisible }) => {
+const RenderFormAndButton = ({
+  content,
+  type,
+  children,
+  visible,
+  setVisible,
+  buttonStyles = {},
+}) => {
   const user = useSelector(userSelector);
-
+  console.log("type :", type);
+  console.log(" user type", user.type);
   return (
     <>
-      {user.type === typeUtilisateur.ADMINISTRATEUR ? null : (
+      {user.type === type ? (
         <Button
           type="primary"
           icon={<PlusOutlined />}
           size="large"
+          style={buttonStyles}
           onClick={() => {
             setVisible(true);
           }}
         >
-          Ajouter itervenant
+          Ajouter {content}
         </Button>
-      )}
+      ) : null}
       {visible ? children : null}
     </>
   );

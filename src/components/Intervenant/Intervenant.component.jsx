@@ -189,7 +189,12 @@ const Intervenant = () => {
         <ContainerTopLeft>
           <SearchInput />
         </ContainerTopLeft>
-        <RenderFormAndButton visible={visible} setVisible={setVisible}>
+        <RenderFormAndButton
+          visible={visible}
+          setVisible={setVisible}
+          type={typeUtilisateur.INITIATEUR}
+          content="intervenant"
+        >
           <IntervenantForm
             visible={visible}
             id={intervenantId}

@@ -8,6 +8,8 @@ import { userSelector } from "../../redux/user/user.selectors";
 import { typeUtilisateur } from "../../util/magic_strings";
 import { toast } from "react-toastify";
 import Spinner from "../Spinner/Spinner.component";
+import RenderFormAndButton from "../RenderFormAndButton/RenderFormAndButton.component";
+
 import {
   getDemandesCount,
   getDemandeIsOpened,
@@ -138,19 +140,12 @@ function DemandeEvenement(props) {
         <ContainerTopLeft>
           <SearchInput />
         </ContainerTopLeft>
-        {user.type === typeUtilisateur.ADMINISTRATEUR ? null : (
-          <Button
-            type="primary"
-            icon={<PlusOutlined />}
-            size="large"
-            onClick={() => {
-              setVisible(true);
-            }}
-          >
-            Nouvel Evenement
-          </Button>
-        )}
-        {visible ? (
+        <RenderFormAndButton
+          visible={visible}
+          setVisible={setVisible}
+          type={typeUtilisateur.INITIATEUR}
+          content="une demande"
+        >
           <EvenementForm
             visible={visible}
             id={demandeId}
@@ -159,7 +154,7 @@ function DemandeEvenement(props) {
               setVisible(false);
             }}
           />
-        ) : null}
+        </RenderFormAndButton>
       </ContainerTop>
       <ContainerBottom>
         {isLoading ? (
