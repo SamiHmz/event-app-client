@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
 
-import { Delete, Edit, Eye } from "../Icons/icons";
+import { Eye } from "../Icons/icons";
 import Etat from "../Etat/Etat.component";
 import EvenementForm from "../EvenementForm/EvenementForm.componenet";
 import { useSelector, useDispatch } from "react-redux";
 import { userSelector } from "../../redux/user/user.selectors";
 import { typeUtilisateur } from "../../util/magic_strings";
 import { toast } from "react-toastify";
-import Spinner from "../Spinner/Spinner.component";
 import RenderFormAndButton from "../RenderFormAndButton/RenderFormAndButton.component";
-
+import RenderTable from "../RenderTable/RenderTable.component";
 import {
   getDemandesCount,
   getDemandeIsOpened,
@@ -22,8 +21,6 @@ import {
   startFetchingDemandes,
   startDeleteDemande,
 } from "../../redux/evenement/evenement.actions";
-import { Button, Table, Spin, BackTop, Space, Popconfirm } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
 import {
   Container,
   ContainerTop,
@@ -33,7 +30,8 @@ import {
 
 import { AdminstrateurColumn } from "./demandesColums";
 import SearchInput from "../SearchInput/SearchInput.component";
-
+import Actions from "../Actions/Actions.component";
+import { getColumn } from "../../util/usefull_functions";
 function DemandeEvenement(props) {
   const initiateurColumn = [
     {
@@ -70,17 +68,12 @@ function DemandeEvenement(props) {
       key: "action",
       dataIndex: "key",
       render: (key) => (
-        <Space size="middle">
-          <Popconfirm
-            title="Êtes-vous sûr de supprimer cette demande?"
-            okText="Oui"
-            cancelText="Non"
-            onConfirm={() => dispatch(startDeleteDemande(key))}
-          >
-            <Delete title="Suprimer la demande " />
-          </Popconfirm>
-          <Edit title="Modifier la demande " onClick={() => handleEdit(key)} />
-        </Space>
+        <Actions
+          onDelete={startDeleteDemande}
+          onEdit={handleEdit}
+          title="demande"
+          id={key}
+        />
       ),
     },
   ];
@@ -114,11 +107,6 @@ function DemandeEvenement(props) {
     dispatch(startFetchingDemandes(page));
   };
 
-  const getColumn = () => {
-    return user.type === typeUtilisateur.ADMINISTRATEUR
-      ? AdminstrateurColumn
-      : initiateurColumn;
-  };
   const handleEdit = async (id) => {
     try {
       const { data: isOpened } = await getDemandeIsOpened(id);
@@ -157,26 +145,14 @@ function DemandeEvenement(props) {
         </RenderFormAndButton>
       </ContainerTop>
       <ContainerBottom>
-        {isLoading ? (
-          <Spinner size="large" />
-        ) : (
-          <Table
-            columns={getColumn()}
-            dataSource={data}
-            scroll={{ scrollToFirstRowOnChange: true }}
-            style={{
-              alignSelf: "center",
-              boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
-              width: "80%",
-              overflowX: "scroll",
-            }}
-            pagination={{
-              pageSize: 10,
-              total: demandeCount,
-              onChange: handlePageChange,
-            }}
-          />
-        )}
+        <RenderTable
+          isLoading={isLoading}
+          pageSize={10}
+          count={demandeCount}
+          handlePageChange={handlePageChange}
+          data={data}
+          columns={getColumn(user, AdminstrateurColumn, initiateurColumn)}
+        />
       </ContainerBottom>
     </Container>
   );

@@ -14,8 +14,7 @@ const RenderFormAndButton = ({
   buttonStyles = {},
 }) => {
   const user = useSelector(userSelector);
-  console.log("type :", type);
-  console.log(" user type", user.type);
+
   return (
     <>
       {user.type === type ? (

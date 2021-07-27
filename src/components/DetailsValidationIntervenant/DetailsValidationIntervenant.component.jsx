@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Table, Spin, Button, Space, Popconfirm } from "antd";
-import { Delete, Edit } from "../Icons/icons";
-import Etat from "../Etat/Etat.component";
+import { Table, Spin } from "antd";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { PlusOutlined } from "@ant-design/icons";
 import { userSelector } from "../../redux/user/user.selectors";
 import { typeUtilisateur } from "../../util/magic_strings";
 import {
@@ -18,34 +15,11 @@ import {
 } from "../../redux/intervenant/intervenant.actions";
 import IntervenantValidationFom from "../IntervenantValidationFom/IntervenantValidationFom.component";
 import RenderFormAndButton from "../RenderFormAndButton/RenderFormAndButton.component";
+import { initiateurColumns } from "./detailsValidationDemandeColumns";
+import Actions from "../Actions/Actions.component";
+import RenderTable from "../RenderTable/RenderTable.component";
+import { getColumn } from "../../util/usefull_functions";
 
-const initiateurColumns = [
-  {
-    title: "Date",
-    dataIndex: "date",
-    key: "date",
-  },
-  {
-    title: "Validateur",
-    dataIndex: "validateur",
-    key: "validateur",
-  },
-  {
-    title: "Etat",
-    dataIndex: "etat",
-    key: "etat",
-    render: (etat) => (
-      <>
-        <Etat value={etat} />
-      </>
-    ),
-  },
-  {
-    title: "Details",
-    dataIndex: "details",
-    key: "details",
-  },
-];
 const DetailsValidationIntervenant = () => {
   const [visible, setVisible] = useState(false);
   const [validationId, setValidationId] = useState(false);
@@ -65,60 +39,22 @@ const DetailsValidationIntervenant = () => {
   }, [id]);
 
   const administrateurColumns = [
-    {
-      title: "Date",
-      dataIndex: "date",
-      key: "date",
-    },
-    {
-      title: "Validateur",
-      dataIndex: "validateur",
-      key: "validateur",
-    },
-    {
-      title: "Etat",
-      dataIndex: "etat",
-      key: "etat",
-      render: (etat) => (
-        <>
-          <Etat value={etat} />
-        </>
-      ),
-    },
-    {
-      title: "Details",
-      dataIndex: "details",
-      key: "details",
-    },
+    ...initiateurColumns,
     {
       title: "Action",
       key: "action",
       render: ({ key, administrateur_id }) => {
         return administrateur_id === user.id ? (
-          <Space size="middle">
-            <Popconfirm
-              title="Êtes-vous sûr de supprimer cette demande?"
-              okText="Oui"
-              cancelText="Non"
-              onConfirm={() => dispatch(startDeleteIntervenantValidation(key))}
-            >
-              <Delete title="Suprimer la demande " />
-            </Popconfirm>
-            <Edit
-              title="Modifier la demande "
-              onClick={() => handleEdit(key)}
-            />
-          </Space>
+          <Actions
+            onDelete={startDeleteIntervenantValidation}
+            onEdit={handleEdit}
+            title="validation"
+            id={key}
+          />
         ) : null;
       },
     },
   ];
-
-  const getColumns = () => {
-    return user.type === typeUtilisateur.INITIATEUR
-      ? initiateurColumns
-      : administrateurColumns;
-  };
 
   const handleEdit = (id) => {
     setValidationId(id);
@@ -141,20 +77,12 @@ const DetailsValidationIntervenant = () => {
           setValidationId={setValidationId}
         />
       </RenderFormAndButton>
-      {isValidationLoading ? (
-        <Spin size="large" />
-      ) : (
-        <Table
-          columns={getColumns()}
-          style={{
-            alignSelf: "center",
-            boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
-            maxWidth: "100%",
-          }}
-          tableLayout="fixed"
-          dataSource={intervenantValidations}
-        />
-      )}
+      <RenderTable
+        isLoading={isValidationLoading}
+        data={intervenantValidations}
+        columns={getColumn(user, administrateurColumns, initiateurColumns)}
+        isValidation={true}
+      />
     </DetailsValidationContainer>
   );
 };

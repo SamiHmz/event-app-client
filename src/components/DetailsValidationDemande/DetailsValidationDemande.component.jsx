@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Table, Spin, Button, Space, Popconfirm } from "antd";
+import { Space, Popconfirm } from "antd";
 import { Delete, Edit } from "../Icons/icons";
+import RenderTable from "../RenderTable/RenderTable.component";
 
 import Etat from "../Etat/Etat.component";
 import { useParams } from "react-router-dom";
@@ -13,35 +14,14 @@ import {
   demandeValidationIsLoadingSelector,
 } from "../../redux/evenement/evenement.selectors";
 import { useDispatch, useSelector } from "react-redux";
-import { PlusOutlined } from "@ant-design/icons";
 import { userSelector } from "../../redux/user/user.selectors";
 import { typeUtilisateur } from "../../util/magic_strings";
 import { DetailsValidationContainer } from "./DetailsValidationDemande.styles";
 import DemandeValidationForm from "../DemandeValidationForm/DemandeValidationForm.component";
 import RenderFormAndButton from "../RenderFormAndButton/RenderFormAndButton.component";
-
-const initiateurColumns = [
-  {
-    title: "Date",
-    dataIndex: "date",
-    key: "date",
-  },
-  {
-    title: "Etat",
-    dataIndex: "etat",
-    key: "etat",
-    render: (etat) => (
-      <>
-        <Etat value={etat} />
-      </>
-    ),
-  },
-  {
-    title: "Details",
-    dataIndex: "details",
-    key: "details",
-  },
-];
+import Actions from "../Actions/Actions.component";
+import { initiateurColumns } from "./detailsValidationDemandeColumns";
+import { getColumn } from "../../util/usefull_functions";
 
 const buttonStyles = {
   width: "20%",
@@ -59,42 +39,18 @@ const DetailsValidationDemande = () => {
   const user = useSelector(userSelector);
 
   const administrateurColumns = [
-    {
-      title: "Date",
-      dataIndex: "date",
-      key: "date",
-    },
-    {
-      title: "Etat",
-      dataIndex: "etat",
-      key: "etat",
-      render: (etat) => (
-        <>
-          <Etat value={etat} />
-        </>
-      ),
-    },
-    {
-      title: "Details",
-      dataIndex: "details",
-      key: "details",
-    },
+    ...initiateurColumns,
     {
       title: "Action",
       key: "action",
       dataIndex: "key",
       render: (key) => (
-        <Space size="middle">
-          <Popconfirm
-            title="Êtes-vous sûr de supprimer cette demande?"
-            okText="Oui"
-            cancelText="Non"
-            onConfirm={() => dispatch(startDeleteValidation(key))}
-          >
-            <Delete title="Suprimer la demande " />
-          </Popconfirm>
-          <Edit title="Modifier la demande " onClick={() => handleEdit(key)} />
-        </Space>
+        <Actions
+          onDelete={startDeleteValidation}
+          onEdit={handleEdit}
+          title="validation"
+          id={key}
+        />
       ),
     },
   ];
@@ -102,12 +58,6 @@ const DetailsValidationDemande = () => {
   useEffect(() => {
     dispatch(startDemandeValidationFetching(id));
   }, [id]);
-
-  const getColumns = () => {
-    return user.type === typeUtilisateur.INITIATEUR
-      ? initiateurColumns
-      : administrateurColumns;
-  };
 
   const handleEdit = (id) => {
     setValidationId(id);
@@ -130,20 +80,12 @@ const DetailsValidationDemande = () => {
           setValidationId={setValidationId}
         />
       </RenderFormAndButton>
-      {isLoading ? (
-        <Spin size="large" />
-      ) : (
-        <Table
-          columns={getColumns()}
-          style={{
-            alignSelf: "center",
-            boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
-            maxWidth: "100%",
-          }}
-          tableLayout="fixed"
-          dataSource={demandesValidation}
-        />
-      )}
+      <RenderTable
+        isLoading={isLoading}
+        data={demandesValidation}
+        columns={getColumn(user, administrateurColumns, initiateurColumns)}
+        isValidation={true}
+      />
     </DetailsValidationContainer>
   );
 };
