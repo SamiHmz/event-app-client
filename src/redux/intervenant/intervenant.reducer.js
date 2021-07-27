@@ -56,6 +56,32 @@ const intervenantReducer = (state = INITIAL_STATE, action) => {
         isValidationLoading: false,
         intervenantValidations: action.payload.validations,
       };
+    case IntervenantActions.CREATE_INTERVENANT_VALIDATION_SUCCESS:
+      return {
+        ...state,
+        intervenantValidations: [
+          ...state.intervenantValidations,
+          action.payload.validation,
+        ],
+      };
+    case IntervenantActions.UPDATE_INTERVENANT_VALIDATION_SUCCESS:
+      return {
+        ...state,
+        intervenantValidations: state.intervenantValidations.map(
+          (validation) => {
+            if (validation.id === action.payload.validation.id)
+              return action.payload.validation;
+            return validation;
+          }
+        ),
+      };
+    case IntervenantActions.DELETE_INTERVENANT_VALIDATION_SUCCESS:
+      return {
+        ...state,
+        intervenantValidations: state.intervenantValidations.filter(
+          (validation) => validation.id !== action.payload.id
+        ),
+      };
     default:
       return state;
   }

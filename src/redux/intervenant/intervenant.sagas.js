@@ -8,6 +8,9 @@ import {
   updateIntervenant,
   getOneIntervenant,
   getAllIntervenantValidations,
+  createIntervenantValidation,
+  updateIntervenantValidation,
+  deleteIntervenantValidation,
 } from "../../services/intervenant.services";
 import {
   intervenantFetchingSuccess,
@@ -16,6 +19,9 @@ import {
   updateIntervenantSuccess,
   OneIntervenantFetchingSuccess,
   IntervenantValidationFetchingSuccess,
+  createIntervenantValidationSuccess,
+  updateValidationIntervenantSuccess,
+  deleteValidationIntervenantSuccess,
 } from "./intervenant.actions";
 
 export function* onIntervenantFetchingStart({ payload }) {
@@ -130,6 +136,66 @@ export function* watchIntervenantValidationFetchingStart() {
   );
 }
 
+export function* onCreateIntervenantValidationStart({ payload }) {
+  try {
+    console.log("validation", payload.validation);
+    const { data: validation } = yield call(
+      createIntervenantValidation,
+      payload.validation
+    );
+    yield put(createIntervenantValidationSuccess(validation));
+    yield payload.resetForm();
+    yield payload.onCancel();
+    yield message.success("la validation a été créé  avec succès");
+  } catch (error) {
+    yield payload.setErrors({ server: error.response.data });
+  }
+}
+export function* watchCreateIntervenantValidationStart() {
+  yield takeLatest(
+    IntervenantActions.CREATE_INTERVENANT_VALIDATION_START,
+    onCreateIntervenantValidationStart
+  );
+}
+
+export function* onUpdateIntervenantValidationStart({ payload }) {
+  try {
+    const { data: validation } = yield call(
+      updateIntervenantValidation,
+      payload.validation,
+      payload.id
+    );
+    yield put(updateValidationIntervenantSuccess(validation));
+    yield payload.resetForm();
+    yield payload.onCancel();
+    yield message.success("la validation a été modifier avec succès");
+  } catch (error) {
+    yield payload.setErrors({ server: error.response.data });
+  }
+}
+
+export function* watchUpdateIntervenantValidationStart() {
+  yield takeLatest(
+    IntervenantActions.START_INTERVENANT_UPDATE_VALIDATION,
+    onUpdateIntervenantValidationStart
+  );
+}
+
+export function* onDeleteIntervenantValidationStart({ payload }) {
+  try {
+    yield call(deleteIntervenantValidation, payload.id);
+    yield put(deleteValidationIntervenantSuccess(payload.id));
+  } catch (error) {
+    console.log(error);
+  }
+}
+export function* watchDeleteIntervenantValidationStart() {
+  yield takeLatest(
+    IntervenantActions.START_DELETE_INTERVENANT_VALIDATION,
+    onDeleteIntervenantValidationStart
+  );
+}
+
 export function* intervenantSagas() {
   yield all([
     call(watchIntervenantFetchingStart),
@@ -138,5 +204,8 @@ export function* intervenantSagas() {
     call(watchUpdateIntervenantStart),
     call(watchFetchOneIntervenantStart),
     call(watchIntervenantValidationFetchingStart),
+    call(watchCreateIntervenantValidationStart),
+    call(watchUpdateIntervenantValidationStart),
+    call(watchDeleteIntervenantValidationStart),
   ]);
 }

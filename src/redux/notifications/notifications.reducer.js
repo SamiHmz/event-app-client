@@ -48,6 +48,7 @@ const notificationsReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         unviewedNotificationsCount: state.unviewedNotificationsCount + 1,
+        notificationsIsLoading: false,
         notificationsList: [
           action.payload.notification,
           ...state.notificationsList,

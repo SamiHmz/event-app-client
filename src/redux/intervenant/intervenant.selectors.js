@@ -1,5 +1,8 @@
 import { createSelector } from "reselect";
 import moment from "moment";
+import { userInputSelector } from "../user/user.selectors";
+import { typeUtilisateur } from "../../util/magic_strings";
+
 const intervenantInputSelector = (state) => state.intervenant;
 
 export const intervenantSelector = createSelector(
@@ -26,18 +29,32 @@ export const isCurrentIntervenantLoadingSelector = createSelector(
 );
 
 export const intervenantValidationsSelector = createSelector(
-  intervenantInputSelector,
-  (intervenant) =>
-    intervenant.intervenantValidations.map((validation) => {
+  [intervenantInputSelector, userInputSelector],
+  ({ intervenantValidations }, { currentUser }) => {
+    if (currentUser.type === typeUtilisateur.INITIATEUR)
+      return intervenantValidations.map((validation) => {
+        return {
+          key: validation.id,
+          date: moment(validation.createdAt).format("MMMM Do YYYY, h:mm:ss a"),
+          etat: validation.etat,
+          details: validation.details,
+          validateur: validation.administrateur.nom,
+          administrateur_id: validation.administrateur_id,
+        };
+      });
+    return intervenantValidations.map((validation) => {
       return {
         key: validation.id,
         date: moment(validation.createdAt).format("MMMM Do YYYY, h:mm:ss a"),
         etat: validation.etat,
         details: validation.details,
+        administrateur_id: validation.administrateur_id,
         validateur: validation.administrateur.nom,
       };
-    })
+    });
+  }
 );
+
 export const isValidationLoadingSelector = createSelector(
   intervenantInputSelector,
   (intervenant) => intervenant.isValidationLoading

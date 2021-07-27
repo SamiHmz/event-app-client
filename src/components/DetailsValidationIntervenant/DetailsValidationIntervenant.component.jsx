@@ -12,8 +12,11 @@ import {
   isValidationLoadingSelector,
 } from "../../redux/intervenant/intervenant.selectors";
 import { DetailsValidationContainer } from "../DetailsValidationDemande/DetailsValidationDemande.styles";
-import { startIntervenantValidationFetching } from "../../redux/intervenant/intervenant.actions";
-
+import {
+  startIntervenantValidationFetching,
+  startDeleteIntervenantValidation,
+} from "../../redux/intervenant/intervenant.actions";
+import IntervenantValidationFom from "../IntervenantValidationFom/IntervenantValidationFom.component";
 const initiateurColumns = [
   {
     title: "Date",
@@ -66,6 +69,11 @@ const DetailsValidationIntervenant = () => {
       key: "date",
     },
     {
+      title: "Validateur",
+      dataIndex: "validateur",
+      key: "validateur",
+    },
+    {
       title: "Etat",
       dataIndex: "etat",
       key: "etat",
@@ -83,24 +91,24 @@ const DetailsValidationIntervenant = () => {
     {
       title: "Action",
       key: "action",
-      dataIndex: "key",
-      render: (key) => (
-        <Space size="middle">
-          <Popconfirm
-            title="Êtes-vous sûr de supprimer cette demande?"
-            okText="Oui"
-            cancelText="Non"
-            // onConfirm={() =>
-            //      dispatch(startDeleteValidation(key))}
-          >
-            <Delete title="Suprimer la demande " />
-          </Popconfirm>
-          <Edit
-            title="Modifier la demande "
-            //   onClick={() => handleEdit(key)}
-          />
-        </Space>
-      ),
+      render: ({ key, administrateur_id }) => {
+        return administrateur_id === user.id ? (
+          <Space size="middle">
+            <Popconfirm
+              title="Êtes-vous sûr de supprimer cette demande?"
+              okText="Oui"
+              cancelText="Non"
+              onConfirm={() => dispatch(startDeleteIntervenantValidation(key))}
+            >
+              <Delete title="Suprimer la demande " />
+            </Popconfirm>
+            <Edit
+              title="Modifier la demande "
+              onClick={() => handleEdit(key)}
+            />
+          </Space>
+        ) : null;
+      },
     },
   ];
 
@@ -108,6 +116,11 @@ const DetailsValidationIntervenant = () => {
     return user.type === typeUtilisateur.INITIATEUR
       ? initiateurColumns
       : administrateurColumns;
+  };
+
+  const handleEdit = (id) => {
+    setValidationId(id);
+    setVisible(true);
   };
   return (
     <DetailsValidationContainer>
@@ -124,15 +137,15 @@ const DetailsValidationIntervenant = () => {
           >
             Nouvel Validation
           </Button>
-          {/* {visible ? (
-            <DemandeValidationForm
+          {visible ? (
+            <IntervenantValidationFom
               visible={visible}
               onCancel={() => setVisible(false)}
               id={id}
               validationId={validationId}
               setValidationId={setValidationId}
             />
-          ) : null} */}
+          ) : null}
         </>
       )}
       {isValidationLoading ? (

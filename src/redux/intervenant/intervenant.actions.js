@@ -74,3 +74,41 @@ export const IntervenantValidationFetchingSuccess = (validations) => ({
   type: IntervenantActions.INTERVENANT_VALIDATION_FETCHING_SUCCESS,
   payload: { validations },
 });
+
+export const startCreateIntervenantValidation = (payload) => ({
+  type: IntervenantActions.CREATE_INTERVENANT_VALIDATION_START,
+  payload,
+});
+
+export const createIntervenantValidationSuccess = (validation) => ({
+  type: IntervenantActions.CREATE_INTERVENANT_VALIDATION_SUCCESS,
+  payload: {
+    validation,
+  },
+});
+
+export const startUpdateIntervenantValidation = (payload) => ({
+  type: IntervenantActions.START_INTERVENANT_UPDATE_VALIDATION,
+  payload,
+});
+
+export const updateValidationIntervenantSuccess = (validation) => ({
+  type: IntervenantActions.UPDATE_INTERVENANT_VALIDATION_SUCCESS,
+  payload: {
+    validation,
+  },
+});
+
+export const startDeleteIntervenantValidation = (id) => ({
+  type: IntervenantActions.START_DELETE_INTERVENANT_VALIDATION,
+  payload: {
+    id,
+  },
+});
+
+export const deleteValidationIntervenantSuccess = (id) => ({
+  type: IntervenantActions.DELETE_INTERVENANT_VALIDATION_SUCCESS,
+  payload: {
+    id,
+  },
+});

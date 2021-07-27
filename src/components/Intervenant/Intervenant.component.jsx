@@ -4,7 +4,7 @@ import { Delete, Edit, File, Eye } from "../Icons/icons";
 import Etat from "../Etat/Etat.component";
 import { typeUtilisateur } from "../../util/magic_strings";
 import { toast } from "react-toastify";
-
+import RenderFormAndButton from "../RenderFormAndButton/RenderFormAndButton.component";
 import { Button, Table, Spin, Space, Popconfirm, Avatar, Image } from "antd";
 import {
   Container,
@@ -28,6 +28,52 @@ import {
   getIntervenantIsOpened,
 } from "../../services/intervenant.services";
 import IntervenantForm from "../IntervenantForm/IntervenantForm.component";
+const AdminstrateurColumn = [
+  {
+    title: "Photo",
+    dataIndex: "photo",
+    key: "photo",
+    render: (photo) => (
+      <Avatar src={<Image src={photo} />} shape="square" size="large" />
+    ),
+  },
+  {
+    title: "Nom",
+    dataIndex: "nom",
+    key: "nom",
+  },
+  {
+    title: "Prénom",
+    dataIndex: "prenom",
+    key: "prenom",
+  },
+  {
+    title: "Etat",
+    key: "etat",
+    dataIndex: "etat",
+    render: (etat) => (
+      <>
+        <Etat value={etat} />
+      </>
+    ),
+  },
+  {
+    title: "Datails ",
+    dataIndex: "key",
+    key: "details",
+    render: (key) => {
+      return <Eye to={key} title="Voir les details de l'intervenant " />;
+    },
+  },
+  {
+    title: "Cv ",
+    dataIndex: "cv",
+    key: "cv",
+    render: (cv) => {
+      return <File to={cv} title="Voir le cv de l'intervenant " />;
+    },
+  },
+];
 const Intervenant = () => {
   const [IntervenantCount, setIntervenantCount] = useState(0);
   const [visible, setVisible] = useState(false);
@@ -37,7 +83,7 @@ const Intervenant = () => {
   const intervenantList = useSelector(intervenantSelector);
   const intervenantIsLoading = useSelector(intervenantIsLoadingSelector);
   const [intervenantId, setIntervenantId] = useState(null);
-  const columns = [
+  const initiateurColumn = [
     {
       title: "Photo",
       dataIndex: "photo",
@@ -114,6 +160,11 @@ const Intervenant = () => {
     };
     onLoad();
   }, []);
+  const getColumn = () => {
+    return user.type === typeUtilisateur.ADMINISTRATEUR
+      ? AdminstrateurColumn
+      : initiateurColumn;
+  };
 
   const handlePageChange = (page) => {
     dispatch(startIntervenantFetching(page));
@@ -138,20 +189,7 @@ const Intervenant = () => {
         <ContainerTopLeft>
           <SearchInput />
         </ContainerTopLeft>
-
-        {user.type === typeUtilisateur.ADMINISTRATEUR ? null : (
-          <Button
-            type="primary"
-            icon={<PlusOutlined />}
-            size="large"
-            onClick={() => {
-              setVisible(true);
-            }}
-          >
-            Ajouter itervenant
-          </Button>
-        )}
-        {visible ? (
+        <RenderFormAndButton visible={visible} setVisible={setVisible}>
           <IntervenantForm
             visible={visible}
             id={intervenantId}
@@ -160,14 +198,14 @@ const Intervenant = () => {
               setVisible(false);
             }}
           />
-        ) : null}
+        </RenderFormAndButton>
       </ContainerTop>
       <ContainerBottom>
         {intervenantIsLoading ? (
           <Spin />
         ) : (
           <Table
-            columns={columns}
+            columns={getColumn()}
             dataSource={intervenantList}
             scroll={{ scrollToFirstRowOnChange: true }}
             style={{

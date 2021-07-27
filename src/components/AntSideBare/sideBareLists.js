@@ -60,3 +60,16 @@ export const administrateurSimpleList = [
     to: "/comptes",
   },
 ];
+
+export const administrateurAdminList = [
+  {
+    text: "Dashboard",
+    component: <Dashboard />,
+    to: "/",
+  },
+  {
+    text: "Intervenats",
+    component: <Intervenants />,
+    to: "/intervenants",
+  },
+];

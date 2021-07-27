@@ -5,21 +5,21 @@ import FormErorr from "../FormError/FormError.componenet";
 import SelectInput from "../SelectInput/SelectInput.component";
 import * as Yup from "yup";
 import { etat } from "../../util/magic_strings";
+import { startUpdateValidation } from "../../redux/evenement/evenement.actions";
 import {
-  startCreateValidation,
-  startUpdateValidation,
-} from "../../redux/evenement/evenement.actions";
+  startCreateIntervenantValidation,
+  startUpdateIntervenantValidation,
+} from "../../redux/intervenant/intervenant.actions";
 import { useDispatch } from "react-redux";
-import { getOneValidation } from "../../services/evenement.services";
-import { getOneIntervenant } from "../../services/intervenant.services";
+import { getOneIntervenantValidation } from "../../services/intervenant.services";
 
 const { TextArea } = Input;
 
 const demandeValidationSchema = Yup.object().shape({
-  etat: Yup.string().required().label("Etat"),
+  etat: Yup.string().required().label("Décision"),
   details: Yup.string().required().label("Details"),
 });
-const DemandeValidationForm = ({
+const IntervenantValidationFom = ({
   visible,
   onCancel,
   id,
@@ -37,10 +37,10 @@ const DemandeValidationForm = ({
     onSubmit: (values) => {
       if (!validationId) {
         dispatch(
-          startCreateValidation({
+          startCreateIntervenantValidation({
             validation: {
               ...values,
-              evenement_id: id,
+              intervenant_id: id,
             },
             setErrors,
             onCancel,
@@ -49,10 +49,10 @@ const DemandeValidationForm = ({
         );
       } else {
         dispatch(
-          startUpdateValidation({
+          startUpdateIntervenantValidation({
             validation: {
               ...values,
-              evenement_id: id,
+              intervenant_id: id,
             },
             id: validationId,
             setErrors,
@@ -60,6 +60,7 @@ const DemandeValidationForm = ({
             resetForm: form.resetFields,
           })
         );
+        console.log("edit");
       }
     },
   });
@@ -80,12 +81,12 @@ const DemandeValidationForm = ({
   } = formik;
 
   useEffect(() => {
-    console.log("validationId :", validationId);
     if (!validationId) return;
     const getValidation = async () => {
       try {
-        const { data: validation } = await getOneIntervenant(validationId);
-        console.log(validation);
+        const { data: validation } = await getOneIntervenantValidation(
+          validationId
+        );
         setValues({
           etat: validation.etat,
           details: validation.details,
@@ -145,4 +146,4 @@ const DemandeValidationForm = ({
   );
 };
 
-export default DemandeValidationForm;
+export default IntervenantValidationFom;

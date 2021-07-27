@@ -37,3 +37,22 @@ export const getIntervenantIsOpened = async (id) => {
 export const getAllIntervenantValidations = async (id) => {
   return await axios.get(`${apiUrl}intervenants/validations/${id}`);
 };
+
+export const createIntervenantValidation = async (validation) => {
+  return await axios.post(`${apiUrl}intervenants/validation`, validation);
+};
+
+export const updateIntervenantValidation = async (validation, valiDationId) => {
+  return await axios.put(
+    `${apiUrl}intervenants/validation/${valiDationId}`,
+    validation
+  );
+};
+
+export const getOneIntervenantValidation = async (id) => {
+  return await axios.get(`${apiUrl}intervenants/validation/${id}`);
+};
+
+export const deleteIntervenantValidation = async (validationId) => {
+  return await axios.delete(`${apiUrl}intervenants/validation/${validationId}`);
+};
