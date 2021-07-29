@@ -48,7 +48,7 @@ export const intiateurSimpleList = [
   {
     text: "Bilans",
     component: <Bilan />,
-    to: "/demandes",
+    to: "/bilans",
   },
 ];
 
