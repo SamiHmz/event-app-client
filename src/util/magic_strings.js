@@ -26,7 +26,7 @@ export const typeUtilisateur = {
 const typeInitiateur = ["club", "association"];
 export const modeEvenement = ["Prèsentiel", "En Ligne"];
 
-const modeSponsoring = ["espèce", "matériel"];
+export const modeSponsoring = ["espèce", "matériel"];
 const media = ["tv", "radio", "journal", "journal", "jouranl en ligne"];
 const langue = ["Francais,Anglais,Arabe"];
 export const sexe = ["homme", "femme"];

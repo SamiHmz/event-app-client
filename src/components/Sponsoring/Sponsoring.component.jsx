@@ -12,32 +12,32 @@ import {
 import SearchInput from "../SearchInput/SearchInput.component";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  startIntervenantFetching,
-  startDeleteIntervenant,
-} from "../../redux/intervenant/intervenant.actions";
+  startSponsoringFetching,
+  startDeleteSponsoring,
+} from "../../redux/sponsoring/sponsoring.actions";
 import {
-  intervenantSelector,
-  intervenantIsLoadingSelector,
-} from "../../redux/intervenant/intervenant.selectors";
+  sponsoringSelector,
+  sponsoringIsLoadingSelector,
+} from "../../redux/sponsoring/sponsoring.selectors";
 import { userSelector } from "../../redux/user/user.selectors";
 import {
-  getAllIntervenantCount,
-  getIntervenantIsOpened,
-} from "../../services/intervenant.services";
-import IntervenantForm from "../IntervenantForm/IntervenantForm.component";
+  getAllSponsoringCount,
+  getSponsoringIsOpened,
+} from "../../services/sponsoring.services";
+import SponsoringForm from "../SponsoringForm/SponsoringForm.component";
 import Actions from "../Actions/Actions.component";
-import { AdminstrateurColumn } from "./IntervenantColumns";
+import { AdminstrateurColumn } from "./SponsoringColumns";
 import { getColumn } from "../../util/usefull_functions";
 
-const Intervenant = () => {
-  const [IntervenantCount, setIntervenantCount] = useState(0);
+const Sponsoring = () => {
+  const [SponsoringCount, setSponsoringCount] = useState(0);
   const [visible, setVisible] = useState(false);
   const user = useSelector(userSelector);
 
   const dispatch = useDispatch();
-  const intervenantList = useSelector(intervenantSelector);
-  const intervenantIsLoading = useSelector(intervenantIsLoadingSelector);
-  const [intervenantId, setIntervenantId] = useState(null);
+  const sponsoringList = useSelector(sponsoringSelector);
+  const sponsoringIsLoading = useSelector(sponsoringIsLoadingSelector);
+  const [sponsoringId, setSponsoringId] = useState(null);
   const initiateurColumn = [
     ...AdminstrateurColumn,
     {
@@ -46,9 +46,9 @@ const Intervenant = () => {
       dataIndex: "key",
       render: (key) => (
         <Actions
-          onDelete={startDeleteIntervenant}
+          onDelete={startDeleteSponsoring}
           onEdit={handleEdit}
-          title="intervenant"
+          title="sponsoring"
           id={key}
         />
       ),
@@ -58,9 +58,9 @@ const Intervenant = () => {
   useEffect(() => {
     const onLoad = async () => {
       try {
-        const { data } = await getAllIntervenantCount();
-        setIntervenantCount(data.count);
-        dispatch(startIntervenantFetching(1));
+        const { data } = await getAllSponsoringCount();
+        setSponsoringCount(data.count);
+        dispatch(startSponsoringFetching(1));
       } catch (error) {
         console.log(error);
       }
@@ -69,17 +69,17 @@ const Intervenant = () => {
   }, []);
 
   const handlePageChange = (page) => {
-    dispatch(startIntervenantFetching(page));
+    dispatch(startSponsoringFetching(page));
   };
   const handleEdit = async (id) => {
     try {
-      const { data: isOpened } = await getIntervenantIsOpened(id);
+      const { data: isOpened } = await getSponsoringIsOpened(id);
 
       if (isOpened)
         return toast.error(
           "vous ne pouvez pas modifier cette demande, un administrateur est en train de la validè ,Veuillez réessayer ultérieurement"
         );
-      setIntervenantId(id);
+      setSponsoringId(id);
       setVisible(true);
     } catch (error) {
       console.log(error);
@@ -95,12 +95,12 @@ const Intervenant = () => {
           visible={visible}
           setVisible={setVisible}
           type={typeUtilisateur.INITIATEUR}
-          content="intervenant"
+          content="sponsoring"
         >
-          <IntervenantForm
+          <SponsoringForm
             visible={visible}
-            id={intervenantId}
-            setId={setIntervenantId}
+            id={sponsoringId}
+            setId={setSponsoringId}
             onCancel={() => {
               setVisible(false);
             }}
@@ -109,15 +109,15 @@ const Intervenant = () => {
       </ContainerTop>
       <ContainerBottom>
         <RenderTable
-          isLoading={intervenantIsLoading}
+          isLoading={sponsoringIsLoading}
           pageSize={10}
-          count={IntervenantCount}
+          count={SponsoringCount}
           handlePageChange={handlePageChange}
-          data={intervenantList}
+          data={sponsoringList}
           columns={getColumn(user, AdminstrateurColumn, initiateurColumn)}
         />
       </ContainerBottom>
     </Container>
   );
 };
-export default Intervenant;
+export default Sponsoring;

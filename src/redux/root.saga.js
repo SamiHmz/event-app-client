@@ -3,6 +3,7 @@ import { userSagas } from "./user/user.sagas";
 import { evenementSagas } from "./evenement/evenement.saga";
 import { notificaitonsSagas } from "./notifications/notifications.sagas";
 import { intervenantSagas } from "./intervenant/intervenant.sagas";
+import { sponsoringSagas } from "./sponsoring/sponsoring.sagas";
 
 export default function* rootSaga() {
   const sagas = [
@@ -10,6 +11,7 @@ export default function* rootSaga() {
     evenementSagas,
     notificaitonsSagas,
     intervenantSagas,
+    sponsoringSagas,
   ];
 
   yield all(

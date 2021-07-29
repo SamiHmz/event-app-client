@@ -30,21 +30,21 @@ export const intiateurSimpleList = [
     component: <Intervenants />,
     to: "/intervenants",
   },
-  {
-    text: "Journalistes",
-    component: <Journaliste />,
-    to: "/demandes",
-  },
+  // {
+  //   text: "Journalistes",
+  //   component: <Journaliste />,
+  //   to: "/demandes",
+  // },
   {
     text: "Sponsoring",
     component: <Dollar />,
-    to: "/demandes",
+    to: "/sponsorings",
   },
-  {
-    text: "Reservations",
-    component: <Checked />,
-    to: "/demandes",
-  },
+  // {
+  //   text: "Reservations",
+  //   component: <Checked />,
+  //   to: "/demandes",
+  // },
   {
     text: "Bilans",
     component: <Bilan />,
