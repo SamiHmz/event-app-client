@@ -55,10 +55,10 @@ const BilanForm = ({ visible, onCancel, id, setId }) => {
       participants_extern: "",
       evenement_id: "",
       problem: "",
-      photo: [""],
+      photo: [],
     },
 
-    validationSchema: bilanSchema,
+    // validationSchema: bilanSchema,
     onSubmit: (values) => {
       console.log(values);
       if (!id) {
@@ -89,14 +89,12 @@ const BilanForm = ({ visible, onCancel, id, setId }) => {
     handleSubmit,
     handleChange,
     handleBlur,
-    handleReset,
     setFieldTouched,
     values,
     setFieldValue,
     setErrors,
     errors,
     touched,
-    resetForm,
     setValues,
   } = formik;
   const handlCloseForm = () => {
@@ -109,23 +107,43 @@ const BilanForm = ({ visible, onCancel, id, setId }) => {
   };
 
   const setFileUrlInForm = (file, field) => {
-    if (file.percent === 100 && file.response?.url) {
+    console.log(file);
+    var fileUrl = "";
+    if (file.url) {
+      fileUrl = file.name;
+    } else {
+      fileUrl = file.response?.url;
+    }
+    if (file.percent === 100 && fileUrl) {
       if (field === "photo") {
-        setFieldValue(field, [...photos, baseUrl + file.response.url]);
-        setPhotos([...photos, baseUrl + file.response.url]);
+        setFieldValue(field, [...photos, fileUrl]);
+        setPhotos([...photos, fileUrl]);
       } else {
-        setFieldValue(field, baseUrl + file.response.url);
+        setFieldValue(field, fileUrl);
       }
     }
-    if (values[field]) {
-      setFieldValue(field, "");
+    //delete case
+    // if the file exist we want to delete
+    // because we are sure that onRemove trigred this onChange excuttion
+    const fileUrlIndex = values.photo.findIndex((url) => url == fileUrl);
+    if (fileUrlIndex > -1) {
+      // remove locally
+      const newPhotos = [...values.photo];
+      newPhotos.splice(fileUrlIndex, 1);
+      setPhotos(newPhotos);
+      setFieldValue(field, newPhotos);
     }
   };
 
-  const deleteFileInServer = async (field) => {
+  const deleteFileInServer = async (file, field) => {
     try {
-      const fileUrl = values[field];
-      await removeFile(fileUrl);
+      var imageUrl = "";
+      if (file.url) {
+        imageUrl = baseUrl + file.name;
+      } else {
+        imageUrl = baseUrl + file.response.url;
+      }
+      await removeFile(imageUrl);
     } catch (error) {
       console.log(error);
     }
@@ -143,8 +161,9 @@ const BilanForm = ({ visible, onCancel, id, setId }) => {
           participants_extern: bilan.participants_extern,
           evenement_id: bilan.evenement_id,
           problem: bilan.problem,
+          photo: bilan.bilan_photos.map((photo) => photo.lien),
         };
-        console.log("values are :", values);
+        setPhotos(values.photo);
         setValues(values);
         form.setFieldsValue(values);
       } catch (error) {
@@ -154,11 +173,6 @@ const BilanForm = ({ visible, onCancel, id, setId }) => {
 
     getBilanInfo(id);
   }, []);
-
-  const handleUploadMultiple = async () => {
-    // await setFieldValue("photo", photos);
-    console.log(values.photo);
-  };
 
   return (
     <Modal
@@ -264,14 +278,13 @@ const BilanForm = ({ visible, onCancel, id, setId }) => {
         <FormErorr error={errors.problem} touched={touched.problem} />
         <Form.Item label="Photo " name="photo">
           <Upload
-            // onClick={() => setFieldTouched("photo", true)}
             listType="picture"
             accept="image/*"
             action={uploadUrl}
             onChange={({ file }) => {
               setFileUrlInForm(file, "photo");
             }}
-            onRemove={() => deleteFileInServer("photo")}
+            onRemove={(file) => deleteFileInServer(file, "photo")}
           >
             <Button icon={<UploadOutlined />}>Upload Photo</Button>
           </Upload>

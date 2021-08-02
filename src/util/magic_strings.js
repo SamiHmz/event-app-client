@@ -30,4 +30,4 @@ export const modeSponsoring = ["espèce", "matériel"];
 const media = ["tv", "radio", "journal", "journal", "jouranl en ligne"];
 const langue = ["Francais,Anglais,Arabe"];
 export const sexe = ["homme", "femme"];
-export const typeIntervenant = ["interne", "externe"];
+export const typeIntervenant = ["interne", "externe", "journalist"];

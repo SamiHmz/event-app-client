@@ -16,6 +16,7 @@ import AntSideBare from "../../components/AntSideBare/AntSideBare.component";
 import windowSize from "react-window-size";
 import { Drawer } from "antd";
 import Bilan from "../../components/Bilan/Bilan.component";
+import DetailsBilan from "../../components/DetailsBilan/DetailsBilan.component";
 
 const Dashboard = () => <h1>i'am dashboard</h1>;
 const Main = ({ windowWidth }) => {
@@ -56,6 +57,7 @@ const Main = ({ windowWidth }) => {
               component={DetailsValidationSponsoring}
             />
             <Route exact path="/sponsorings" component={Sponsoring} />
+            <Route exact path="/bilans/:id" component={DetailsBilan} />
             <Route exact path="/bilans" component={Bilan} />
           </Switch>
         </MainContainerRightBottom>

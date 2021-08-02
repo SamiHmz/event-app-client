@@ -107,6 +107,7 @@ const SponsoringForm = ({ visible, onCancel, id, setId }) => {
     if (file.percent === 100 && file.response?.url) {
       setFieldValue(field, baseUrl + file.response.url);
     }
+    // in case of deleting
     if (values[field]) {
       setFieldValue(field, "");
     }

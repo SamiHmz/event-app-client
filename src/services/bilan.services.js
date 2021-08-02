@@ -23,3 +23,6 @@ export const getOneBilan = async (id) => {
 export const updateBilan = async (bilan, id) => {
   return await axios.put(`${apiUrl}bilan/${id}`, bilan);
 };
+export const validateBilan = async (id, decision) => {
+  return await axios.put(`${apiUrl}bilan/validate/${id}`, decision);
+};

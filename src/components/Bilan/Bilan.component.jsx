@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { typeUtilisateur } from "../../util/magic_strings";
+import { typeUtilisateur, etat } from "../../util/magic_strings";
 import { toast } from "react-toastify";
+import { Popconfirm } from "antd";
+import { Valide } from "../Icons/icons";
 import RenderFormAndButton from "../RenderFormAndButton/RenderFormAndButton.component";
 import RenderTable from "../RenderTable/RenderTable.component";
 import {
@@ -14,6 +16,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   startBilanFetching,
   startDeleteBilan,
+  startValidateBilan,
 } from "../../redux/bilan/bilan.actions";
 import {
   bilanSelector,
@@ -23,7 +26,7 @@ import { userSelector } from "../../redux/user/user.selectors";
 import { getAllBilanCount } from "../../services/bilan.services";
 import BilanForm from "../BilanForm/BilanForm.component";
 import Actions from "../Actions/Actions.component";
-import { AdminstrateurColumn } from "./BilanColumns";
+import { Column } from "./BilanColumns";
 import { getColumn } from "../../util/usefull_functions";
 
 const Bilan = () => {
@@ -36,7 +39,7 @@ const Bilan = () => {
   const bilanIsLoading = useSelector(bilanIsLoadingSelector);
   const [bilanId, setBilanId] = useState(null);
   const initiateurColumn = [
-    ...AdminstrateurColumn,
+    ...Column,
     {
       title: "Action",
       key: "action",
@@ -48,6 +51,30 @@ const Bilan = () => {
           title="bilan"
           id={key}
         />
+      ),
+    },
+  ];
+
+  const AdminstrateurColumn = [
+    ...Column,
+    {
+      title: "Action",
+      key: "action",
+      dataIndex: "key",
+      render: (key) => (
+        <Popconfirm
+          title={`Voulez vous aprouvé ou rejeté  ce bilan?`}
+          okText="Aprouvé"
+          cancelText="Rejeté"
+          onConfirm={() =>
+            dispatch(startValidateBilan(key, { etat: etat.APROUVER }))
+          }
+          onCancel={() =>
+            dispatch(startValidateBilan(key, { etat: etat.REJETER }))
+          }
+        >
+          <Valide />
+        </Popconfirm>
       ),
     },
   ];

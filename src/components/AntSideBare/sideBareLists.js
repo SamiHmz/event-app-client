@@ -30,21 +30,11 @@ export const intiateurSimpleList = [
     component: <Intervenants />,
     to: "/intervenants",
   },
-  // {
-  //   text: "Journalistes",
-  //   component: <Journaliste />,
-  //   to: "/demandes",
-  // },
   {
     text: "Sponsoring",
     component: <Dollar />,
     to: "/sponsorings",
   },
-  // {
-  //   text: "Reservations",
-  //   component: <Checked />,
-  //   to: "/demandes",
-  // },
   {
     text: "Bilans",
     component: <Bilan />,
@@ -55,9 +45,9 @@ export const intiateurSimpleList = [
 export const administrateurSimpleList = [
   ...intiateurSimpleList,
   {
-    text: "Comptes",
+    text: "Utilisateurs",
     component: <Acount />,
-    to: "/comptes",
+    to: "/utilisateurs",
   },
 ];
 

@@ -3,7 +3,7 @@ import { File, Eye } from "../Icons/icons";
 import Etat from "../Etat/Etat.component";
 import { Avatar, Image } from "antd";
 
-export const AdminstrateurColumn = [
+export const Column = [
   {
     title: "Evenement",
     dataIndex: "intitulé",
