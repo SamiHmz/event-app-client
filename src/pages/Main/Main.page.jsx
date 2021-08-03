@@ -17,7 +17,7 @@ import windowSize from "react-window-size";
 import { Drawer } from "antd";
 import Bilan from "../../components/Bilan/Bilan.component";
 import DetailsBilan from "../../components/DetailsBilan/DetailsBilan.component";
-
+import Utilisateur from "../../components/Utilisateur/Utilisateur.component";
 const Dashboard = () => <h1>i'am dashboard</h1>;
 const Main = ({ windowWidth }) => {
   const [visible, setVisible] = useState(false);
@@ -59,6 +59,7 @@ const Main = ({ windowWidth }) => {
             <Route exact path="/sponsorings" component={Sponsoring} />
             <Route exact path="/bilans/:id" component={DetailsBilan} />
             <Route exact path="/bilans" component={Bilan} />
+            <Route exact path="/utilisateurs" component={Utilisateur} />
           </Switch>
         </MainContainerRightBottom>
       </MainContainerRight>

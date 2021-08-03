@@ -33,10 +33,6 @@ const LoginForm = () => {
     },
     validationSchema: LoginSchema,
     onSubmit: async ({ type, email, password }) => {
-      // dispatch({
-      //   type: userActions.LOGIN_START,
-      //   payload: { type, email, password, setErrors },
-      // });
       dispatch(loginStart({ type, email, password, setErrors }));
     },
   });

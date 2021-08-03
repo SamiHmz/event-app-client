@@ -23,7 +23,7 @@ export const typeUtilisateur = {
   ADMINISTRATEUR: "administrateur",
   INITIATEUR: "initiateur",
 };
-const typeInitiateur = ["club", "association"];
+export const typeInitiateur = ["club", "association"];
 export const modeEvenement = ["Prèsentiel", "En Ligne"];
 
 export const modeSponsoring = ["espèce", "matériel"];

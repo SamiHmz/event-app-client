@@ -29,8 +29,7 @@ const AntSideBare = ({ windowWidth }) => {
       if (user.role === roles.SIMPLE) {
         return administrateurSimpleList;
       } else return administrateurAdminList;
-    }
-    if (user.role === roles.SIMPLE) {
+    } else {
       return intiateurSimpleList;
     }
     return [];

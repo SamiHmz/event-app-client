@@ -5,6 +5,7 @@ import notificationsReducer from "./notifications/notifications.reducer";
 import intervenantReducer from "./intervenant/intervenant.reducer";
 import sponsoringReducer from "./sponsoring/sponsoring.reducer";
 import bilanReducer from "./bilan/bilan.reducer";
+import utilisateurReducer from "./utilisateur/utilisateur.reducer";
 
 export default combineReducers({
   user: userReducer,
@@ -13,4 +14,5 @@ export default combineReducers({
   intervenant: intervenantReducer,
   sponsoring: sponsoringReducer,
   bilan: bilanReducer,
+  utilisateur: utilisateurReducer,
 });
