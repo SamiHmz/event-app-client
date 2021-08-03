@@ -1,8 +1,10 @@
 import { apiUrl } from "../config";
 import axios from "./axios";
 
-export const getAllDemandes = async (pageNumber = 1) => {
-  return await axios.get(`${apiUrl}/demande/${pageNumber}`);
+export const getAllDemandes = async (pageNumber = 1, filter) => {
+  const filterToJson = JSON.stringify(filter);
+  console.log("filterToJson", filterToJson);
+  return await axios.get(`${apiUrl}/demande/${pageNumber}/${filterToJson}`);
 };
 export const getAllNotHappenedEvent = async () => {
   return await axios.get(`${apiUrl}evenements/nothappened`);

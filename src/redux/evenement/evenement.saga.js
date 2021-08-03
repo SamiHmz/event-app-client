@@ -26,7 +26,11 @@ import {
 
 function* onFetchDemandesStarts({ payload }) {
   try {
-    const { data: demandes } = yield call(getAllDemandes, payload.pageNumber);
+    const { data: demandes } = yield call(
+      getAllDemandes,
+      payload.pageNumber,
+      payload.searchValue
+    );
     yield put(fetchingDemandesSuccess(demandes));
   } catch (error) {
     console.log(error);

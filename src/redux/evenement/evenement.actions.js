@@ -1,8 +1,8 @@
 import evenemetActions from "./evenement.actions.types";
 
-export const startFetchingDemandes = (pageNumber) => ({
+export const startFetchingDemandes = (pageNumber, searchValue) => ({
   type: evenemetActions.START_DEMANDE_FETCHING,
-  payload: { pageNumber },
+  payload: { pageNumber, searchValue },
 });
 export const fetchingDemandesSuccess = (demandes) => ({
   type: evenemetActions.DEMANDE_FETCHING_SUCCESS,
