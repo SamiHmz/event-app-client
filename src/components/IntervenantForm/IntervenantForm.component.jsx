@@ -107,8 +107,8 @@ const IntervenantForm = ({ visible, onCancel, id, setId }) => {
       form.resetFields();
       setId(null);
     }
-    if (values["photo"]) deleteFileInServer("photo");
-    if (values["cv"]) deleteFileInServer("cv");
+    if (values["photo"] && !id) deleteFileInServer("photo");
+    if (values["cv"] && !id) deleteFileInServer("cv");
     onCancel();
   };
 

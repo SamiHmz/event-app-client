@@ -12,3 +12,10 @@ export const setSearchField = (value) => ({
     value,
   },
 });
+export const setFilter = (field, value) => ({
+  type: SearchActions.SET_FILTER,
+  payload: {
+    field,
+    value,
+  },
+});

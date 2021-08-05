@@ -1,8 +1,13 @@
 import { apiUrl } from "../config";
 import axios from "./axios";
+import { stringifySearchAndFilter } from "../util/usefull_functions";
 
-export const getAllSponsoring = async (pageNumber) => {
-  return axios.get(`${apiUrl}sponsorings/${pageNumber}`);
+export const getAllSponsoring = async (pageNumber, search, filter) => {
+  const [searchToJson, filterToJson] = stringifySearchAndFilter(search, filter);
+
+  return axios.get(
+    `${apiUrl}sponsorings/${pageNumber}/${searchToJson}/${filterToJson}`
+  );
 };
 
 export const getAllSponsoringCount = async () => {

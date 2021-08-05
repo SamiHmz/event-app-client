@@ -5,7 +5,7 @@ import Etat from "../Etat/Etat.component";
 import EvenementForm from "../EvenementForm/EvenementForm.componenet";
 import { useSelector, useDispatch } from "react-redux";
 import { userSelector } from "../../redux/user/user.selectors";
-import { searchValueSelector } from "../../redux/search/search.selectors";
+
 import { typeUtilisateur } from "../../util/magic_strings";
 import { toast } from "react-toastify";
 import RenderFormAndButton from "../RenderFormAndButton/RenderFormAndButton.component";
@@ -29,12 +29,14 @@ import {
   ContainerTopLeft,
 } from "./DemandeEvenement.styles";
 
-import Search from "../../components/Search/Search.component";
-
 import { AdminstrateurColumn } from "./demandesColums";
-import SearchInput from "../SearchInput/SearchInput.component";
 import Actions from "../Actions/Actions.component";
 import { getColumn } from "../../util/usefull_functions";
+import Filter from "../Filter/Filter.component";
+import Search from "../../components/Search/Search.component";
+import { demandeSearchOptions } from "../../util/search_options";
+import { demandeFilterOptions } from "../../util/filter_options";
+import useSearch from "../../hooks/useSearch";
 
 function DemandeEvenement(props) {
   const initiateurColumn = [
@@ -42,6 +44,21 @@ function DemandeEvenement(props) {
       title: "Intitulé de l'évenement",
       dataIndex: "intitulé",
       key: "intitulé",
+    },
+    {
+      title: "Lieu",
+      dataIndex: "lieu",
+      key: "lieu",
+    },
+    {
+      title: "Type",
+      dataIndex: "type",
+      key: "type",
+    },
+    {
+      title: "Mode",
+      dataIndex: "mode",
+      key: "mode",
     },
     {
       title: "Date de la demande",
@@ -92,17 +109,18 @@ function DemandeEvenement(props) {
   const data = useSelector(demandesSelector);
   const isLoading = useSelector(demandesIsLoadingSelector);
   const user = useSelector(userSelector);
-  const searchValue = useSelector(searchValueSelector);
+  const { searchValue, filter } = useSearch();
+
   const searchOptions =
     user.type === typeUtilisateur.ADMINISTRATEUR
-      ? ["intitulé", "initiateur", "lieu"]
-      : ["intitulé", "lieu"];
+      ? [...demandeSearchOptions, typeUtilisateur.INITIATEUR]
+      : demandeSearchOptions;
 
   const getDemandesOnFirstLoad = async () => {
     try {
       const { data } = await getDemandesCount();
       setDemandeCount(data.count);
-      dispatch(startFetchingDemandes(1, searchValue));
+      dispatch(startFetchingDemandes(1, searchValue, filter));
     } catch (error) {
       console.log(error);
     }
@@ -110,10 +128,10 @@ function DemandeEvenement(props) {
 
   useEffect(() => {
     getDemandesOnFirstLoad();
-  }, [searchValue]);
+  }, [searchValue, filter]);
 
   const handlePageChange = (page) => {
-    dispatch(startFetchingDemandes(page, searchValue));
+    dispatch(startFetchingDemandes(page, searchValue, filter));
   };
 
   const handleEdit = async (id) => {
@@ -139,6 +157,7 @@ function DemandeEvenement(props) {
             defaultSearchField={searchOptions[0]}
             options={searchOptions}
           />
+          <Filter list={demandeFilterOptions} />
         </ContainerTopLeft>
         <RenderFormAndButton
           visible={visible}

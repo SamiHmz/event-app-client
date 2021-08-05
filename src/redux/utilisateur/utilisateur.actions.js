@@ -1,9 +1,11 @@
 import UtilisateurActions from "./utilisateur.actions.type";
 
-export const startUtilisateurFetching = (pageNumber) => ({
+export const startUtilisateurFetching = (pageNumber, search, filter) => ({
   type: UtilisateurActions.START_UTILISATEUR_FETCHING,
   payload: {
     pageNumber,
+    search,
+    filter,
   },
 });
 

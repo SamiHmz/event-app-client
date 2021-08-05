@@ -20,7 +20,12 @@ import {
 
 export function* onBilanFetchingStart({ payload }) {
   try {
-    const { data: bilans } = yield call(getAllBilan, payload.pageNumber);
+    const { data: bilans } = yield call(
+      getAllBilan,
+      payload.pageNumber,
+      payload.search,
+      payload.filter
+    );
     yield put(bilanFetchingSuccess(bilans));
   } catch (error) {
     console.log(error);

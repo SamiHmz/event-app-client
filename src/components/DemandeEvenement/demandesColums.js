@@ -10,9 +10,19 @@ export const AdminstrateurColumn = [
     key: "initiateur",
   },
   {
-    title: "Intitulé de l'évenement",
-    dataIndex: "intitulé",
-    key: "intitulé",
+    title: "Lieu",
+    dataIndex: "lieu",
+    key: "lieu",
+  },
+  {
+    title: "Type",
+    dataIndex: "type",
+    key: "type",
+  },
+  {
+    title: "Mode",
+    dataIndex: "mode",
+    key: "mode",
   },
   {
     title: "Date de la demande",

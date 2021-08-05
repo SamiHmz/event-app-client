@@ -9,22 +9,21 @@ export const demandesSelector = createSelector(
   ({ demandes }, { currentUser }) => {
     if (currentUser.type === typeUtilisateur.INITIATEUR) {
       return demandes.map((demande) => {
-        return {
-          key: demande.id,
-          intitulé: demande.intitulé,
-          date: moment(demande.createdAt).format("DD-MMM-YYYY , h:mm:ss a"),
-          etat: demande.etat,
-        };
+        demande.key = demande.id;
+        demande.date = moment(demande.createdAt).format(
+          "DD-MMM-YYYY , h:mm:ss a"
+        );
+        return demande;
       });
     }
     return demandes.map((demande) => {
-      return {
-        initiateur: demande.initiateur.nom,
-        key: demande.id,
-        intitulé: demande.intitulé,
-        date: moment(demande.createdAt).format("DD-MMM-YYYY , h:mm:ss a"),
-        etat: demande.etat,
-      };
+      demande.key = demande.id;
+      demande.date = moment(demande.createdAt).format(
+        "DD-MMM-YYYY , h:mm:ss a"
+      );
+      demande.initiateur = demande.initiateur.nom;
+
+      return demande;
     });
   }
 );

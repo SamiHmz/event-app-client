@@ -1,9 +1,11 @@
 import IntervenantActions from "./intervenant.actions.type";
 
-export const startIntervenantFetching = (pageNumber) => ({
+export const startIntervenantFetching = (pageNumber, search, filter) => ({
   type: IntervenantActions.START_INTERVENANT_FETCHING,
   payload: {
     pageNumber,
+    search,
+    filter,
   },
 });
 

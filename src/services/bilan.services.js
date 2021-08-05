@@ -1,8 +1,13 @@
 import { apiUrl } from "../config";
 import axios from "./axios";
+import { stringifySearchAndFilter } from "../util/usefull_functions";
 
-export const getAllBilan = async (pageNumber) => {
-  return axios.get(`${apiUrl}bilans/${pageNumber}`);
+export const getAllBilan = async (pageNumber, search, filter) => {
+  const [searchToJson, filterToJson] = stringifySearchAndFilter(search, filter);
+
+  return axios.get(
+    `${apiUrl}bilans/${pageNumber}/${searchToJson}/${filterToJson}`
+  );
 };
 
 export const getAllBilanCount = async () => {

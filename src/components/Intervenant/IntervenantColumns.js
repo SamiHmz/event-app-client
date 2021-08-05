@@ -23,6 +23,26 @@ export const AdminstrateurColumn = [
     key: "prenom",
   },
   {
+    title: "Type",
+    dataIndex: "type",
+    key: "type",
+  },
+  {
+    title: "Sexe",
+    dataIndex: "sexe",
+    key: "sexe",
+  },
+  {
+    title: "Telephone",
+    dataIndex: "telephone",
+    key: "telephone",
+  },
+  {
+    title: "Email",
+    dataIndex: "email",
+    key: "email",
+  },
+  {
     title: "Etat",
     key: "etat",
     dataIndex: "etat",

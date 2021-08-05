@@ -1,8 +1,12 @@
 import { apiUrl } from "../config";
 import axios from "./axios";
+import { stringifySearchAndFilter } from "../util/usefull_functions";
 
-export const getAllIntervenant = async (pageNumber) => {
-  return axios.get(`${apiUrl}intervenants/${pageNumber}`);
+export const getAllIntervenant = async (pageNumber, search, filter) => {
+  const [searchToJson, filterToJson] = stringifySearchAndFilter(search, filter);
+  return axios.get(
+    `${apiUrl}intervenants/${pageNumber}/${searchToJson}/${filterToJson}`
+  );
 };
 
 export const getAllIntervenantCount = async () => {

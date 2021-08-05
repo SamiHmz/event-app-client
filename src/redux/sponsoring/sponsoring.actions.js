@@ -1,9 +1,11 @@
 import sponsoringActions from "./sponsoring.actions.type";
 
-export const startSponsoringFetching = (pageNumber) => ({
+export const startSponsoringFetching = (pageNumber, search, filter) => ({
   type: sponsoringActions.START_SPONSORING_FETCHING,
   payload: {
     pageNumber,
+    search,
+    filter,
   },
 });
 

@@ -1,10 +1,12 @@
 import { apiUrl } from "../config";
 import axios from "./axios";
+import { stringifySearchAndFilter } from "../util/usefull_functions";
 
-export const getAllDemandes = async (pageNumber = 1, filter) => {
-  const filterToJson = JSON.stringify(filter);
-  console.log("filterToJson", filterToJson);
-  return await axios.get(`${apiUrl}/demande/${pageNumber}/${filterToJson}`);
+export const getAllDemandes = async (pageNumber = 1, search, filter) => {
+  const [searchToJson, filterToJson] = stringifySearchAndFilter(search, filter);
+  return await axios.get(
+    `${apiUrl}/demande/${pageNumber}/${searchToJson}/${filterToJson}`
+  );
 };
 export const getAllNotHappenedEvent = async () => {
   return await axios.get(`${apiUrl}evenements/nothappened`);

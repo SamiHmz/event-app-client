@@ -6,6 +6,7 @@ export const bilanSelector = createSelector(bilanInputSelector, (bilan) =>
   bilan.bilansList.map((bilan) => {
     bilan.key = bilan.id;
     bilan.intitulé = bilan.evenement?.intitulé;
+    bilan.initiateur = bilan.evenement?.initiateur?.nom;
     return bilan;
   })
 );

@@ -10,6 +10,11 @@ export const Column = [
     key: "intitulé",
   },
   {
+    title: "Initiateur",
+    dataIndex: "initiateur",
+    key: "initiateur",
+  },
+  {
     title: "Participant Interne",
     dataIndex: "participants_intern",
     key: "participants_intern",

@@ -28,7 +28,9 @@ export function* onSponsoringFetchingStart({ payload }) {
   try {
     const { data: sponsorings } = yield call(
       getAllSponsoring,
-      payload.pageNumber
+      payload.pageNumber,
+      payload.search,
+      payload.filter
     );
     yield put(sponsoringFetchingSuccess(sponsorings));
   } catch (error) {

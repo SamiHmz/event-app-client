@@ -9,7 +9,12 @@ import {
   ContainerBottom,
   ContainerTopLeft,
 } from "../DemandeEvenement/DemandeEvenement.styles";
-import SearchInput from "../SearchInput/SearchInput.component";
+import Search from "../Search/Search.component";
+import Filter from "../Filter/Filter.component";
+import {
+  searchValueSelector,
+  filterSelector,
+} from "../../redux/search/search.selectors";
 import { useSelector, useDispatch } from "react-redux";
 import {
   startIntervenantFetching,
@@ -28,11 +33,15 @@ import IntervenantForm from "../IntervenantForm/IntervenantForm.component";
 import Actions from "../Actions/Actions.component";
 import { AdminstrateurColumn } from "./IntervenantColumns";
 import { getColumn } from "../../util/usefull_functions";
+import { intervenantSearchOptions } from "../../util/search_options";
+import { intervenantFilterOptions } from "../../util/filter_options";
 
 const Intervenant = () => {
   const [IntervenantCount, setIntervenantCount] = useState(0);
   const [visible, setVisible] = useState(false);
   const user = useSelector(userSelector);
+  const searchValue = useSelector(searchValueSelector);
+  const filter = useSelector(filterSelector);
 
   const dispatch = useDispatch();
   const intervenantList = useSelector(intervenantSelector);
@@ -60,16 +69,16 @@ const Intervenant = () => {
       try {
         const { data } = await getAllIntervenantCount();
         setIntervenantCount(data.count);
-        dispatch(startIntervenantFetching(1));
+        dispatch(startIntervenantFetching(1, searchValue, filter));
       } catch (error) {
         console.log(error);
       }
     };
     onLoad();
-  }, []);
+  }, [searchValue, filter]);
 
   const handlePageChange = (page) => {
-    dispatch(startIntervenantFetching(page));
+    dispatch(startIntervenantFetching(page, searchValue, filter));
   };
   const handleEdit = async (id) => {
     try {
@@ -89,7 +98,11 @@ const Intervenant = () => {
     <Container>
       <ContainerTop>
         <ContainerTopLeft>
-          <SearchInput />
+          <Search
+            defaultSearchField={intervenantSearchOptions[0]}
+            options={intervenantSearchOptions}
+          />
+          <Filter list={intervenantFilterOptions} />
         </ContainerTopLeft>
         <RenderFormAndButton
           visible={visible}

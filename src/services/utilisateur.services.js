@@ -1,9 +1,13 @@
 import { apiUrl } from "../config";
 import axios from "./axios";
 import { typeUtilisateur } from "../util/magic_strings";
+import { stringifySearchAndFilter } from "../util/usefull_functions";
 
-export const getAllUtilisateur = async (pageNumber) => {
-  return axios.get(`${apiUrl}users/${pageNumber}`);
+export const getAllUtilisateur = async (pageNumber, search, filter) => {
+  const [searchToJson, filterToJson] = stringifySearchAndFilter(search, filter);
+  return axios.get(
+    `${apiUrl}users/${pageNumber}/${searchToJson}/${filterToJson}`
+  );
 };
 
 export const getAllUtilisateurCount = async () => {

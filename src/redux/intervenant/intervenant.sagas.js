@@ -28,7 +28,9 @@ export function* onIntervenantFetchingStart({ payload }) {
   try {
     const { data: intervenants } = yield call(
       getAllIntervenant,
-      payload.pageNumber
+      payload.pageNumber,
+      payload.search,
+      payload.filter
     );
     yield put(intervenantFetchingSuccess(intervenants));
   } catch (error) {

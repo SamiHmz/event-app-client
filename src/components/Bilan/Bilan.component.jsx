@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { typeUtilisateur, etat } from "../../util/magic_strings";
-import { toast } from "react-toastify";
+import { Eye } from "../Icons/icons";
+import Etat from "../Etat/Etat.component";
 import { Popconfirm } from "antd";
 import { Valide } from "../Icons/icons";
 import RenderFormAndButton from "../RenderFormAndButton/RenderFormAndButton.component";
 import RenderTable from "../RenderTable/RenderTable.component";
+import Filter from "../Filter/Filter.component";
+import Search from "../../components/Search/Search.component";
 import {
   Container,
   ContainerTop,
   ContainerBottom,
   ContainerTopLeft,
 } from "../DemandeEvenement/DemandeEvenement.styles";
-import SearchInput from "../SearchInput/SearchInput.component";
+import { bilanSearchOptions } from "../../util/search_options";
+import { bilanFilterOptions } from "../../util/filter_options";
 import { useSelector, useDispatch } from "react-redux";
 import {
   startBilanFetching,
@@ -28,6 +32,7 @@ import BilanForm from "../BilanForm/BilanForm.component";
 import Actions from "../Actions/Actions.component";
 import { Column } from "./BilanColumns";
 import { getColumn } from "../../util/usefull_functions";
+import useSearch from "../../hooks/useSearch";
 
 const Bilan = () => {
   const [BilanCount, setBilanCount] = useState(0);
@@ -38,8 +43,46 @@ const Bilan = () => {
   const bilanList = useSelector(bilanSelector);
   const bilanIsLoading = useSelector(bilanIsLoadingSelector);
   const [bilanId, setBilanId] = useState(null);
+  const { searchValue, filter } = useSearch();
+  const searchOptions =
+    user.type === typeUtilisateur.ADMINISTRATEUR
+      ? [...bilanSearchOptions, typeUtilisateur.INITIATEUR]
+      : bilanSearchOptions;
+
   const initiateurColumn = [
-    ...Column,
+    {
+      title: "Evenement",
+      dataIndex: "intitulé",
+      key: "intitulé",
+    },
+    {
+      title: "Participant Interne",
+      dataIndex: "participants_intern",
+      key: "participants_intern",
+    },
+    {
+      title: "Participant Externe",
+      dataIndex: "participants_extern",
+      key: "participants_extern",
+    },
+    {
+      title: "Etat",
+      key: "etat",
+      dataIndex: "etat",
+      render: (etat) => (
+        <>
+          <Etat value={etat} />
+        </>
+      ),
+    },
+    {
+      title: "Datails ",
+      dataIndex: "key",
+      key: "details",
+      render: (key) => {
+        return <Eye to={key} title="Voir les details de l'intervenant " />;
+      },
+    },
     {
       title: "Action",
       key: "action",
@@ -84,16 +127,16 @@ const Bilan = () => {
       try {
         const { data } = await getAllBilanCount();
         setBilanCount(data.count);
-        dispatch(startBilanFetching(1));
+        dispatch(startBilanFetching(1, searchValue, filter));
       } catch (error) {
         console.log(error);
       }
     };
     onLoad();
-  }, []);
+  }, [searchValue, filter]);
 
   const handlePageChange = (page) => {
-    dispatch(startBilanFetching(page));
+    dispatch(startBilanFetching(page, searchValue, filter));
   };
   const handleEdit = async (id) => {
     try {
@@ -107,7 +150,11 @@ const Bilan = () => {
     <Container>
       <ContainerTop>
         <ContainerTopLeft>
-          <SearchInput />
+          <Search
+            defaultSearchField={searchOptions[0]}
+            options={searchOptions}
+          />
+          <Filter list={bilanFilterOptions} />
         </ContainerTopLeft>
         <RenderFormAndButton
           visible={visible}

@@ -9,6 +9,11 @@ export const AdminstrateurColumn = [
     key: "intitulé",
   },
   {
+    title: "Initiateur",
+    dataIndex: "initiateur",
+    key: "initiateur",
+  },
+  {
     title: "Sponsor",
     dataIndex: "sponsor",
     key: "sponsor",

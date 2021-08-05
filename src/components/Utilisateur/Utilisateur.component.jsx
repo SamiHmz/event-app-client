@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { typeUtilisateur, etat } from "../../util/magic_strings";
-import { toast } from "react-toastify";
-import { Popconfirm } from "antd";
-import { Valide } from "../Icons/icons";
+import Filter from "../Filter/Filter.component";
+import Search from "../../components/Search/Search.component";
 import RenderFormAndButton from "../RenderFormAndButton/RenderFormAndButton.component";
 import RenderTable from "../RenderTable/RenderTable.component";
 import {
@@ -11,7 +10,6 @@ import {
   ContainerBottom,
   ContainerTopLeft,
 } from "../DemandeEvenement/DemandeEvenement.styles";
-import SearchInput from "../SearchInput/SearchInput.component";
 import { useSelector, useDispatch } from "react-redux";
 import {
   startUtilisateurFetching,
@@ -26,7 +24,9 @@ import { getAllUtilisateurCount } from "../../services/utilisateur.services";
 import UtilisateurForm from "../UtilisateurForm/UtilisateurForm.component";
 import Actions from "../Actions/Actions.component";
 import { Column } from "./UtilisateurColumns";
-import { getColumn } from "../../util/usefull_functions";
+import useSearch from "../../hooks/useSearch";
+import { usersFilterOptions } from "../../util/filter_options";
+import { uesersSearchOptions } from "../../util/search_options";
 
 const Utilisateur = () => {
   const [UtilisateurCount, setUtilisateurCount] = useState(0);
@@ -37,6 +37,7 @@ const Utilisateur = () => {
   const utilisateurList = useSelector(utilisateurSelector);
   const utilisateurIsLoading = useSelector(utilisateurIsLoadingSelector);
   const [utilisateurId, setUtilisateurId] = useState(null);
+  const { searchValue, filter } = useSearch();
 
   const AdminstrateurColumn = [
     ...Column,
@@ -61,16 +62,16 @@ const Utilisateur = () => {
       try {
         const { data } = await getAllUtilisateurCount();
         setUtilisateurCount(data.count);
-        dispatch(startUtilisateurFetching(1));
+        dispatch(startUtilisateurFetching(1, searchValue, filter));
       } catch (error) {
         console.log(error);
       }
     };
     onLoad();
-  }, []);
+  }, [searchValue, filter]);
 
   const handlePageChange = (page) => {
-    dispatch(startUtilisateurFetching(page));
+    dispatch(startUtilisateurFetching(page, searchValue, filter));
   };
   const handleEdit = async (id) => {
     try {
@@ -84,7 +85,11 @@ const Utilisateur = () => {
     <Container>
       <ContainerTop>
         <ContainerTopLeft>
-          <SearchInput />
+          <Search
+            defaultSearchField={uesersSearchOptions[0]}
+            options={uesersSearchOptions}
+          />
+          <Filter list={usersFilterOptions} />
         </ContainerTopLeft>
         <RenderFormAndButton
           visible={visible}

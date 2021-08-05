@@ -10,3 +10,8 @@ export const searchFieldSelector = createSelector(
   sponsoringInputSelector,
   (search) => search.searchField
 );
+
+export const filterSelector = createSelector(
+  sponsoringInputSelector,
+  (search) => search.filter
+);

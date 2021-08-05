@@ -20,7 +20,9 @@ export function* onUtilisateurFetchingStart({ payload }) {
   try {
     const { data: utilisateurs } = yield call(
       getAllUtilisateur,
-      payload.pageNumber
+      payload.pageNumber,
+      payload.search,
+      payload.filter
     );
     yield put(utilisateurFetchingSuccess(utilisateurs));
   } catch (error) {

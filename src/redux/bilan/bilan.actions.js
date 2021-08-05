@@ -1,9 +1,11 @@
 import BilanActions from "./bilan.actions.type";
 
-export const startBilanFetching = (pageNumber) => ({
+export const startBilanFetching = (pageNumber, search, filter) => ({
   type: BilanActions.START_BILAN_FETCHING,
   payload: {
     pageNumber,
+    search,
+    filter,
   },
 });
 

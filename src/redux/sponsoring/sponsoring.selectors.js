@@ -11,6 +11,7 @@ export const sponsoringSelector = createSelector(
     sponsoring.sponsoringList.map((sponsoring) => {
       sponsoring.key = sponsoring.id;
       sponsoring.intitulé = sponsoring.evenement?.intitulé;
+      sponsoring.initiateur = sponsoring.evenement?.initiateur?.nom;
       return sponsoring;
     })
 );

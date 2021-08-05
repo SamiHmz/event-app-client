@@ -29,7 +29,8 @@ function* onFetchDemandesStarts({ payload }) {
     const { data: demandes } = yield call(
       getAllDemandes,
       payload.pageNumber,
-      payload.searchValue
+      payload.searchValue,
+      payload.filter
     );
     yield put(fetchingDemandesSuccess(demandes));
   } catch (error) {
