@@ -11,6 +11,7 @@ import {
   deleteDemandeSuccess,
   updateValidationSuccess,
   deleteValidationSuccess,
+  fetchingEvenementsSuccess,
 } from "./evenement.actions";
 import {
   getAllDemandes,
@@ -22,6 +23,7 @@ import {
   deleteDemande,
   updateDemandeValidation,
   deleteDemandeValidation,
+  getAllEvenements,
 } from "../../services/evenement.services";
 
 function* onFetchDemandesStarts({ payload }) {
@@ -186,6 +188,29 @@ export function* watchDeleteValidationStart() {
     onDeleteValidationStart
   );
 }
+
+/**************** Evenement ************/
+
+function* onFetchEvenementsStarts({ payload }) {
+  try {
+    const { data: demandes } = yield call(
+      getAllEvenements,
+      payload.pageNumber,
+      payload.searchValue,
+      payload.filter
+    );
+    yield put(fetchingEvenementsSuccess(demandes));
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export function* watchFetchEvenementsStart() {
+  yield takeLatest(
+    evenemetActions.START_EVENEMENT_FETCHING,
+    onFetchEvenementsStarts
+  );
+}
 export function* evenementSagas() {
   yield all([
     call(watchEvenementCreated),
@@ -197,5 +222,6 @@ export function* evenementSagas() {
     call(watchDeleteDemandeStart),
     call(watchUpdateValidationStart),
     call(watchDeleteValidationStart),
+    call(watchFetchEvenementsStart),
   ]);
 }

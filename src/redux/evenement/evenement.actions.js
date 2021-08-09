@@ -99,3 +99,19 @@ export const deleteValidationSuccess = (id) => ({
     id,
   },
 });
+
+export const startFetchingEvenements = (pageNumber, searchValue, filter) => ({
+  type: evenemetActions.START_EVENEMENT_FETCHING,
+  payload: { pageNumber, searchValue, filter },
+});
+export const fetchingEvenementsSuccess = (evenements) => ({
+  type: evenemetActions.EVENEMENT_FETCHING_SUCCESS,
+  payload: { evenements },
+});
+
+export const resetEvenements = () => ({
+  type: evenemetActions.RESET_EVENEMENT,
+});
+export const setEvenementsPageNumber = () => ({
+  type: evenemetActions.SET_EVENEMENT_PAGE_NUMBER,
+});

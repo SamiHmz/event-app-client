@@ -2,10 +2,10 @@ import { createSelector } from "reselect";
 import { userInputSelector } from "../user/user.selectors";
 import { typeUtilisateur } from "../../util/magic_strings";
 import moment from "moment";
-const demandesInputSelector = (state) => state.evenement;
+const evenmentInputSelector = (state) => state.evenement;
 
 export const demandesSelector = createSelector(
-  [demandesInputSelector, userInputSelector],
+  [evenmentInputSelector, userInputSelector],
   ({ demandes }, { currentUser }) => {
     if (currentUser.type === typeUtilisateur.INITIATEUR) {
       return demandes.map((demande) => {
@@ -28,12 +28,12 @@ export const demandesSelector = createSelector(
   }
 );
 export const demandesIsLoadingSelector = createSelector(
-  demandesInputSelector,
+  evenmentInputSelector,
   ({ isDemandesLoading }) => isDemandesLoading
 );
 
 export const demandeValidationSelector = createSelector(
-  demandesInputSelector,
+  evenmentInputSelector,
   ({ demandesValidation }) => {
     return demandesValidation.map((validation) => {
       return {
@@ -47,16 +47,30 @@ export const demandeValidationSelector = createSelector(
 );
 
 export const demandeValidationIsLoadingSelector = createSelector(
-  demandesInputSelector,
+  evenmentInputSelector,
   ({ isValidationLoading }) => isValidationLoading
 );
 
 export const currentDemandeSelector = createSelector(
-  demandesInputSelector,
+  evenmentInputSelector,
   ({ currentDemande }) => currentDemande
 );
 
 export const currentDemandeIsLoadingSelector = createSelector(
-  demandesInputSelector,
+  evenmentInputSelector,
   ({ isCurrentDemandeLoading }) => isCurrentDemandeLoading
+);
+
+export const evenementsSelector = createSelector(
+  evenmentInputSelector,
+  ({ evenements }) => evenements
+);
+export const evenementsIsLoadingSelector = createSelector(
+  evenmentInputSelector,
+  ({ isEvenementLoading }) => isEvenementLoading
+);
+
+export const evenementPageNumberSelector = createSelector(
+  evenmentInputSelector,
+  ({ evenementPageNumber }) => evenementPageNumber
 );

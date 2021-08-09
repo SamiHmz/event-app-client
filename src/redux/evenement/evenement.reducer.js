@@ -1,5 +1,8 @@
 import evenemetActions from "./evenement.actions.types";
 const INITIAL_STATE = {
+  evenements: [],
+  evenementPageNumber: 1,
+  isEvenementLoading: true,
   demandes: [],
   demandesValidation: [],
   isDemandesLoading: true,
@@ -73,6 +76,22 @@ const evenementReducer = (state = INITIAL_STATE, action) => {
         demandesValidation: state.demandesValidation.filter(
           (validation) => validation.id !== action.payload.id
         ),
+      };
+    case evenemetActions.EVENEMENT_FETCHING_SUCCESS:
+      return {
+        ...state,
+        isEvenementLoading: false,
+        evenements: [...state.evenements, ...action.payload.evenements],
+      };
+    case evenemetActions.RESET_EVENEMENT:
+      return {
+        ...state,
+        evenements: [],
+      };
+    case evenemetActions.SET_EVENEMENT_PAGE_NUMBER:
+      return {
+        ...state,
+        evenementPageNumber: state.evenementPageNumber + 1,
       };
     default:
       return state;

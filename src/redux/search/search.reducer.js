@@ -7,7 +7,9 @@ const INITIAL_STATE = {
 };
 
 const setFilter = (state, action) => {
-  if (action.payload.value.length === 0) {
+  if (action.payload.field === "") {
+    return {};
+  } else if (action.payload.value.length === 0) {
     delete state.filter[action.payload.field];
     return { ...state.filter };
   } else

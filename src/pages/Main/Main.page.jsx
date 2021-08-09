@@ -18,6 +18,7 @@ import { Drawer } from "antd";
 import Bilan from "../../components/Bilan/Bilan.component";
 import DetailsBilan from "../../components/DetailsBilan/DetailsBilan.component";
 import Utilisateur from "../../components/Utilisateur/Utilisateur.component";
+import Evenement from "../../components/Evenement/Evenement.component";
 const Dashboard = () => <h1>i'am dashboard</h1>;
 const Main = ({ windowWidth }) => {
   const [visible, setVisible] = useState(false);
@@ -60,6 +61,7 @@ const Main = ({ windowWidth }) => {
             <Route exact path="/bilans/:id" component={DetailsBilan} />
             <Route exact path="/bilans" component={Bilan} />
             <Route exact path="/utilisateurs" component={Utilisateur} />
+            <Route exact path="/evenements" component={Evenement} />
           </Switch>
         </MainContainerRightBottom>
       </MainContainerRight>

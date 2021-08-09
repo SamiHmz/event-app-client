@@ -33,6 +33,7 @@ const Filter = ({ list }) => {
         dispatch(setFilter(item.title, defaultItem));
       }
     });
+    return () => dispatch(setFilter(""));
   }, []);
 
   return (
