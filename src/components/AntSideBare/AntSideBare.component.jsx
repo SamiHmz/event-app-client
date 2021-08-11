@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
-import { Menu, Button } from "antd";
+import { Menu } from "antd";
 import logo from "../../img/logo.png";
 
 import { SideBareLogo } from "../sideBare/sideBare.styles";
@@ -19,10 +19,6 @@ import windowSize from "react-window-size";
 const MenuItem = Menu.Item;
 
 const AntSideBare = ({ windowWidth }) => {
-  const [collapsed, setColapsed] = useState(false);
-
-  const history = useHistory();
-
   const user = useSelector(userSelector);
   const getCurrentList = () => {
     if (user.type === typeUtilisateur.ADMINISTRATEUR) {
@@ -34,6 +30,11 @@ const AntSideBare = ({ windowWidth }) => {
     }
     return [];
   };
+
+  const history = useHistory();
+  const defaultSelectedKeys = getCurrentList().findIndex(
+    (item) => item.to === history.location.pathname
+  );
 
   const renderSideBareMenuItem = (MenuItems) => {
     return MenuItems.map(({ text, component, to }, index) => {
@@ -48,11 +49,10 @@ const AntSideBare = ({ windowWidth }) => {
   return (
     <AntSideBareContainer windowWidth={windowWidth}>
       <Menu
-        defaultSelectedKeys={["2"]}
+        defaultSelectedKeys={[defaultSelectedKeys.toString()]}
         defaultOpenKeys={["sub1"]}
         mode="inline"
         theme="dark"
-        inlineCollapsed={collapsed}
         style={{ minHeight: "100%" }}
       >
         <SideBareLogo src={logo} />

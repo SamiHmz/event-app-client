@@ -5,7 +5,8 @@ import { ReactComponent as Menu } from "../../img/menu.svg";
 import { ReactComponent as Bell } from "../../img/bxs-bell.svg";
 import Notifications from "../Notifications/Notifications.component";
 import { Typography } from "antd";
-import Avatar from "../Avatar/Avatar.component";
+// import Avatar from "../Avatar/Avatar.component";
+import { Avatar } from "antd";
 import { useSelector } from "react-redux";
 import { userSelector } from "../../redux/user/user.selectors";
 import {
@@ -15,6 +16,7 @@ import {
 } from "./NavBar.styles";
 import img from "../../img/avatar.jpg";
 import windowSize from "react-window-size";
+import { baseUrl } from "../../config.json";
 
 const iconStyles = { fontSize: "20px", cursor: "pointer" };
 
@@ -35,7 +37,17 @@ const NavBar = ({ windowWidth, onOpen }) => {
         <Text type="secondary">Tuesday,April 27th,2021</Text>
         <NavBarElementsRight>
           <Notifications />
-          <Avatar src={img} />
+          <Avatar
+            src={baseUrl + user.photo}
+            size={{
+              xs: "32px",
+              sm: "32px",
+              md: "32px",
+              lg: "48x",
+              xl: "48px",
+              xxl: "64px",
+            }}
+          />
           <Text type="secondary">{user.nom}</Text>
           <Icon
             component={ShevronDown}

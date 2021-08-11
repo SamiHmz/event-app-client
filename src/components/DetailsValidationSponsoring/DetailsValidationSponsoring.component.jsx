@@ -20,7 +20,11 @@ import { initiateurColumns } from "./detailsValidationDemandeColumns";
 import Actions from "../Actions/Actions.component";
 import RenderTable from "../RenderTable/RenderTable.component";
 import { getColumn } from "../../util/usefull_functions";
-
+import {
+  addBeforeCloseHandler,
+  removeBeforeCloseHandler,
+  removeListenersFromElement,
+} from "../../util/usefull_functions";
 const DetailsValidationSponsoring = () => {
   const { id } = useParams();
   const { type } = useSelector(userSelector);
@@ -45,8 +49,15 @@ const DetailsValidationSponsoring = () => {
       }
     };
     setIsOpened(id, true);
-    return () => setIsOpened(id, false);
-  });
+    // var cb = () => setIsOpened(id, false);
+    // addBeforeCloseHandler(cb);
+
+    return () => {
+      setIsOpened(id, false);
+      // removeBeforeCloseHandler(cb);
+      // // removeListenersFromElement(window, "beforeunload");
+    };
+  }, []);
 
   useEffect(() => {
     dispatch(startSponsoringValidationFetching(id));

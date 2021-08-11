@@ -94,28 +94,28 @@ const UtilisateurForm = ({ visible, onCancel, id, setId }) => {
     handleSubmit,
     handleChange,
     handleBlur,
-    handleReset,
     setFieldTouched,
     values,
     setFieldValue,
     setErrors,
     errors,
     touched,
-    resetForm,
     setValues,
   } = formik;
+
   const handlCloseForm = () => {
-    if (id) {
+    if (isEditing) {
       form.resetFields();
       setId(null);
+    } else {
+      if (values["photo"]) deleteFileInServer("photo");
     }
-    if (values["photo"]) deleteFileInServer("photo");
     onCancel();
   };
 
   const setFileUrlInForm = (file, field) => {
     if (file.percent === 100 && file.response?.url) {
-      setFieldValue(field, baseUrl + file.response.url);
+      setFieldValue(field, file.response.url);
     }
     if (values[field]) {
       setFieldValue(field, "");

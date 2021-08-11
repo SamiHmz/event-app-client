@@ -86,6 +86,8 @@ const evenementReducer = (state = INITIAL_STATE, action) => {
     case evenemetActions.RESET_EVENEMENT:
       return {
         ...state,
+        evenementPageNumber: 1,
+        isEvenementLoading: true,
         evenements: [],
       };
     case evenemetActions.SET_EVENEMENT_PAGE_NUMBER:

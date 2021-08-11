@@ -2,6 +2,7 @@ import { createSelector } from "reselect";
 import moment from "moment";
 import { userInputSelector } from "../user/user.selectors";
 import { typeUtilisateur } from "../../util/magic_strings";
+import { baseUrl } from "../../config.json";
 
 const intervenantInputSelector = (state) => state.intervenant;
 
@@ -10,6 +11,7 @@ export const intervenantSelector = createSelector(
   (intervenant) =>
     intervenant.intervenantsList.map((intervenant) => {
       intervenant.key = intervenant.id;
+      intervenant.photo = baseUrl + intervenant.photo;
       return intervenant;
     })
 );

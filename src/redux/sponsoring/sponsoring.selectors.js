@@ -2,7 +2,7 @@ import { createSelector } from "reselect";
 import moment from "moment";
 import { userInputSelector } from "../user/user.selectors";
 import { typeUtilisateur } from "../../util/magic_strings";
-
+import { baseUrl } from "../../config.json";
 const sponsoringInputSelector = (state) => state.sponsoring;
 
 export const sponsoringSelector = createSelector(
@@ -12,6 +12,7 @@ export const sponsoringSelector = createSelector(
       sponsoring.key = sponsoring.id;
       sponsoring.intitulé = sponsoring.evenement?.intitulé;
       sponsoring.initiateur = sponsoring.evenement?.initiateur?.nom;
+      sponsoring.dossier = baseUrl + sponsoring.dossier;
       return sponsoring;
     })
 );

@@ -35,7 +35,6 @@ const Notifications = () => {
 
     socket.on("notifications", (notification) => {
       dispatch(addNewNotification(notification));
-      console.log(notification);
     });
   }, []);
 

@@ -119,6 +119,7 @@ function DemandeEvenement(props) {
   const getDemandesOnFirstLoad = async () => {
     try {
       const { data } = await getDemandesCount();
+      console.log("count", data.count);
       setDemandeCount(data.count);
       dispatch(startFetchingDemandes(1, searchValue, filter));
     } catch (error) {

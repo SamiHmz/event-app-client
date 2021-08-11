@@ -1,5 +1,5 @@
 import { createSelector } from "reselect";
-
+import { baseUrl } from "../../config.json";
 const utilisateurInputSelector = (state) => state.utilisateur;
 
 export const utilisateurSelector = createSelector(
@@ -8,6 +8,7 @@ export const utilisateurSelector = createSelector(
     utilisateur.utilisateursList.map((utilisateur) => {
       utilisateur.key = utilisateur.id;
       utilisateur.intitulé = utilisateur.evenement?.intitulé;
+      utilisateur.photo = baseUrl + utilisateur.photo;
       return utilisateur;
     })
 );

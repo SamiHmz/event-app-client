@@ -1,5 +1,6 @@
 import React from "react";
-import Avatar from "../Avatar/Avatar.component";
+// import Avatar from "../Avatar/Avatar.component";
+import { Avatar } from "antd";
 import moment from "moment";
 import img from "../../img/avatar.jpg";
 import { notificationClicked } from "../../redux/notifications/notifications.actions";

@@ -28,6 +28,7 @@ const sponsoringSchema = Yup.object().shape({
 
 const SponsoringForm = ({ visible, onCancel, id, setId }) => {
   const [evenementsList, setEvenementList] = useState([]);
+  const idEditing = !!id;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -56,7 +57,7 @@ const SponsoringForm = ({ visible, onCancel, id, setId }) => {
 
     validationSchema: sponsoringSchema,
     onSubmit: (values) => {
-      if (!id) {
+      if (!idEditing) {
         dispatch(
           startCreateSponsoring({
             sponsoring: values,
@@ -84,28 +85,28 @@ const SponsoringForm = ({ visible, onCancel, id, setId }) => {
     handleSubmit,
     handleChange,
     handleBlur,
-    handleReset,
     setFieldTouched,
     values,
     setFieldValue,
     setErrors,
     errors,
     touched,
-    resetForm,
     setValues,
   } = formik;
   const handlCloseForm = () => {
-    if (id) {
+    if (idEditing) {
       form.resetFields();
       setId(null);
     }
-    if (values["dossier"]) deleteFileInServer("photo");
+    if (!idEditing) {
+      if (values["dossier"]) deleteFileInServer("photo");
+    }
     onCancel();
   };
 
   const setFileUrlInForm = (file, field) => {
     if (file.percent === 100 && file.response?.url) {
-      setFieldValue(field, baseUrl + file.response.url);
+      setFieldValue(field, file.response.url);
     }
     // in case of deleting
     if (values[field]) {
@@ -123,7 +124,7 @@ const SponsoringForm = ({ visible, onCancel, id, setId }) => {
   };
 
   useEffect(() => {
-    if (!id) return;
+    if (!idEditing) return;
     const getSponsoringInfo = async (sponsoringId) => {
       try {
         const { data: sponsoring } = await getOneSponsoring(sponsoringId);

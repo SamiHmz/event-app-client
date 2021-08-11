@@ -33,7 +33,7 @@ const intervenantSchema = Yup.object().shape({
 const IntervenantForm = ({ visible, onCancel, id, setId }) => {
   const [evenementsList, setEvenementList] = useState([]);
   const dispatch = useDispatch();
-
+  const isEditing = !!id;
   useEffect(() => {
     const getEvenementlist = async () => {
       try {
@@ -64,7 +64,7 @@ const IntervenantForm = ({ visible, onCancel, id, setId }) => {
 
     validationSchema: intervenantSchema,
     onSubmit: (values) => {
-      if (!id) {
+      if (!isEditing) {
         dispatch(
           startCreateIntervenant({
             intervenant: values,
@@ -92,29 +92,28 @@ const IntervenantForm = ({ visible, onCancel, id, setId }) => {
     handleSubmit,
     handleChange,
     handleBlur,
-    handleReset,
     setFieldTouched,
     values,
     setFieldValue,
     setErrors,
     errors,
     touched,
-    resetForm,
     setValues,
   } = formik;
   const handlCloseForm = () => {
-    if (id) {
+    if (isEditing) {
       form.resetFields();
       setId(null);
+    } else {
+      if (values["photo"]) deleteFileInServer("photo");
+      if (values["cv"]) deleteFileInServer("cv");
     }
-    if (values["photo"] && !id) deleteFileInServer("photo");
-    if (values["cv"] && !id) deleteFileInServer("cv");
     onCancel();
   };
 
   const setFileUrlInForm = (file, field) => {
     if (file.percent === 100 && file.response?.url) {
-      setFieldValue(field, baseUrl + file.response.url);
+      setFieldValue(field, file.response.url);
     }
     if (values[field]) {
       setFieldValue(field, "");
@@ -131,7 +130,7 @@ const IntervenantForm = ({ visible, onCancel, id, setId }) => {
   };
 
   useEffect(() => {
-    if (!id) return;
+    if (!isEditing) return;
     const getIntervenantInfo = async (intervenantId) => {
       try {
         const { data: intervenant } = await getOneIntervenant(intervenantId);

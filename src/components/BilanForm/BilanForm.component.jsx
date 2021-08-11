@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
-import { useFormik, FieldArray } from "formik";
+import { useFormik } from "formik";
 import { Modal, Form, Input, Upload, Button, Select } from "antd";
 import FormErorr from "../FormError/FormError.componenet";
-import SelectInput from "../SelectInput/SelectInput.component";
 import { UploadOutlined } from "@ant-design/icons";
 import { baseUrl } from "../../config.json";
 import { removeFile } from "../../services/file-upload.services";
@@ -32,6 +31,7 @@ const BilanForm = ({ visible, onCancel, id, setId }) => {
   const [evenementsList, setEvenementList] = useState([]);
   const [photos, setPhotos] = useState([]);
   const dispatch = useDispatch();
+  const isEditing = !!id;
 
   useEffect(() => {
     const getEvenementlist = async () => {
@@ -58,10 +58,9 @@ const BilanForm = ({ visible, onCancel, id, setId }) => {
       photo: [],
     },
 
-    // validationSchema: bilanSchema,
+    validationSchema: bilanSchema,
     onSubmit: (values) => {
-      console.log(values);
-      if (!id) {
+      if (!isEditing) {
         dispatch(
           startCreateBilan({
             bilan: values,
@@ -98,16 +97,16 @@ const BilanForm = ({ visible, onCancel, id, setId }) => {
     setValues,
   } = formik;
   const handlCloseForm = () => {
-    if (id) {
+    if (isEditing) {
       form.resetFields();
       setId(null);
+    } else {
+      if (values["dossier"]) deleteFileInServer("photo");
     }
-    if (values["dossier"]) deleteFileInServer("photo");
     onCancel();
   };
 
   const setFileUrlInForm = (file, field) => {
-    console.log(file);
     var fileUrl = "";
     if (file.url) {
       fileUrl = file.name;
