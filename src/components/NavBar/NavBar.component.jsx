@@ -9,6 +9,8 @@ import { Typography } from "antd";
 import { Avatar } from "antd";
 import { useSelector } from "react-redux";
 import { userSelector } from "../../redux/user/user.selectors";
+import { UserOutlined } from "@ant-design/icons";
+
 import {
   NavBarContainer,
   NavBarElements,
@@ -27,6 +29,12 @@ const NavBar = ({ windowWidth, onOpen }) => {
     localStorage.removeItem("token");
     window.location = "/";
   };
+
+  const avatartOptions = user.photo
+    ? {
+        src: baseUrl + user.photo,
+      }
+    : { style: { color: "#f56a00", backgroundColor: "#fde3cf" } };
   return (
     <NavBarContainer windowWidth={windowWidth}>
       {windowWidth < 700 ? (
@@ -38,16 +46,18 @@ const NavBar = ({ windowWidth, onOpen }) => {
         <NavBarElementsRight>
           <Notifications />
           <Avatar
-            src={baseUrl + user.photo}
+            {...avatartOptions}
             size={{
               xs: "32px",
               sm: "32px",
               md: "32px",
-              lg: "48x",
-              xl: "48px",
-              xxl: "64px",
+              lg: "40x",
+              xl: "40px",
+              xxl: "40px",
             }}
-          />
+          >
+            {user.nom[0]}
+          </Avatar>
           <Text type="secondary">{user.nom}</Text>
           <Icon
             component={ShevronDown}

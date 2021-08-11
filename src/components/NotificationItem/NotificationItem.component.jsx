@@ -11,12 +11,30 @@ import {
   TimeText,
 } from "./NotificationItem.styles";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { userSelector } from "../../redux/user/user.selectors";
+import { typeUtilisateur } from "../../util/magic_strings";
+import { baseUrl } from "../../config.json";
 
 const NotificationItem = React.forwardRef(
-  ({ src, nom, details, createdAt, is_clicked, id, lien }, ref) => {
+  (
+    { details, createdAt, is_clicked, id, lien, initiateur, administrateur },
+    ref
+  ) => {
     const history = useHistory();
     const dispatch = useDispatch();
+    const user = useSelector(userSelector);
+
+    var photo = null,
+      nom = null;
+
+    if (user.type === typeUtilisateur.ADMINISTRATEUR) {
+      photo = initiateur.photo;
+      nom = initiateur.nom;
+    } else {
+      photo = administrateur.photo;
+      nom = administrateur.nom;
+    }
 
     const handleNotificationClick = () => {
       if (!is_clicked) {
@@ -24,13 +42,20 @@ const NotificationItem = React.forwardRef(
       }
       history.push(lien);
     };
+
+    const avatartOptions = photo
+      ? {
+          src: baseUrl + photo,
+        }
+      : { style: { color: "#f56a00", backgroundColor: "#fde3cf" } };
+
     return (
       <NotificationItemContainer
         is_clicked={is_clicked}
         ref={ref}
         onClick={() => handleNotificationClick()}
       >
-        <Avatar src={src ? src : img} />
+        <Avatar {...avatartOptions}>{nom[0]}</Avatar>
         <NotificationItemTextContainer>
           <div>
             <BoldText>{nom}</BoldText>
