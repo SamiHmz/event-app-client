@@ -15,3 +15,7 @@ export const filterSelector = createSelector(
   sponsoringInputSelector,
   (search) => search.filter
 );
+export const isFilterInitialisedSelector = createSelector(
+  sponsoringInputSelector,
+  (search) => search.isFilterInitialised
+);

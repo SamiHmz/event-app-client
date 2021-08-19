@@ -6,6 +6,7 @@ import { intervenantSagas } from "./intervenant/intervenant.sagas";
 import { sponsoringSagas } from "./sponsoring/sponsoring.sagas";
 import { bilanSagas } from "./bilan/bilan.sagas";
 import { utilisateurSagas } from "./utilisateur/utilisateur.sagas";
+import { dashboardSagas } from "./dashboard/dashboard.sagas";
 export default function* rootSaga() {
   const sagas = [
     userSagas,
@@ -15,6 +16,7 @@ export default function* rootSaga() {
     sponsoringSagas,
     bilanSagas,
     utilisateurSagas,
+    dashboardSagas,
   ];
 
   yield all(

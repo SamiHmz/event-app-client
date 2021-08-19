@@ -19,7 +19,8 @@ import Bilan from "../../components/Bilan/Bilan.component";
 import DetailsBilan from "../../components/DetailsBilan/DetailsBilan.component";
 import Utilisateur from "../../components/Utilisateur/Utilisateur.component";
 import Evenement from "../../components/Evenement/Evenement.component";
-const Dashboard = () => <h1>i'am dashboard</h1>;
+import Dashboard from "../../components/Dashboard/Dashboard.componenet";
+
 const Main = ({ windowWidth }) => {
   const [visible, setVisible] = useState(false);
 

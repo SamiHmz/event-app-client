@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { typeUtilisateur, etat } from "../../util/magic_strings";
+import { typeUtilisateur } from "../../util/magic_strings";
 import Filter from "../Filter/Filter.component";
 import Search from "../../components/Search/Search.component";
 import RenderFormAndButton from "../RenderFormAndButton/RenderFormAndButton.component";
@@ -27,11 +27,14 @@ import { Column } from "./UtilisateurColumns";
 import useSearch from "../../hooks/useSearch";
 import { usersFilterOptions } from "../../util/filter_options";
 import { uesersSearchOptions } from "../../util/search_options";
+import { isFilterInitialisedSelector } from "../../redux/search/search.selectors";
 
 const Utilisateur = () => {
   const [UtilisateurCount, setUtilisateurCount] = useState(0);
   const [visible, setVisible] = useState(false);
   const user = useSelector(userSelector);
+  const isFilterInitialised = useSelector(isFilterInitialisedSelector);
+  console.log("isFilterInitialised:", isFilterInitialised);
 
   const dispatch = useDispatch();
   const utilisateurList = useSelector(utilisateurSelector);
@@ -60,9 +63,11 @@ const Utilisateur = () => {
   useEffect(() => {
     const onLoad = async () => {
       try {
-        const { data } = await getAllUtilisateurCount();
-        setUtilisateurCount(data.count);
-        dispatch(startUtilisateurFetching(1, searchValue, filter));
+        if (isFilterInitialised) {
+          const { data } = await getAllUtilisateurCount();
+          setUtilisateurCount(data.count);
+          dispatch(startUtilisateurFetching(1, searchValue, filter));
+        }
       } catch (error) {
         console.log(error);
       }
@@ -81,6 +86,7 @@ const Utilisateur = () => {
       console.log(error);
     }
   };
+
   return (
     <Container>
       <ContainerTop>

@@ -10,6 +10,7 @@ import { startOneIntervenantFetching } from "../../redux/intervenant/intervenant
 import Etat from "../Etat/Etat.component";
 import { File } from "../Icons/icons";
 import moment from "moment";
+import { baseUrl } from "../../config.json";
 
 const DetailsIntervenantInfo = () => {
   const isLoading = useSelector(isCurrentIntervenantLoadingSelector);
@@ -27,7 +28,7 @@ const DetailsIntervenantInfo = () => {
     <Descriptions bordered>
       <Descriptions.Item label="Photo" span={3}>
         <Avatar
-          src={<Image src={currentIntervenant.photo} />}
+          src={<Image src={baseUrl + currentIntervenant.photo} />}
           shape="square"
           size={64}
         />
@@ -39,7 +40,7 @@ const DetailsIntervenantInfo = () => {
         {currentIntervenant.prenom}
       </Descriptions.Item>
       <Descriptions.Item label="Evènement" span={3}>
-        {currentIntervenant.evenement.intitulé}
+        {currentIntervenant.evenement?.intitulé || "Evènement supprimé"}
       </Descriptions.Item>
       <Descriptions.Item label="Type" span={3}>
         {currentIntervenant.type}
@@ -57,7 +58,10 @@ const DetailsIntervenantInfo = () => {
         <Etat value={currentIntervenant.etat}></Etat>
       </Descriptions.Item>
       <Descriptions.Item label="Cv" span={3}>
-        <File to={currentIntervenant.cv} title="Voir le cv de l'intervenant " />
+        <File
+          to={baseUrl + currentIntervenant.cv}
+          title="Voir le cv de l'intervenant "
+        />
       </Descriptions.Item>
       <Descriptions.Item label="Date de Crèation" span={3}>
         {moment(currentIntervenant.createdAt).format("MMMM Do YYYY, h:mm:ss a")}

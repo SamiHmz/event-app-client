@@ -3,7 +3,11 @@ import Icon from "@ant-design/icons";
 import { ReactComponent as FilterIcon } from "../../img/filter.svg";
 import { Popover, Badge, Spin } from "antd";
 import FilterList from "../FilterList/FilterList.component";
-import { setFilter } from "../../redux/search/search.actions";
+import {
+  setFilter,
+  resetFilter,
+  setFilterInitialised,
+} from "../../redux/search/search.actions";
 import { useDispatch, useSelector } from "react-redux";
 import { typeUtilisateur } from "../../util/magic_strings";
 import { userSelector } from "../../redux/user/user.selectors";
@@ -31,9 +35,15 @@ const Filter = ({ list }) => {
       if (item.default) {
         setDefaultFilter(defaultItem);
         dispatch(setFilter(item.title, defaultItem));
+      } else {
+        dispatch(resetFilter());
       }
+      dispatch(setFilterInitialised(true));
     });
-    return () => dispatch(setFilter(""));
+    return () => {
+      dispatch(setFilterInitialised(false));
+      dispatch(resetFilter());
+    };
   }, []);
 
   return (

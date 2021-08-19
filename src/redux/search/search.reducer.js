@@ -4,6 +4,7 @@ const INITIAL_STATE = {
   searchValue: {},
   searchField: "",
   filter: {},
+  isFilterInitialised: false,
 };
 
 const setFilter = (state, action) => {
@@ -43,6 +44,18 @@ const searchReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         filter: setFilter(state, action),
+      };
+    }
+    case SearchActions.RESET_FILTER: {
+      return {
+        ...state,
+        filter: {},
+      };
+    }
+    case SearchActions.SET_FILTER_INITIALISED: {
+      return {
+        ...state,
+        isFilterInitialised: action.payload.value,
       };
     }
     default:

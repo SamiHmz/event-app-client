@@ -7,7 +7,7 @@ import sponsoringReducer from "./sponsoring/sponsoring.reducer";
 import bilanReducer from "./bilan/bilan.reducer";
 import utilisateurReducer from "./utilisateur/utilisateur.reducer";
 import searchReducer from "./search/search.reducer";
-
+import dashboardReducer from "./dashboard/dashboard.reducer";
 export default combineReducers({
   user: userReducer,
   evenement: evenementReducer,
@@ -17,4 +17,5 @@ export default combineReducers({
   bilan: bilanReducer,
   utilisateur: utilisateurReducer,
   search: searchReducer,
+  dashboard: dashboardReducer,
 });

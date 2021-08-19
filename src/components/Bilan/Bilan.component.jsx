@@ -33,12 +33,12 @@ import Actions from "../Actions/Actions.component";
 import { Column } from "./BilanColumns";
 import { getColumn } from "../../util/usefull_functions";
 import useSearch from "../../hooks/useSearch";
+import { resetFilter } from "../../redux/search/search.actions";
 
 const Bilan = () => {
   const [BilanCount, setBilanCount] = useState(0);
   const [visible, setVisible] = useState(false);
   const user = useSelector(userSelector);
-
   const dispatch = useDispatch();
   const bilanList = useSelector(bilanSelector);
   const bilanIsLoading = useSelector(bilanIsLoadingSelector);
@@ -146,6 +146,7 @@ const Bilan = () => {
       console.log(error);
     }
   };
+
   return (
     <Container>
       <ContainerTop>

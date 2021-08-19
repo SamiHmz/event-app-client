@@ -61,7 +61,7 @@ const NavBar = ({ windowWidth, onOpen }) => {
           <Text type="secondary">{user.nom}</Text>
           <Icon
             component={ShevronDown}
-            style={{ fontSize: "20px" }}
+            style={{ fontSize: "20px", color: "#bfbfbf" }}
             onClick={logOut}
           />
         </NavBarElementsRight>

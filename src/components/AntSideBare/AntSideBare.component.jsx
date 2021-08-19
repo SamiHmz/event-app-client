@@ -22,13 +22,10 @@ const AntSideBare = ({ windowWidth }) => {
   const user = useSelector(userSelector);
   const getCurrentList = () => {
     if (user.type === typeUtilisateur.ADMINISTRATEUR) {
-      if (user.role === roles.SIMPLE) {
-        return administrateurSimpleList;
-      } else return administrateurAdminList;
+      return administrateurSimpleList;
     } else {
       return intiateurSimpleList;
     }
-    return [];
   };
 
   const history = useHistory();

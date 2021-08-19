@@ -11,7 +11,7 @@ const FilterList = ({ list, defaultFilter }) => {
     <div>
       {list?.map((item) => {
         return (
-          <div>
+          <div key={item.title}>
             <div>{capitaliseFirst(item.title)}</div>
             <Checkbox.Group
               options={item.options}

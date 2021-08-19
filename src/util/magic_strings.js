@@ -29,3 +29,9 @@ export const modeEvenement = ["Prèsentiel", "En Ligne"];
 export const modeSponsoring = ["espèce", "matériel"];
 export const sexe = ["homme", "femme"];
 export const typeIntervenant = ["interne", "externe", "journalist"];
+
+export const colors = {
+  red: "#E24C4B",
+  green: "#14B8A6",
+  orange: "#F89938",
+};

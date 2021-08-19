@@ -12,6 +12,7 @@ export const intervenantSelector = createSelector(
     intervenant.intervenantsList.map((intervenant) => {
       intervenant.key = intervenant.id;
       intervenant.photo = baseUrl + intervenant.photo;
+      intervenant.cv = baseUrl + intervenant.cv;
       return intervenant;
     })
 );

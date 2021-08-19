@@ -39,3 +39,13 @@ export function removeListenersFromElement(element, listenerType) {
     window.removeEventListener(listenerType, listeners[i].listener);
   }
 }
+
+export const getChartData = (data) => {
+  var categories = [];
+  var series = [];
+  data.forEach((element) => {
+    categories.push(element.nom);
+    series.push(element.count);
+  });
+  return [categories, series];
+};

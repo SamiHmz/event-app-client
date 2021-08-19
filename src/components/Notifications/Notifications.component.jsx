@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Popover, Badge, Spin } from "antd";
-import { ReactComponent as Bell } from "../../img/bxs-bell.svg";
+import { ReactComponent as Bell } from "../../img/bell-regular.svg";
 import Icon from "@ant-design/icons";
 import NotificationsList from "../NotificationsList/NotificationsList.component";
 import { userSelector } from "../../redux/user/user.selectors";
@@ -16,7 +16,7 @@ import {
   setAllNotificationsToViewed,
 } from "../../redux/notifications/notifications.actions";
 
-const iconStyles = { fontSize: "20px", cursor: "pointer" };
+const iconStyles = { fontSize: "20px", cursor: "pointer", color: "#bfbfbf" };
 
 const Notifications = () => {
   const dispatch = useDispatch();
