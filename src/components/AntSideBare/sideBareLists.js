@@ -12,7 +12,7 @@ import { ReactComponent as Acount } from "../../img/user.svg";
 export const intiateurSimpleList = [
   {
     text: "Dashboard",
-    component: <Dashboard />,
+    component: <CalendarFilled />,
     to: "/",
   },
   {
