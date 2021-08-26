@@ -11,7 +11,6 @@ import { useDispatch } from "react-redux";
 import { baseUrl } from "../../config";
 import {
   startFetchUnviewedNotificationCount,
-  setUnviewedNotificationCount,
   addNewNotification,
   setAllNotificationsToViewed,
 } from "../../redux/notifications/notifications.actions";
