@@ -1,5 +1,5 @@
 import React from "react";
-
+import { DashboardFilled } from "@ant-design/icons";
 import { CalendarFilled, ClockCircleFilled } from "@ant-design/icons";
 import { ReactComponent as Intervenants } from "../../img/intervenants.svg";
 import { ReactComponent as Dashboard } from "../../img/dashboard.svg";
@@ -12,7 +12,7 @@ import { ReactComponent as Acount } from "../../img/user.svg";
 export const intiateurSimpleList = [
   {
     text: "Dashboard",
-    component: <CalendarFilled />,
+    component: <DashboardFilled />,
     to: "/",
   },
   {
