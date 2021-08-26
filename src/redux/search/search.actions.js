@@ -22,10 +22,3 @@ export const setFilter = (field, value) => ({
 export const resetFilter = () => ({
   type: SearchActions.RESET_FILTER,
 });
-
-export const setFilterInitialised = (value) => ({
-  type: SearchActions.SET_FILTER_INITIALISED,
-  payload: {
-    value,
-  },
-});

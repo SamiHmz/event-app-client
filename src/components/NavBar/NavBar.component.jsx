@@ -2,23 +2,19 @@ import React from "react";
 import Icon from "@ant-design/icons";
 import { ReactComponent as ShevronDown } from "../../img/chevron-down-solid.svg";
 import { ReactComponent as Menu } from "../../img/menu.svg";
-import { ReactComponent as Bell } from "../../img/bxs-bell.svg";
 import Notifications from "../Notifications/Notifications.component";
 import { Typography } from "antd";
-// import Avatar from "../Avatar/Avatar.component";
 import { Avatar } from "antd";
 import { useSelector } from "react-redux";
 import { userSelector } from "../../redux/user/user.selectors";
-import { UserOutlined } from "@ant-design/icons";
 
 import {
   NavBarContainer,
   NavBarElements,
   NavBarElementsRight,
 } from "./NavBar.styles";
-import img from "../../img/avatar.jpg";
 import windowSize from "react-window-size";
-import { baseUrl } from "../../config.json";
+import { baseUrl } from "../../config";
 
 const iconStyles = { fontSize: "20px", cursor: "pointer" };
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Descriptions, Image } from "antd";
-import { baseUrl } from "../../config.json";
+import { baseUrl } from "../../config";
 import moment from "moment";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";

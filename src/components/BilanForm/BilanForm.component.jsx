@@ -4,7 +4,7 @@ import { useFormik } from "formik";
 import { Modal, Form, Input, Upload, Button, Select } from "antd";
 import FormErorr from "../FormError/FormError.componenet";
 import { UploadOutlined } from "@ant-design/icons";
-import { baseUrl } from "../../config.json";
+import { baseUrl } from "../../config";
 import { removeFile } from "../../services/file-upload.services";
 import { getAllNotHappenedEvent } from "../../services/evenement.services";
 import { getOneBilan } from "../../services/bilan.services";

@@ -10,7 +10,7 @@ import { startOneBilanFetching } from "../../redux/bilan/bilan.actions";
 import Etat from "../Etat/Etat.component";
 import { File } from "../Icons/icons";
 import moment from "moment";
-import { baseUrl } from "../../config.json";
+import { baseUrl } from "../../config";
 import { DetailsBilanContainer, PhotoContainer } from "./DetailBilan.styles";
 const DetailsBilan = () => {
   const isLoading = useSelector(isCurrentBilanLoadingSelector);

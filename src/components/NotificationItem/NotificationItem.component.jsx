@@ -14,7 +14,7 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userSelector } from "../../redux/user/user.selectors";
 import { typeUtilisateur } from "../../util/magic_strings";
-import { baseUrl } from "../../config.json";
+import { baseUrl } from "../../config";
 
 const NotificationItem = React.forwardRef(
   (

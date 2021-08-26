@@ -3,7 +3,6 @@ const SearchActions = {
   SET_SEARCH_FIELD: "SET_SEARCH_FIELD",
   SET_FILTER: "SET_FILTER",
   RESET_FILTER: "RESET_FILTER",
-  SET_FILTER_INITIALISED: "SET_FILTER_INITIALISED",
 };
 
 export default SearchActions;

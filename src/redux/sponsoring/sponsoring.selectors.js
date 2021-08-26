@@ -2,7 +2,7 @@ import { createSelector } from "reselect";
 import moment from "moment";
 import { userInputSelector } from "../user/user.selectors";
 import { typeUtilisateur } from "../../util/magic_strings";
-import { baseUrl } from "../../config.json";
+import { baseUrl } from "../../config";
 const sponsoringInputSelector = (state) => state.sponsoring;
 
 export const sponsoringSelector = createSelector(

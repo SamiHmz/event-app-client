@@ -21,34 +21,30 @@ const styles = {
 };
 
 const Filter = ({ list }) => {
-  const [defaultFilter, setDefaultFilter] = useState([]);
   const dispatch = useDispatch();
   const user = useSelector(userSelector);
 
   useEffect(() => {
     list.forEach((item) => {
+      //
       const defaultvalues =
         user.type === typeUtilisateur.ADMINISTRATEUR
           ? [item.default]
           : item.options;
-      var defaultItem = item.default ? defaultvalues : [];
+
       if (item.default) {
-        setDefaultFilter(defaultItem);
-        dispatch(setFilter(item.title, defaultItem));
-      } else {
-        dispatch(resetFilter());
+        dispatch(setFilter(item.title, defaultvalues));
       }
-      dispatch(setFilterInitialised(true));
     });
+
     return () => {
-      dispatch(setFilterInitialised(false));
       dispatch(resetFilter());
     };
   }, []);
 
   return (
     <Popover
-      content={<FilterList list={list} defaultFilter={defaultFilter} />}
+      content={<FilterList list={list} />}
       placement="bottom"
       trigger="click"
     >

@@ -49,3 +49,10 @@ export const getChartData = (data) => {
   });
   return [categories, series];
 };
+
+export const getTotal = (arr) => {
+  return arr.reduce((acumulator, item) => {
+    if (item.count) return acumulator + parseInt(item.count);
+    else return acumulator;
+  }, 0);
+};

@@ -32,9 +32,6 @@ import { isFilterInitialisedSelector } from "../../redux/search/search.selectors
 const Utilisateur = () => {
   const [UtilisateurCount, setUtilisateurCount] = useState(0);
   const [visible, setVisible] = useState(false);
-  const user = useSelector(userSelector);
-  const isFilterInitialised = useSelector(isFilterInitialisedSelector);
-  console.log("isFilterInitialised:", isFilterInitialised);
 
   const dispatch = useDispatch();
   const utilisateurList = useSelector(utilisateurSelector);
@@ -63,11 +60,9 @@ const Utilisateur = () => {
   useEffect(() => {
     const onLoad = async () => {
       try {
-        if (isFilterInitialised) {
-          const { data } = await getAllUtilisateurCount();
-          setUtilisateurCount(data.count);
-          dispatch(startUtilisateurFetching(1, searchValue, filter));
-        }
+        const { data } = await getAllUtilisateurCount();
+        setUtilisateurCount(data.count);
+        dispatch(startUtilisateurFetching(1, searchValue, filter));
       } catch (error) {
         console.log(error);
       }

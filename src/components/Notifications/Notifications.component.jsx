@@ -8,7 +8,7 @@ import { unviewedNotificationsCountSelector } from "../../redux/notifications/no
 import { useSelector } from "react-redux";
 import io from "socket.io-client";
 import { useDispatch } from "react-redux";
-import { baseUrl } from "../../config.json";
+import { baseUrl } from "../../config";
 import {
   startFetchUnviewedNotificationCount,
   setUnviewedNotificationCount,

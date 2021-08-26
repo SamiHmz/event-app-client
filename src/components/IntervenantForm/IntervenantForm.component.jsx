@@ -6,7 +6,7 @@ import FormErorr from "../FormError/FormError.componenet";
 import SelectInput from "../SelectInput/SelectInput.component";
 import { sexe, typeIntervenant } from "../../util/magic_strings";
 import { UploadOutlined } from "@ant-design/icons";
-import { baseUrl } from "../../config.json";
+import { baseUrl } from "../../config";
 import { removeFile } from "../../services/file-upload.services";
 import { getAllNotHappenedEvent } from "../../services/evenement.services";
 import { getOneIntervenant } from "../../services/intervenant.services";

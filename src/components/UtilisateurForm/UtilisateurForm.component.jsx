@@ -7,7 +7,7 @@ import FormErorr from "../FormError/FormError.componenet";
 import SelectInput from "../SelectInput/SelectInput.component";
 import { typeInitiateur } from "../../util/magic_strings";
 import { UploadOutlined } from "@ant-design/icons";
-import { baseUrl } from "../../config.json";
+import { baseUrl } from "../../config.js";
 import { removeFile } from "../../services/file-upload.services";
 import { getOneUtilisateur } from "../../services/utilisateur.services";
 import {

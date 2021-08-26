@@ -1,5 +1,5 @@
 import { createSelector } from "reselect";
-import { baseUrl } from "../../config.json";
+import { baseUrl } from "../../config.js";
 const utilisateurInputSelector = (state) => state.utilisateur;
 
 export const utilisateurSelector = createSelector(

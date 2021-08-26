@@ -109,6 +109,7 @@ function DemandeEvenement(props) {
   const data = useSelector(demandesSelector);
   const isLoading = useSelector(demandesIsLoadingSelector);
   const user = useSelector(userSelector);
+
   const { searchValue, filter } = useSearch();
 
   const searchOptions =
@@ -116,18 +117,16 @@ function DemandeEvenement(props) {
       ? [...demandeSearchOptions, typeUtilisateur.INITIATEUR]
       : demandeSearchOptions;
 
-  const getDemandesOnFirstLoad = async () => {
-    try {
-      const { data } = await getDemandesCount();
-      console.log("count", data.count);
-      setDemandeCount(data.count);
-      dispatch(startFetchingDemandes(1, searchValue, filter));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
+    const getDemandesOnFirstLoad = async () => {
+      try {
+        const { data } = await getDemandesCount();
+        setDemandeCount(data.count);
+        dispatch(startFetchingDemandes(1, searchValue, filter));
+      } catch (error) {
+        console.log(error);
+      }
+    };
     getDemandesOnFirstLoad();
   }, [searchValue, filter]);
 

@@ -52,12 +52,7 @@ const searchReducer = (state = INITIAL_STATE, action) => {
         filter: {},
       };
     }
-    case SearchActions.SET_FILTER_INITIALISED: {
-      return {
-        ...state,
-        isFilterInitialised: action.payload.value,
-      };
-    }
+
     default:
       return state;
   }

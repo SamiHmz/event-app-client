@@ -2,7 +2,11 @@ import React, { useEffect } from "react";
 import DashboardCard from "../DashboardCard/DashboardCard.component";
 import { DashboardAdministrateurContainer } from "./DashboardAdministrateur.styles";
 import Chart from "react-apexcharts";
-import { getChartData } from "../../util/usefull_functions";
+import { getChartData, getTotal } from "../../util/usefull_functions";
+import DashboardIndicator from "../DashboardIndicator/DashboardIndicator.component";
+import Event from "../../img/event.svg";
+import Conference from "../../img/conference.svg";
+import Money from "../../img/money-bag.svg";
 const DashboardAdministrateur = ({ data }) => {
   var [nbEvenementcategories, nbEvenementdataSeries] = getChartData(
     data.nb_evenement
@@ -44,6 +48,21 @@ const DashboardAdministrateur = ({ data }) => {
 
   return (
     <DashboardAdministrateurContainer>
+      <DashboardIndicator
+        icon={Event}
+        title="Nombre d'Evenement"
+        value={getTotal(data.nb_evenement)}
+      ></DashboardIndicator>
+      <DashboardIndicator
+        icon={Conference}
+        title="Nombre d'Intervenant "
+        value={data.intervenants.approuvé}
+      ></DashboardIndicator>
+      <DashboardIndicator
+        icon={Money}
+        title="Budget Consomé"
+        value={getTotal(data.budget)}
+      ></DashboardIndicator>
       <DashboardCard title="Demandes" cardData={data.demandes} />
       <DashboardCard title="Intervenant" cardData={data.intervenants} />
       <DashboardCard title="Sponsoring" cardData={data.sponsorings} />
@@ -53,12 +72,14 @@ const DashboardAdministrateur = ({ data }) => {
         series={nbEvenemtSeries}
         type="bar"
         width="500"
+        style={{ marginTop: "50px" }}
       />
       <Chart
         options={budgetOptions}
         series={budgetSeries}
         type="bar"
         width="500"
+        style={{ marginTop: "50px" }}
       />
     </DashboardAdministrateurContainer>
   );

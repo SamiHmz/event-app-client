@@ -2,15 +2,15 @@ import React, { useEffect } from "react";
 import {
   currentIntervenantSelector,
   isCurrentIntervenantLoadingSelector,
-} from "../../redux/intervenant/intervenant.selectors";
+} from "../../../redux/intervenant/intervenant.selectors";
 import { Descriptions, Spin, Image, Avatar } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { startOneIntervenantFetching } from "../../redux/intervenant/intervenant.actions";
-import Etat from "../Etat/Etat.component";
-import { File } from "../Icons/icons";
+import { startOneIntervenantFetching } from "../../../redux/intervenant/intervenant.actions";
+import Etat from "../../Etat/Etat.component";
+import { File } from "../../Icons/icons";
 import moment from "moment";
-import { baseUrl } from "../../config";
+import { baseUrl } from "../../../config";
 
 const DetailsIntervenantInfo = () => {
   const isLoading = useSelector(isCurrentIntervenantLoadingSelector);
