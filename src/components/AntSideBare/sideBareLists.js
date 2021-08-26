@@ -1,12 +1,13 @@
 import React from "react";
-import { DashboardFilled } from "@ant-design/icons";
-import { CalendarFilled, ClockCircleFilled } from "@ant-design/icons";
-import { ReactComponent as Intervenants } from "../../img/intervenants.svg";
-import { ReactComponent as Dashboard } from "../../img/dashboard.svg";
-import { ReactComponent as Journaliste } from "../../img/journaliste.svg";
-import { ReactComponent as Dollar } from "../../img/dollar.svg";
-import { ReactComponent as Checked } from "../../img/checked.svg";
-import { ReactComponent as Bilan } from "../../img/bilan.svg";
+import {
+  DashboardFilled,
+  EuroCircleFilled,
+  FileTextFilled,
+  CalendarFilled,
+  ClockCircleFilled,
+  UsergroupAddOutlined,
+  UserAddOutlined,
+} from "@ant-design/icons";
 import { ReactComponent as Acount } from "../../img/user.svg";
 
 export const intiateurSimpleList = [
@@ -27,17 +28,17 @@ export const intiateurSimpleList = [
   },
   {
     text: "Intervenants",
-    component: <Intervenants />,
+    component: <UsergroupAddOutlined />,
     to: "/intervenants",
   },
   {
     text: "Sponsoring",
-    component: <Dollar />,
+    component: <EuroCircleFilled />,
     to: "/sponsorings",
   },
   {
     text: "Bilans",
-    component: <Bilan />,
+    component: <FileTextFilled />,
     to: "/bilans",
   },
 ];
@@ -46,20 +47,7 @@ export const administrateurSimpleList = [
   ...intiateurSimpleList,
   {
     text: "Utilisateurs",
-    component: <Acount />,
+    component: <UserAddOutlined />,
     to: "/utilisateurs",
-  },
-];
-
-export const administrateurAdminList = [
-  {
-    text: "Dashboard",
-    component: <Dashboard />,
-    to: "/",
-  },
-  {
-    text: "Intervenats",
-    component: <Intervenants />,
-    to: "/intervenants",
   },
 ];
