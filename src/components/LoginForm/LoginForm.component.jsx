@@ -7,6 +7,7 @@ import { typeUtilisateur } from "../../util/magic_strings";
 
 import { loginStart } from "../../redux/user/user.actions";
 import FormErorr from "../FormError/FormError.componenet";
+import useWindowSize from "../../hooks/useWindowSize";
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email().required().label("Email"),
@@ -14,16 +15,18 @@ const LoginSchema = Yup.object().shape({
 });
 
 const { INITIATEUR, ADMINISTRATEUR } = typeUtilisateur;
-const formStyles = {
-  width: "500px ",
-  display: "flex",
-  flexDirection: "column",
-};
 
 const btnStyles = { alignSelf: "center" };
 
 const LoginForm = () => {
   const dispatch = useDispatch();
+  const { width: windowWidth } = useWindowSize();
+  const formWidth = windowWidth > 600 ? "500px" : "300px";
+  const formStyles = {
+    width: formWidth,
+    display: "flex",
+    flexDirection: "column",
+  };
 
   const formik = useFormik({
     initialValues: {

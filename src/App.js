@@ -7,6 +7,7 @@ import { userSelector } from "./redux/user/user.selectors";
 import jwt_decode from "jwt-decode";
 import { setCurrentUser } from "./redux/user/user.actions";
 import { ToastContainer } from "react-toastify";
+import useWindowSize from "./hooks/useWindowSize";
 //
 import "react-toastify/dist/ReactToastify.css";
 import "./App.less";
@@ -16,7 +17,8 @@ const toastStyle = { height: "400px", width: "500px", fontSize: "20px" };
 const App = () => {
   const user = useSelector(userSelector);
   const dispatch = useDispatch();
-
+  const windowSize = useWindowSize();
+  console.log(windowSize);
   useEffect(() => {
     if (!user) {
       const token = localStorage.getItem("token");

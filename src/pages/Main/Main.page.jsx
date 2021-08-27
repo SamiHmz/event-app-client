@@ -13,16 +13,16 @@ import DetailsValidationSponsoring from "../../components/DetailsValidationSpons
 import Sponsoring from "../../components/Sponsoring/Sponsoring.component";
 import { Route, Switch } from "react-router-dom";
 import AntSideBare from "../../components/AntSideBare/AntSideBare.component";
-import windowSize from "react-window-size";
 import { Drawer } from "antd";
 import Bilan from "../../components/Bilan/Bilan.component";
 import DetailsBilan from "../../components/DetailsBilan/DetailsBilan.component";
 import Utilisateur from "../../components/Utilisateur/Utilisateur.component";
 import Evenement from "../../components/Evenement/Evenement.component";
 import Dashboard from "../../components/Dashboard/Dashboard.componenet";
-
-const Main = ({ windowWidth }) => {
+import useWindowSize from "../../hooks/useWindowSize";
+const Main = () => {
   const [visible, setVisible] = useState(false);
+  const { width: windowWidth } = useWindowSize();
 
   return (
     <MainContainer>
@@ -70,4 +70,4 @@ const Main = ({ windowWidth }) => {
   );
 };
 
-export default windowSize(Main);
+export default Main;

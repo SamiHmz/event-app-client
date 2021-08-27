@@ -14,12 +14,13 @@ import { useSelector } from "react-redux";
 import { userSelector } from "../../redux/user/user.selectors";
 import { roles, typeUtilisateur } from "../../util/magic_strings";
 import { AntSideBareContainer } from "./AntSideBare.styles";
-import windowSize from "react-window-size";
+import useWindowSize from "../../hooks/useWindowSize";
 
 const MenuItem = Menu.Item;
 
-const AntSideBare = ({ windowWidth }) => {
+const AntSideBare = () => {
   const user = useSelector(userSelector);
+  const { width: windowWidth } = useWindowSize();
   const getCurrentList = () => {
     if (user.type === typeUtilisateur.ADMINISTRATEUR) {
       return administrateurSimpleList;
@@ -59,4 +60,4 @@ const AntSideBare = ({ windowWidth }) => {
   );
 };
 
-export default windowSize(AntSideBare);
+export default AntSideBare;

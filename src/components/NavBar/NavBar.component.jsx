@@ -7,20 +7,22 @@ import { Typography } from "antd";
 import { Avatar } from "antd";
 import { useSelector } from "react-redux";
 import { userSelector } from "../../redux/user/user.selectors";
+import useWindowSize from "../../hooks/useWindowSize";
 
 import {
   NavBarContainer,
   NavBarElements,
   NavBarElementsRight,
 } from "./NavBar.styles";
-import windowSize from "react-window-size";
 import { baseUrl } from "../../config";
 
 const iconStyles = { fontSize: "20px", cursor: "pointer" };
 
 const { Text } = Typography;
-const NavBar = ({ windowWidth, onOpen }) => {
+const NavBar = ({ onOpen }) => {
   const user = useSelector(userSelector);
+  const { width: windowWidth } = useWindowSize();
+
   const logOut = () => {
     localStorage.removeItem("token");
     window.location = "/";
@@ -66,4 +68,4 @@ const NavBar = ({ windowWidth, onOpen }) => {
   );
 };
 
-export default windowSize(NavBar);
+export default NavBar;
