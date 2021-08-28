@@ -35,7 +35,6 @@ const DetailsValidationSponsoring = () => {
   const sponsoringValidations = useSelector(sponsoringValidationsSelector);
   const isValidationLoading = useSelector(isValidationLoadingSelector);
   const buttonStyles = {
-    width: "20%",
     alignSelf: "flex-end",
     marginBottom: "30px",
   };

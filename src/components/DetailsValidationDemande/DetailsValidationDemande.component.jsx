@@ -86,13 +86,6 @@ const DetailsValidationDemande = () => {
         columns={getColumn(user, administrateurColumns, initiateurColumns)}
         isValidation={true}
       />
-      <RenderFormAndButton
-        visible={visible}
-        setVisible={setVisible}
-        type={typeUtilisateur.ADMINISTRATEUR}
-        content="validation"
-        buttonStyles={buttonPhoneSyles}
-      ></RenderFormAndButton>
     </DetailsValidationContainer>
   );
 };
