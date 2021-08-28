@@ -7,7 +7,10 @@ import DashboardIndicator from "../DashboardIndicator/DashboardIndicator.compone
 import Event from "../../img/event.svg";
 import Conference from "../../img/conference.svg";
 import Money from "../../img/money-bag.svg";
+import useWindowSize from "../../hooks/useWindowSize";
 const DashboardAdministrateur = ({ data }) => {
+  var { width: windowWidth } = useWindowSize();
+  var chartsWidth = windowWidth > 700 ? "500px" : "300px";
   var [nbEvenementcategories, nbEvenementdataSeries] = getChartData(
     data.nb_evenement
   );
@@ -71,14 +74,14 @@ const DashboardAdministrateur = ({ data }) => {
         options={nbEvenementoptions}
         series={nbEvenemtSeries}
         type="bar"
-        width="500"
+        width={chartsWidth}
         style={{ marginTop: "50px" }}
       />
       <Chart
         options={budgetOptions}
         series={budgetSeries}
         type="bar"
-        width="500"
+        width={chartsWidth}
         style={{ marginTop: "50px" }}
       />
     </DashboardAdministrateurContainer>

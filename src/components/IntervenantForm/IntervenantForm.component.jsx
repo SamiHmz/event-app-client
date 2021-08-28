@@ -158,9 +158,11 @@ const IntervenantForm = ({ visible, onCancel, id, setId }) => {
   return (
     <Modal
       visible={visible}
-      title="Créer un nouvel événement"
-      okText="Create"
-      cancelText="Cancel"
+      title={
+        isEditing ? "Modifier intervenant" : "Ajouter  un nouveau intervenant"
+      }
+      okText={isEditing ? "Enregistrer" : "Ajouter"}
+      cancelText="Annulé"
       onCancel={handlCloseForm}
       onOk={handleSubmit}
     >

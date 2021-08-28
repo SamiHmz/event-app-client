@@ -29,6 +29,7 @@ const evenementSchema = Yup.object().shape({
 const EvenementForm = ({ visible, onCancel, id, setId }) => {
   const dispatch = useDispatch();
   const [form] = Form.useForm();
+  const isEditing = !!id;
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -46,7 +47,7 @@ const EvenementForm = ({ visible, onCancel, id, setId }) => {
 
     validationSchema: evenementSchema,
     onSubmit: (values) => {
-      if (!id) {
+      if (!isEditing) {
         dispatch(
           startCreateDemande({
             demande: values,
@@ -73,19 +74,16 @@ const EvenementForm = ({ visible, onCancel, id, setId }) => {
     handleSubmit,
     handleChange,
     handleBlur,
-    handleReset,
     setFieldTouched,
-    values,
     setFieldValue,
     setErrors,
     errors,
     touched,
-    resetForm,
     setValues,
   } = formik;
 
   useEffect(() => {
-    if (!id) return;
+    if (!isEditing) return;
     const getDemandeInfo = async (demandeID) => {
       try {
         const { data: demande } = await getOneDemande(demandeID);
@@ -118,7 +116,7 @@ const EvenementForm = ({ visible, onCancel, id, setId }) => {
   }, []);
 
   const handlCloseForm = () => {
-    if (id) form.resetFields();
+    if (isEditing) form.resetFields();
     setId(null);
     onCancel();
   };
@@ -126,9 +124,13 @@ const EvenementForm = ({ visible, onCancel, id, setId }) => {
   return (
     <Modal
       visible={visible}
-      title="Créer un nouvel événement"
-      okText="Create"
-      cancelText="Cancel"
+      title={
+        isEditing
+          ? "Modifier demande évenement"
+          : "Ajouter  une nouvel demande évenement"
+      }
+      okText={isEditing ? "Enregistrer" : "Créer"}
+      cancelText={"Annulé"}
       onCancel={handlCloseForm}
       onOk={handleSubmit}
     >

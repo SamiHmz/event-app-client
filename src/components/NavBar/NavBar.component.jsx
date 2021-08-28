@@ -8,6 +8,7 @@ import { Avatar } from "antd";
 import { useSelector } from "react-redux";
 import { userSelector } from "../../redux/user/user.selectors";
 import useWindowSize from "../../hooks/useWindowSize";
+import moment from "moment";
 
 import {
   NavBarContainer,
@@ -15,9 +16,8 @@ import {
   NavBarElementsRight,
 } from "./NavBar.styles";
 import { baseUrl } from "../../config";
-import { style } from "styled-components";
 
-const iconStyles = { fontSize: "20px", cursor: "pointer" };
+const iconStyles = { fontSize: "20px", cursor: "pointer", color: "#bfbfbf" };
 
 const { Text } = Typography;
 const NavBar = ({ onOpen }) => {
@@ -41,7 +41,9 @@ const NavBar = ({ onOpen }) => {
       ) : null}
 
       <NavBarElements>
-        <Text type="secondary">Tuesday,April 27th,2021</Text>
+        <Text type="secondary">
+          {moment(new Date()).format("MMMM Do YYYY")}
+        </Text>
         <NavBarElementsRight>
           <Notifications />
           <Avatar
@@ -63,11 +65,7 @@ const NavBar = ({ onOpen }) => {
             {user.nom[0]}
           </Avatar>
           <Text type="secondary">{user.nom}</Text>
-          <Icon
-            component={ShevronDown}
-            style={{ fontSize: "20px", color: "#bfbfbf" }}
-            onClick={logOut}
-          />
+          <Icon component={ShevronDown} style={iconStyles} onClick={logOut} />
         </NavBarElementsRight>
       </NavBarElements>
     </NavBarContainer>

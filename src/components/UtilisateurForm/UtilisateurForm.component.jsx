@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import _ from "lodash";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { Modal, Form, Input, Upload, Button, Select } from "antd";
+import { Modal, Form, Input, Upload, Button } from "antd";
 import FormErorr from "../FormError/FormError.componenet";
 import SelectInput from "../SelectInput/SelectInput.component";
 import { typeInitiateur } from "../../util/magic_strings";
@@ -15,7 +15,6 @@ import {
   startUpdateUtilisateur,
 } from "../../redux/utilisateur/utilisateur.actions";
 import { useDispatch } from "react-redux";
-const { Option } = Select;
 const uploadUrl = baseUrl + "upload/";
 
 const generaleSchema = {
@@ -156,9 +155,11 @@ const UtilisateurForm = ({ visible, onCancel, id, setId }) => {
   return (
     <Modal
       visible={visible}
-      title="Créer un nouvel événement"
-      okText="Create"
-      cancelText="Cancel"
+      title={
+        isEditing ? "Modifier utilisateur" : "Ajouter  un nouveau utilisateur"
+      }
+      okText={isEditing ? "Enregistrer" : "Ajouter"}
+      cancelText="Annulé"
       onCancel={handlCloseForm}
       onOk={handleSubmit}
     >

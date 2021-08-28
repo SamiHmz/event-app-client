@@ -176,9 +176,9 @@ const BilanForm = ({ visible, onCancel, id, setId }) => {
   return (
     <Modal
       visible={visible}
-      title="Créer un nouvel événement"
-      okText="Create"
-      cancelText="Cancel"
+      title={isEditing ? "Modifier bilan" : "Ajouter  un nouveau bilan"}
+      okText={isEditing ? "Enregistrer" : "Ajouter"}
+      cancelText="Annulé"
       onCancel={handlCloseForm}
       onOk={handleSubmit}
     >

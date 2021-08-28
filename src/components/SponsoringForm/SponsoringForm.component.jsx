@@ -28,7 +28,7 @@ const sponsoringSchema = Yup.object().shape({
 
 const SponsoringForm = ({ visible, onCancel, id, setId }) => {
   const [evenementsList, setEvenementList] = useState([]);
-  const idEditing = !!id;
+  const isEditing = !!id;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -57,7 +57,7 @@ const SponsoringForm = ({ visible, onCancel, id, setId }) => {
 
     validationSchema: sponsoringSchema,
     onSubmit: (values) => {
-      if (!idEditing) {
+      if (!isEditing) {
         dispatch(
           startCreateSponsoring({
             sponsoring: values,
@@ -94,11 +94,11 @@ const SponsoringForm = ({ visible, onCancel, id, setId }) => {
     setValues,
   } = formik;
   const handlCloseForm = () => {
-    if (idEditing) {
+    if (isEditing) {
       form.resetFields();
       setId(null);
     }
-    if (!idEditing) {
+    if (!isEditing) {
       if (values["dossier"]) deleteFileInServer("photo");
     }
     onCancel();
@@ -124,7 +124,7 @@ const SponsoringForm = ({ visible, onCancel, id, setId }) => {
   };
 
   useEffect(() => {
-    if (!idEditing) return;
+    if (!isEditing) return;
     const getSponsoringInfo = async (sponsoringId) => {
       try {
         const { data: sponsoring } = await getOneSponsoring(sponsoringId);
@@ -149,9 +149,11 @@ const SponsoringForm = ({ visible, onCancel, id, setId }) => {
   return (
     <Modal
       visible={visible}
-      title="Créer un nouvel événement"
-      okText="Create"
-      cancelText="Cancel"
+      title={
+        isEditing ? "Modifier sponsoring" : "Ajouter  un nouveau sponsoring"
+      }
+      okText={isEditing ? "Enregistrer" : "Ajouter"}
+      cancelText="Annulé"
       onCancel={handlCloseForm}
       onOk={handleSubmit}
     >
