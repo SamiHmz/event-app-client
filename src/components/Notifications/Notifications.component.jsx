@@ -47,6 +47,7 @@ const Notifications = () => {
     <Popover
       content={<NotificationsList />}
       placement="bottom"
+      arrowPointAtCenter={true}
       title="Notifications"
       trigger="click"
       onClick={handleNotificationsCount}

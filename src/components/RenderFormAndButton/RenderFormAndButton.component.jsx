@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { userSelector } from "../../redux/user/user.selectors";
 import { Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { typeUtilisateur } from "../../util/magic_strings";
 
 const RenderFormAndButton = ({
   content,
@@ -11,7 +10,7 @@ const RenderFormAndButton = ({
   children,
   visible,
   setVisible,
-  buttonStyles = {},
+  buttonStyles,
 }) => {
   const user = useSelector(userSelector);
 

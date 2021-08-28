@@ -17,7 +17,7 @@ const RenderTable = ({
     <Table
       columns={columns}
       style={{
-        alignSelf: "center",
+        justifySelf: "center",
         boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
         maxWidth: "100%",
       }}
@@ -30,10 +30,11 @@ const RenderTable = ({
       dataSource={data}
       scroll={{ scrollToFirstRowOnChange: true }}
       style={{
-        alignSelf: "center",
+        justifySelf: "center",
         boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
         width: "80%",
         overflowX: "scroll",
+        marginTop: "50px",
       }}
       pagination={
         count

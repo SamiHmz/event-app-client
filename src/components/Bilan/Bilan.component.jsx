@@ -21,6 +21,7 @@ import {
   startBilanFetching,
   startDeleteBilan,
   startValidateBilan,
+  setIsBilanLoading,
 } from "../../redux/bilan/bilan.actions";
 import {
   bilanSelector,
@@ -33,7 +34,6 @@ import Actions from "../Actions/Actions.component";
 import { Column } from "./BilanColumns";
 import { getColumn } from "../../util/usefull_functions";
 import useSearch from "../../hooks/useSearch";
-import { resetFilter } from "../../redux/search/search.actions";
 
 const Bilan = () => {
   const [BilanCount, setBilanCount] = useState(0);
@@ -134,6 +134,10 @@ const Bilan = () => {
     };
     onLoad();
   }, [searchValue, filter]);
+
+  // useEffect(() => {
+  //   if (bilanIsLoading) dispatch(setIsBilanLoading(false));
+  // }, []);
 
   const handlePageChange = (page) => {
     dispatch(startBilanFetching(page, searchValue, filter));

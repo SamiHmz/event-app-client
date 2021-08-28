@@ -18,7 +18,7 @@ import { userSelector } from "../../redux/user/user.selectors";
 import { intervenantSearchOptions } from "../../util/search_options";
 import { intervenantFilterOptions } from "../../util/filter_options";
 
-import { Card, Carousel, Descriptions, Image, Spin } from "antd";
+import { Empty, Spin } from "antd";
 import {
   startFetchingEvenements,
   resetEvenements,
@@ -63,19 +63,23 @@ const Evenement = () => {
           <Filter list={intervenantFilterOptions} /> */}
         </ContainerTopLeft>
       </ContainerTop>
-      <EvenementContainer>
-        {evenementsIsLoading ? (
-          <Spin />
-        ) : (
-          <EvenementList evenements={evenements} />
-        )}
-      </EvenementContainer>
-      <a
-        style={{ textAlign: "center" }}
-        onClick={() => dispatch(setEvenementsPageNumber())}
-      >
-        Load More ...
-      </a>
+      {evenementsIsLoading ? (
+        <Spin />
+      ) : evenements.length === 0 ? (
+        <Empty />
+      ) : (
+        <>
+          <EvenementContainer>
+            <EvenementList evenements={evenements} />
+          </EvenementContainer>
+          <a
+            style={{ textAlign: "center" }}
+            onClick={() => dispatch(setEvenementsPageNumber())}
+          >
+            Load More ...
+          </a>
+        </>
+      )}
     </Container>
   );
 };

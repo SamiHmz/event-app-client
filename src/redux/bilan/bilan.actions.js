@@ -76,3 +76,10 @@ export const validateBilanSuccess = (id, decision) => ({
   type: BilanActions.VALIDATE_BILAN_SUCCESS,
   payload: { id, decision },
 });
+
+export const setIsBilanLoading = (value) => ({
+  type: BilanActions.SET_IS_BILAN_LOADING,
+  payload: {
+    value,
+  },
+});

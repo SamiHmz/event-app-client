@@ -15,6 +15,7 @@ import {
   NavBarElementsRight,
 } from "./NavBar.styles";
 import { baseUrl } from "../../config";
+import { style } from "styled-components";
 
 const iconStyles = { fontSize: "20px", cursor: "pointer" };
 
@@ -52,6 +53,11 @@ const NavBar = ({ onOpen }) => {
               lg: "40x",
               xl: "40px",
               xxl: "40px",
+            }}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
             {user.nom[0]}

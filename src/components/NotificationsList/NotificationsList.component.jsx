@@ -46,7 +46,7 @@ const NotificationsList = () => {
   return (
     <div
       style={{
-        minWidth: "400px",
+        minWidth: "300px",
         maxHeight: "70vh",
         minHeight: "70vh",
         overflowY: "scroll",

@@ -21,7 +21,7 @@ export const demandesSelector = createSelector(
       demande.date = moment(demande.createdAt).format(
         "DD-MMM-YYYY , h:mm:ss a"
       );
-      demande.initiateur = demande.initiateur.nom;
+      demande.initiateur = demande.initiateur?.nom;
 
       return demande;
     });

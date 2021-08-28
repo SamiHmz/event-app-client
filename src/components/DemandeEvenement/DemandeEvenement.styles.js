@@ -5,6 +5,7 @@ const { Search } = Input;
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
+  height: 100%;
 `;
 
 export const ContainerTop = styled.div`
@@ -32,8 +33,10 @@ export const Title = styled.div`
 
 export const ContainerBottom = styled.div`
   width: 100%;
+  height: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 `;
 
 export const SearchInput = styled(Search)`

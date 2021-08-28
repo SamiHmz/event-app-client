@@ -54,6 +54,11 @@ const bilanReducer = (state = INITIAL_STATE, action) => {
           return bilan;
         }),
       };
+    case BilanActions.SET_IS_BILAN_LOADING:
+      return {
+        ...state,
+        isBilansLoading: action.payload.value,
+      };
 
     default:
       return state;

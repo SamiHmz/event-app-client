@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Space, Popconfirm } from "antd";
-import { Delete, Edit } from "../Icons/icons";
+
 import RenderTable from "../RenderTable/RenderTable.component";
 
-import Etat from "../Etat/Etat.component";
 import { useParams } from "react-router-dom";
 import {
   startDemandeValidationFetching,
@@ -24,11 +22,13 @@ import { initiateurColumns } from "./detailsValidationDemandeColumns";
 import { getColumn } from "../../util/usefull_functions";
 
 const buttonStyles = {
-  width: "20%",
   alignSelf: "flex-end",
   marginBottom: "30px",
 };
-
+const buttonPhoneSyles = {
+  alignSelf: "center",
+  marginTop: "30px",
+};
 const DetailsValidationDemande = () => {
   const [visible, setVisible] = useState(false);
   const [validationId, setValidationId] = useState(false);
@@ -86,6 +86,13 @@ const DetailsValidationDemande = () => {
         columns={getColumn(user, administrateurColumns, initiateurColumns)}
         isValidation={true}
       />
+      <RenderFormAndButton
+        visible={visible}
+        setVisible={setVisible}
+        type={typeUtilisateur.ADMINISTRATEUR}
+        content="validation"
+        buttonStyles={buttonPhoneSyles}
+      ></RenderFormAndButton>
     </DetailsValidationContainer>
   );
 };
