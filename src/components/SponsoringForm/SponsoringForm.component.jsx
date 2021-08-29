@@ -153,7 +153,7 @@ const SponsoringForm = ({ visible, onCancel, id, setId }) => {
         isEditing ? "Modifier sponsoring" : "Ajouter  un nouveau sponsoring"
       }
       okText={isEditing ? "Enregistrer" : "Ajouter"}
-      cancelText="Annulé"
+      cancelText="Annuler"
       onCancel={handlCloseForm}
       onOk={handleSubmit}
     >

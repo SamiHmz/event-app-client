@@ -178,7 +178,7 @@ const BilanForm = ({ visible, onCancel, id, setId }) => {
       visible={visible}
       title={isEditing ? "Modifier bilan" : "Ajouter  un nouveau bilan"}
       okText={isEditing ? "Enregistrer" : "Ajouter"}
-      cancelText="Annulé"
+      cancelText="Annuler"
       onCancel={handlCloseForm}
       onOk={handleSubmit}
     >

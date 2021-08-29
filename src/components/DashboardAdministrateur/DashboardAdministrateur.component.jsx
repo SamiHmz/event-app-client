@@ -20,7 +20,7 @@ const DashboardAdministrateur = ({ data }) => {
       categories: nbEvenementcategories,
     },
     title: {
-      text: "Nombre d'évenement par club",
+      text: "Nombre d'évenement par initiateur",
       margin: 10,
     },
   };
@@ -37,7 +37,7 @@ const DashboardAdministrateur = ({ data }) => {
     },
 
     title: {
-      text: "Budget par club",
+      text: "Budget par initiateur",
       margin: 10,
     },
   };

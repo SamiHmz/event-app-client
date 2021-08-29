@@ -159,7 +159,7 @@ const UtilisateurForm = ({ visible, onCancel, id, setId }) => {
         isEditing ? "Modifier utilisateur" : "Ajouter  un nouveau utilisateur"
       }
       okText={isEditing ? "Enregistrer" : "Ajouter"}
-      cancelText="Annulé"
+      cancelText="Annuler"
       onCancel={handlCloseForm}
       onOk={handleSubmit}
     >

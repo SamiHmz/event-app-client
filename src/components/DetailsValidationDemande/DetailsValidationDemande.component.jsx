@@ -13,7 +13,7 @@ import {
 } from "../../redux/evenement/evenement.selectors";
 import { useDispatch, useSelector } from "react-redux";
 import { userSelector } from "../../redux/user/user.selectors";
-import { typeUtilisateur } from "../../util/magic_strings";
+import { typeUtilisateur, roles } from "../../util/magic_strings";
 import { DetailsValidationContainer } from "./DetailsValidationDemande.styles";
 import DemandeValidationForm from "../DemandeValidationForm/DemandeValidationForm.component";
 import RenderFormAndButton from "../RenderFormAndButton/RenderFormAndButton.component";
@@ -65,21 +65,23 @@ const DetailsValidationDemande = () => {
   };
   return (
     <DetailsValidationContainer>
-      <RenderFormAndButton
-        visible={visible}
-        setVisible={setVisible}
-        type={typeUtilisateur.ADMINISTRATEUR}
-        content="validation"
-        buttonStyles={buttonStyles}
-      >
-        <DemandeValidationForm
+      {user.role !== roles.SIMPLE ? null : (
+        <RenderFormAndButton
           visible={visible}
-          onCancel={() => setVisible(false)}
-          id={id}
-          validationId={validationId}
-          setValidationId={setValidationId}
-        />
-      </RenderFormAndButton>
+          setVisible={setVisible}
+          type={typeUtilisateur.ADMINISTRATEUR}
+          content="validation"
+          buttonStyles={buttonStyles}
+        >
+          <DemandeValidationForm
+            visible={visible}
+            onCancel={() => setVisible(false)}
+            id={id}
+            validationId={validationId}
+            setValidationId={setValidationId}
+          />
+        </RenderFormAndButton>
+      )}
       <RenderTable
         isLoading={isLoading}
         data={demandesValidation}

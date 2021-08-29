@@ -8,4 +8,6 @@ if (process.env.NODE_ENV === "development") {
   baseUrl = "https://esivent-backend.herokuapp.com/";
 }
 
+console.log("api url :", apiUrl);
+
 export { apiUrl, baseUrl };

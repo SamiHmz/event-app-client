@@ -159,10 +159,10 @@ const IntervenantForm = ({ visible, onCancel, id, setId }) => {
     <Modal
       visible={visible}
       title={
-        isEditing ? "Modifier intervenant" : "Ajouter  un nouveau intervenant"
+        isEditing ? "Modifier intervenant" : "Ajouter un nouveau intervenant"
       }
       okText={isEditing ? "Enregistrer" : "Ajouter"}
-      cancelText="Annulé"
+      cancelText="Annuler"
       onCancel={handlCloseForm}
       onOk={handleSubmit}
     >

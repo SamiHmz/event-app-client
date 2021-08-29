@@ -5,6 +5,7 @@ export const etat = {
 };
 
 export const roles = {
+  SUPER_ADMIN: "super_admin",
   ADMIN: "admin",
   SIMPLE: "simple",
 };
@@ -16,14 +17,21 @@ export const typeEvenement = [
   "Workshop",
   "Formation",
   "Visit",
-  "Compètision",
+  "Compétision",
 ];
 
 export const typeUtilisateur = {
   ADMINISTRATEUR: "administrateur",
   INITIATEUR: "initiateur",
 };
-export const typeInitiateur = ["club", "association"];
+export const typeInitiateur = [
+  "club",
+  "association",
+  "laboratoire",
+  "administration",
+  "alumni",
+  "enseignant",
+];
 export const modeEvenement = ["Prèsentiel", "En Ligne"];
 
 export const modeSponsoring = ["espèce", "matériel"];

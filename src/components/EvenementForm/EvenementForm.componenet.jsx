@@ -130,7 +130,7 @@ const EvenementForm = ({ visible, onCancel, id, setId }) => {
           : "Ajouter  une nouvel demande évenement"
       }
       okText={isEditing ? "Enregistrer" : "Créer"}
-      cancelText={"Annulé"}
+      cancelText="Annuler"
       onCancel={handlCloseForm}
       onOk={handleSubmit}
     >
