@@ -12,7 +12,7 @@ const Login = (props) => {
         flexDirection: "column",
       }}
     >
-      <h1>Login</h1>
+      <h1>Connectez-vous</h1>
       <LoginForm />
       {/* <h1>gs_hamaizi@esi.dz --- 1234156</h1>
       <h1>dahak@gmail.com --- 123456</h1>

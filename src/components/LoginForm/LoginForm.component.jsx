@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import { Input, Button, Radio, Form } from "antd";
 import * as Yup from "yup";
@@ -30,8 +30,8 @@ const LoginForm = () => {
 
   const formik = useFormik({
     initialValues: {
-      email: "",
-      password: "",
+      email: "cse@esi.dz",
+      password: "123456",
       type: INITIATEUR,
     },
     validationSchema: LoginSchema,
@@ -51,12 +51,19 @@ const LoginForm = () => {
     touched,
   } = formik;
 
+  const [form] = Form.useForm();
+
+  useEffect(() => {
+    form.setFieldsValue({ email: "cse@esi.dz", password: "123456" });
+  }, []);
+
   return (
     <Form
       onFinish={handleSubmit}
       size="large"
       layout="vertical"
       style={formStyles}
+      form={form}
     >
       <Form.Item
         label="Email"
@@ -68,7 +75,7 @@ const LoginForm = () => {
       </Form.Item>
       <FormErorr error={errors.email} touched={touched.email} />
       <Form.Item
-        label="Password"
+        label="Mot de pass"
         name="password"
         type="password"
         onChange={handleChange}
@@ -82,8 +89,8 @@ const LoginForm = () => {
           onChange={({ target }) => setFieldValue("type", target.value)}
           value={values.type}
         >
-          <Radio value={INITIATEUR}>{INITIATEUR}</Radio>
-          <Radio value={ADMINISTRATEUR}>{ADMINISTRATEUR}</Radio>
+          <Radio value={INITIATEUR}>Iinitiateur</Radio>
+          <Radio value={ADMINISTRATEUR}>Administrateur</Radio>
         </Radio.Group>
       </Form.Item>
 
