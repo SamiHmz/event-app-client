@@ -6,9 +6,8 @@ import {
 } from "../DemandeEvenement/DemandeEvenement.styles";
 
 import { useSelector, useDispatch } from "react-redux";
-import { userSelector } from "../../redux/user/user.selectors";
 
-import { Empty, Spin } from "antd";
+import { Empty } from "antd";
 import {
   startFetchingEvenements,
   resetEvenements,
@@ -21,6 +20,7 @@ import {
 } from "../../redux/evenement/evenement.selectors";
 import EvenementList from "../EvenementList/EvenementList.component";
 import { EvenementContainer } from "./Evenement.styles";
+import Spinner from "../Spinner/Spinner.component";
 
 const Evenement = () => {
   const evenements = useSelector(evenementsSelector);
@@ -51,7 +51,7 @@ const Evenement = () => {
         </ContainerTopLeft>
       </ContainerTop>
       {evenementsIsLoading ? (
-        <Spin />
+        <Spinner size="large" />
       ) : evenements.length === 0 ? (
         <Empty />
       ) : (

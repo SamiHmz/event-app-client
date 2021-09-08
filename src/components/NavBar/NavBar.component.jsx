@@ -20,6 +20,7 @@ import { baseUrl } from "../../config";
 const iconStyles = { fontSize: "20px", cursor: "pointer", color: "#bfbfbf" };
 
 const { Text } = Typography;
+
 const NavBar = ({ onOpen }) => {
   const user = useSelector(userSelector);
   const { width: windowWidth } = useWindowSize();

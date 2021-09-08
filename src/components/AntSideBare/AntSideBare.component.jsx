@@ -5,11 +5,7 @@ import { Menu } from "antd";
 import logo from "../../img/logo.png";
 
 import { SideBareLogo } from "../sideBare/sideBare.styles";
-import {
-  intiateurSimpleList,
-  administrateurAdminList,
-  administrateurSimpleList,
-} from "./sideBareLists";
+import { intiateurSimpleList, administrateurSimpleList } from "./sideBareLists";
 import { useSelector } from "react-redux";
 import { userSelector } from "../../redux/user/user.selectors";
 import { roles, typeUtilisateur } from "../../util/magic_strings";

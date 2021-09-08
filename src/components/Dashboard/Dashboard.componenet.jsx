@@ -4,7 +4,6 @@ import {
   startDashboardDataFetching,
   setDashboardIsLoading,
 } from "../../redux/dashboard/dashboard.actions";
-import { Spin } from "antd";
 import {
   dashboardSelector,
   isDashboardsLoadingSelector,
@@ -13,6 +12,7 @@ import { userSelector } from "../../redux/user/user.selectors";
 import { typeUtilisateur } from "../../util/magic_strings";
 import DashboardAdministrateur from "../DashboardAdministrateur/DashboardAdministrateur.component";
 import DashboardInitiateur from "../DashboardInitiateur/DashboardInitiateur.component";
+import Spinner from "../Spinner/Spinner.component";
 const Dashboard = () => {
   const dispatch = useDispatch();
   const dashboardData = useSelector(dashboardSelector);
@@ -23,7 +23,7 @@ const Dashboard = () => {
     return () => dispatch(setDashboardIsLoading());
   }, []);
   return isDashboardsLoading ? (
-    <Spin />
+    <Spinner size="large" />
   ) : user.type === typeUtilisateur.INITIATEUR ? (
     <DashboardInitiateur data={dashboardData} />
   ) : (
